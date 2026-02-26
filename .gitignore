@@ -1,0 +1,208 @@
+# ==================== #
+#  Java/Maven Project  #
+# ==================== #
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle/
+build/
+
+# IDE #
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse
+.settings/
+.project
+.classpath
+.factorypath
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.netbeans/
+.netbeans_automatic_build
+
+# VS Code
+.vscode/
+
+# ==================== #
+#      Node.js/Vue     #
+# ==================== #
+
+# Dependencies
+node_modules/
+/node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local env files
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+.nuxt/
+.output/
+
+# Misc
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+# ==================== #
+#   OS Specific Files  #
+# ==================== #
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# ==================== #
+#    Log Files         #
+# ==================== #
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Diagnostic reports
+npm-debug.log
+.yarn-integrity
+
+# ==================== #
+#  Temporary Files     #
+# ==================== #
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Cache
+.cache/
+.nyc_output/
+
+# ==================== #
+#  Database Files      #
+# ==================== #
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# ==================== #
+#  Security Files      #
+# ==================== #
+
+# Certificates and keys
+*.jks
+*.keystore
+*.pem
+*.key
+*.crt
+*.csr
+
+# ==================== #
+#  Test Coverage       #
+# ==================== #
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# ==================== #
+#  Package Lock Files  #
+# ==================== #
+
+# Uncomment if you want to ignore lock files
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# ==================== #
+#  Custom Project      #
+# ==================== #
+
+# Add your custom ignores here
+# *.custom-extension
+# custom-folder/
+
+# ==================== #
+#  Sensitive Config    #
+# ==================== #
+
+# Application configuration (uncomment if needed)
+# application-dev.yml
+# application-prod.yml
+# config/application.properties
