@@ -16,7 +16,7 @@ public class YiSmartCloudApplication
     {
         // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(YiSmartCloudApplication.class, args);
-        System.out.println("(♥◠‿◠)ﾉﾞ  颐智云启动成功   ლ(´ڡ`ლ)ﾞ  " +
+        System.out.println("(♥◠‿◠)ﾉﾞ  颐智云启动成功   ლ(´ڡ`ლ)ﾞ  \n" +
                 " __   ___    ____                       _       ____            _     _ \n" +
                 " \\ \\ / (_)  / ___| _ __ ___   __ _ _ __| |_    / ___|___  _   _| | __| |\n" +
                 "  \\ V /| |  \\___ \\| '_ ` _ \\ / _` | '__| __|  | |   / _ \\| | | | |/ _` |\n" +
