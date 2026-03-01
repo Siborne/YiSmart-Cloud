@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -25,28 +28,33 @@ public class BaseEntity implements Serializable
     @JsonIgnore
     // Swagger属性注解，描述搜索值字段（在JSON序列化时忽略）
     @ApiModelProperty(value = "搜索关键字", name = "searchValue", hidden = true)
+    @TableField(exist = false)
     private String searchValue;
 
     /** 创建者 */
     // Swagger属性注解，描述创建者字段
     @ApiModelProperty(value = "创建者用户名", name = "createBy", example = "admin", position = 10)
+    @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     // Swagger属性注解，描述创建时间字段
     @ApiModelProperty(value = "创建时间", name = "createTime", example = "2026-02-27 10:00:00", position = 11)
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     /** 更新者 */
     // Swagger属性注解，描述更新者字段
     @ApiModelProperty(value = "最后更新者用户名", name = "updateBy", example = "admin", position = 12)
+    @TableField(fill = FieldFill.UPDATE)
     private String updateBy;
 
     /** 更新时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     // Swagger属性注解，描述更新时间字段
     @ApiModelProperty(value = "最后更新时间", name = "updateTime", example = "2026-02-27 15:30:00", position = 13)
+    @TableField(fill = FieldFill.UPDATE)
     private Date updateTime;
 
     /** 备注 */
@@ -58,6 +66,7 @@ public class BaseEntity implements Serializable
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     // Swagger属性注解，描述请求参数字段（在JSON序列化时空值不包含）
     @ApiModelProperty(value = "请求参数Map", name = "params", hidden = true)
+    @TableField(exist = false)
     private Map<String, Object> params;
 
     public String getSearchValue()

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.FlyingSparrow.YiSmartCloud.nursing.mapper.NursingPlanMapper">
+<mapper namespace="org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingPlanMapper">
     
     <resultMap type="NursingPlan" id="NursingPlanResult">
         <result property="id"    column="id"    />

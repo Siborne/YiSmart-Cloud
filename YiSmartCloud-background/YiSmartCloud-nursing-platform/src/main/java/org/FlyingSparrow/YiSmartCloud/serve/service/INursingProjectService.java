@@ -1,19 +1,19 @@
-package org.FlyingSparrow.YiSmartCloud.nursing.mapper;
+package org.FlyingSparrow.YiSmartCloud.serve.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
-import org.FlyingSparrow.YiSmartCloud.nursing.domain.NursingProject;
+import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingProject;
 
 /**
- * 护理项目Mapper接口
- * 
+ * 护理项目Service接口
+ *
  * @author ruoyi
- * @date 2026-03-01
+ * @date 2026-03-02
  */
-public interface NursingProjectMapper 
-{
+public interface INursingProjectService extends IService<NursingProject> {
     /**
      * 查询护理项目
-     * 
+     *
      * @param id 护理项目主键
      * @return 护理项目
      */
@@ -21,7 +21,7 @@ public interface NursingProjectMapper
 
     /**
      * 查询护理项目列表
-     * 
+     *
      * @param nursingProject 护理项目
      * @return 护理项目集合
      */
@@ -29,7 +29,7 @@ public interface NursingProjectMapper
 
     /**
      * 新增护理项目
-     * 
+     *
      * @param nursingProject 护理项目
      * @return 结果
      */
@@ -37,25 +37,25 @@ public interface NursingProjectMapper
 
     /**
      * 修改护理项目
-     * 
+     *
      * @param nursingProject 护理项目
      * @return 结果
      */
     public int updateNursingProject(NursingProject nursingProject);
 
     /**
-     * 删除护理项目
-     * 
+     * 批量删除护理项目
+     *
+     * @param ids 需要删除的护理项目主键集合
+     * @return 结果
+     */
+    public int deleteNursingProjectByIds(Long[] ids);
+
+    /**
+     * 删除护理项目信息
+     *
      * @param id 护理项目主键
      * @return 结果
      */
     public int deleteNursingProjectById(Long id);
-
-    /**
-     * 批量删除护理项目
-     * 
-     * @param ids 需要删除的数据主键集合
-     * @return 结果
-     */
-    public int deleteNursingProjectByIds(Long[] ids);
 }

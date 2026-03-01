@@ -1,19 +1,21 @@
-package org.FlyingSparrow.YiSmartCloud.nursing.mapper;
+package org.FlyingSparrow.YiSmartCloud.serve.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
-import org.FlyingSparrow.YiSmartCloud.nursing.domain.NursingLevel;
+import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingLevel;
 
 /**
  * 护理等级Mapper接口
- * 
+ *
  * @author Siborne
- * @date 2026-03-01
+ * @date 2026-03-02
  */
-public interface NursingLevelMapper 
-{
+@Mapper
+public interface NursingLevelMapper extends BaseMapper<NursingLevel> {
     /**
      * 查询护理等级
-     * 
+     *
      * @param id 护理等级主键
      * @return 护理等级
      */
@@ -21,7 +23,7 @@ public interface NursingLevelMapper
 
     /**
      * 查询护理等级列表
-     * 
+     *
      * @param nursingLevel 护理等级
      * @return 护理等级集合
      */
@@ -29,7 +31,7 @@ public interface NursingLevelMapper
 
     /**
      * 新增护理等级
-     * 
+     *
      * @param nursingLevel 护理等级
      * @return 结果
      */
@@ -37,7 +39,7 @@ public interface NursingLevelMapper
 
     /**
      * 修改护理等级
-     * 
+     *
      * @param nursingLevel 护理等级
      * @return 结果
      */
@@ -45,7 +47,7 @@ public interface NursingLevelMapper
 
     /**
      * 删除护理等级
-     * 
+     *
      * @param id 护理等级主键
      * @return 结果
      */
@@ -53,7 +55,7 @@ public interface NursingLevelMapper
 
     /**
      * 批量删除护理等级
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */

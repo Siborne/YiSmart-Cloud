@@ -1,20 +1,21 @@
-package org.FlyingSparrow.YiSmartCloud.nursing.mapper;
+package org.FlyingSparrow.YiSmartCloud.serve.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
-
-import org.FlyingSparrow.YiSmartCloud.nursing.domain.NursingPlan;
+import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingPlan;
 
 /**
  * 护理计划Mapper接口
- * 
+ *
  * @author Siborne
- * @date 2026-03-01
+ * @date 2026-03-02
  */
-public interface NursingPlanMapper 
-{
+@Mapper
+public interface NursingPlanMapper extends BaseMapper<NursingPlan> {
     /**
      * 查询护理计划
-     * 
+     *
      * @param id 护理计划主键
      * @return 护理计划
      */
@@ -22,7 +23,7 @@ public interface NursingPlanMapper
 
     /**
      * 查询护理计划列表
-     * 
+     *
      * @param nursingPlan 护理计划
      * @return 护理计划集合
      */
@@ -30,7 +31,7 @@ public interface NursingPlanMapper
 
     /**
      * 新增护理计划
-     * 
+     *
      * @param nursingPlan 护理计划
      * @return 结果
      */
@@ -38,7 +39,7 @@ public interface NursingPlanMapper
 
     /**
      * 修改护理计划
-     * 
+     *
      * @param nursingPlan 护理计划
      * @return 结果
      */
@@ -46,7 +47,7 @@ public interface NursingPlanMapper
 
     /**
      * 删除护理计划
-     * 
+     *
      * @param id 护理计划主键
      * @return 结果
      */
@@ -54,7 +55,7 @@ public interface NursingPlanMapper
 
     /**
      * 批量删除护理计划
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
