@@ -7,7 +7,7 @@ import org.FlyingSparrow.YiSmartCloud.nursing.domain.NursingLevel;
  * 护理等级Mapper接口
  * 
  * @author Siborne
- * @date 2026-02-28
+ * @date 2026-03-01
  */
 public interface NursingLevelMapper 
 {
@@ -17,7 +17,7 @@ public interface NursingLevelMapper
      * @param id 护理等级主键
      * @return 护理等级
      */
-    public NursingLevel selectNursingLevelById(Long id);
+    public NursingLevel selectNursingLevelById(Integer id);
 
     /**
      * 查询护理等级列表
@@ -49,7 +49,7 @@ public interface NursingLevelMapper
      * @param id 护理等级主键
      * @return 结果
      */
-    public int deleteNursingLevelById(Long id);
+    public int deleteNursingLevelById(Integer id);
 
     /**
      * 批量删除护理等级
@@ -57,5 +57,5 @@ public interface NursingLevelMapper
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteNursingLevelByIds(Long[] ids);
+    public int deleteNursingLevelByIds(Integer[] ids);
 }

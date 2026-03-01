@@ -12,48 +12,48 @@ import io.swagger.annotations.ApiModelProperty;
  * 护理等级对象 nursing_level
  * 
  * @author Siborne
- * @date 2026-02-28
+ * @date 2026-03-01
  */
-@ApiModel(description = "护理等级信息实体类")
+@ApiModel(description = "护理等级信息")
 public class NursingLevel extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 主键ID */
-    @ApiModelProperty(value = "护理等级主键ID", name = "id", example = "1", position = 1)
-    private Long id;
+    @ApiModelProperty(value = "主键ID", example = "1")
+    private Integer id;
 
     /** 等级名称 */
     @Excel(name = "等级名称")
-    @ApiModelProperty(value = "护理等级名称", name = "name", example = "一级护理", required = true, position = 2)
+    @ApiModelProperty(value = "护理等级名称", example = "一级护理")
     private String name;
 
     /** 护理计划ID */
     @Excel(name = "护理计划ID")
-    @ApiModelProperty(value = "关联的护理计划ID", name = "lplanId", example = "1", position = 3)
-    private Long lplanId;
+    @ApiModelProperty(value = "关联的护理计划ID", example = "1")
+    private Integer lplanId;
 
     /** 护理费用 */
     @Excel(name = "护理费用")
-    @ApiModelProperty(value = "护理费用金额", name = "fee", example = "150.00", position = 4)
+    @ApiModelProperty(value = "护理费用", example = "500.00")
     private BigDecimal fee;
 
     /** 状态（0：禁用，1：启用） */
     @Excel(name = "状态", readConverterExp = "0=：禁用，1：启用")
-    @ApiModelProperty(value = "状态（0：禁用，1：启用）", name = "status", example = "1", allowableValues = "0,1", position = 5)
+    @ApiModelProperty(value = "状态（0：禁用，1：启用）", example = "1")
     private Integer status;
 
     /** 等级说明 */
     @Excel(name = "等级说明")
-    @ApiModelProperty(value = "护理等级详细说明", name = "description", example = "提供24小时专业护理服务", position = 6)
+    @ApiModelProperty(value = "护理等级说明", example = "提供24小时专业护理服务")
     private String description;
 
-    public void setId(Long id) 
+    public void setId(Integer id) 
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Integer getId() 
     {
         return id;
     }
@@ -68,12 +68,12 @@ public class NursingLevel extends BaseEntity
         return name;
     }
 
-    public void setLplanId(Long lplanId) 
+    public void setLplanId(Integer lplanId) 
     {
         this.lplanId = lplanId;
     }
 
-    public Long getLplanId() 
+    public Integer getLplanId() 
     {
         return lplanId;
     }

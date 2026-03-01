@@ -7,7 +7,7 @@ import org.FlyingSparrow.YiSmartCloud.nursing.domain.NursingProject;
  * 护理项目Mapper接口
  * 
  * @author ruoyi
- * @date 2026-02-28
+ * @date 2026-03-01
  */
 public interface NursingProjectMapper 
 {

@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectNursingPlanById" parameterType="Long" resultMap="NursingPlanResult">
+    <select id="selectNursingPlanById" parameterType="Integer" resultMap="NursingPlanResult">
         <include refid="selectNursingPlanVo"/>
         where id = #{id}
     </select>
@@ -73,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-    <delete id="deleteNursingPlanById" parameterType="Long">
+    <delete id="deleteNursingPlanById" parameterType="Integer">
         delete from nursing_plan where id = #{id}
     </delete>
 

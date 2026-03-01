@@ -11,48 +11,48 @@ import io.swagger.annotations.ApiModelProperty;
  * 护理计划对象 nursing_plan
  * 
  * @author Siborne
- * @date 2026-02-28
+ * @date 2026-03-01
  */
-@ApiModel(description = "护理计划信息实体类")
+@ApiModel(description = "护理计划信息")
 public class NursingPlan extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 编号 */
-    @ApiModelProperty(value = "护理计划编号", name = "id", example = "1", position = 1)
-    private Long id;
+    @ApiModelProperty(value = "护理计划编号", example = "1")
+    private Integer id;
 
     /** 排序号 */
     @Excel(name = "排序号")
-    @ApiModelProperty(value = "显示排序号", name = "sortNo", example = "1", position = 2)
-    private Long sortNo;
+    @ApiModelProperty(value = "排序号", example = "1")
+    private Integer sortNo;
 
     /** 名称 */
     @Excel(name = "名称")
-    @ApiModelProperty(value = "护理计划名称", name = "planName", example = "基础护理计划", required = true, position = 3)
+    @ApiModelProperty(value = "护理计划名称", example = "基础护理计划")
     private String planName;
 
     /** 状态 0禁用 1启用 */
     @Excel(name = "状态 0禁用 1启用")
-    @ApiModelProperty(value = "状态（0：禁用，1：启用）", name = "status", example = "1", allowableValues = "0,1", position = 4)
-    private Long status;
+    @ApiModelProperty(value = "状态（0：禁用，1：启用）", example = "1")
+    private Integer status;
 
-    public void setId(Long id) 
+    public void setId(Integer id) 
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Integer getId() 
     {
         return id;
     }
 
-    public void setSortNo(Long sortNo) 
+    public void setSortNo(Integer sortNo) 
     {
         this.sortNo = sortNo;
     }
 
-    public Long getSortNo() 
+    public Integer getSortNo() 
     {
         return sortNo;
     }
@@ -67,12 +67,12 @@ public class NursingPlan extends BaseEntity
         return planName;
     }
 
-    public void setStatus(Long status) 
+    public void setStatus(Integer status) 
     {
         this.status = status;
     }
 
-    public Long getStatus() 
+    public Integer getStatus() 
     {
         return status;
     }
