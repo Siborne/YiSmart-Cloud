@@ -26,11 +26,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectNursingLevelVo"/>
         <where>  
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="description != null  and description != ''"> and description = #{description}</if>
         </where>
     </select>
     
-    <select id="selectNursingLevelById" parameterType="Integer" resultMap="NursingLevelResult">
+    <select id="selectNursingLevelById" parameterType="Long" resultMap="NursingLevelResult">
         <include refid="selectNursingLevelVo"/>
         where id = #{id}
     </select>
@@ -80,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-    <delete id="deleteNursingLevelById" parameterType="Integer">
+    <delete id="deleteNursingLevelById" parameterType="Long">
         delete from nursing_level where id = #{id}
     </delete>
 

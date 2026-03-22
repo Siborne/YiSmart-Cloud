@@ -8,8 +8,8 @@ import lombok.Data;
 /**
  * 护理项目对象 nursing_project
  * 
- * @author ruoyi
- * @date 2026-03-02
+ * @author Siborne
+ * @date 2026-03-23
  */
 @Data
 public class NursingProject extends BaseEntity {
@@ -24,7 +24,7 @@ public class NursingProject extends BaseEntity {
 
     /** 排序号 */
     @Excel(name = "排序号")
-    private Integer orderNo;
+    private Long orderNo;
 
     /** 单位 */
     @Excel(name = "单位")

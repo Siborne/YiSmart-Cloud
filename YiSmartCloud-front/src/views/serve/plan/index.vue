@@ -1,14 +1,6 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="排序号" prop="sortNo">
-        <el-input
-          v-model="queryParams.sortNo"
-          placeholder="请输入排序号"
-          clearable
-          @keyup.enter="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="名称" prop="planName">
         <el-input
           v-model="queryParams.planName"
@@ -76,6 +68,12 @@
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="更新时间" align="center" prop="updateTime" width="180">
+        <template #default="scope">
+          <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['serve:plan:edit']">修改</el-button>
@@ -132,9 +130,7 @@ const data = reactive({
   queryParams: {
     pageNum: 1,
     pageSize: 10,
-    sortNo: null,
     planName: null,
-    status: null,
   },
   rules: {
   }

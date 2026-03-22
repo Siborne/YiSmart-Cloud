@@ -9,14 +9,14 @@ import lombok.Data;
  * 护理等级对象 nursing_level
  * 
  * @author Siborne
- * @date 2026-03-02
+ * @date 2026-03-23
  */
 @Data
 public class NursingLevel extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /** 主键ID */
-    private Integer id;
+    private Long id;
 
     /** 等级名称 */
     @Excel(name = "等级名称")
@@ -24,7 +24,7 @@ public class NursingLevel extends BaseEntity {
 
     /** 护理计划ID */
     @Excel(name = "护理计划ID")
-    private Integer lplanId;
+    private Long lplanId;
 
     /** 护理费用 */
     @Excel(name = "护理费用")

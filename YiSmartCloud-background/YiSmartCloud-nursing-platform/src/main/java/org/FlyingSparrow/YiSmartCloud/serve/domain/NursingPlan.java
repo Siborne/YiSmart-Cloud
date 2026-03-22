@@ -8,18 +8,18 @@ import lombok.Data;
  * 护理计划对象 nursing_plan
  * 
  * @author Siborne
- * @date 2026-03-02
+ * @date 2026-03-23
  */
 @Data
 public class NursingPlan extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /** 编号 */
-    private Integer id;
+    private Long id;
 
     /** 排序号 */
     @Excel(name = "排序号")
-    private Integer sortNo;
+    private Long sortNo;
 
     /** 名称 */
     @Excel(name = "名称")
