@@ -60,6 +60,12 @@
             <groupId>org.FlyingSparrow.YiSmartCloud</groupId>
             <artifactId>YiSmartCloud-nursing-platform</artifactId>
         </dependency>
+
+        <!-- OSS模块-->
+        <dependency>
+            <groupId>org.FlyingSparrow.YiSmartCloud</groupId>
+            <artifactId>YiSmartCloud-oss</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

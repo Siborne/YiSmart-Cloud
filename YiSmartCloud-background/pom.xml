@@ -37,6 +37,7 @@
         <spring-framework.version>5.3.39</spring-framework.version>
         <mybatis-plus-spring-boot.version>3.5.2</mybatis-plus-spring-boot.version>
         <lombok.version>1.18.30</lombok.version>
+        <aliyun.sdk.oss>3.10.2</aliyun.sdk.oss>
     </properties>
 
     <!-- 依赖声明 -->
@@ -227,6 +228,13 @@
                 <version>${YiSmartCloud.version}</version>
             </dependency>
 
+            <!-- OSS模块-->
+            <dependency>
+                <groupId>org.FlyingSparrow.YiSmartCloud</groupId>
+                <artifactId>YiSmartCloud-oss</artifactId>
+                <version>${YiSmartCloud.version}</version>
+            </dependency>
+
             <!-- mybatis-plus 增强CRUD -->
             <dependency>
                 <groupId>com.baomidou</groupId>
@@ -238,15 +246,20 @@
                 <artifactId>mybatis-plus-annotation</artifactId>
                 <version>${mybatis-plus-spring-boot.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun.sdk.oss}</version>
+            </dependency>
+           <!-- &lt;!&ndash; 添加 Lombok 依赖管理 &ndash;&gt;
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version> &lt;!&ndash; 建议使用较新版本以兼容 JDK 11+ &ndash;&gt;
+                <scope>provided</scope>
+            </dependency>-->
         </dependencies>
 
-        <!-- 添加 Lombok 依赖管理 -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version> <!-- 建议使用较新版本以兼容 JDK 11+ -->
-            <scope>provided</scope>
-        </dependency>
     </dependencyManagement>
 
     <modules>
@@ -257,6 +270,7 @@
         <module>YiSmartCloud-generator</module>
         <module>YiSmartCloud-common</module>
         <module>YiSmartCloud-nursing-platform</module>
+        <module>YiSmartCloud-oss</module>
     </modules>
     <packaging>pom</packaging>
 
