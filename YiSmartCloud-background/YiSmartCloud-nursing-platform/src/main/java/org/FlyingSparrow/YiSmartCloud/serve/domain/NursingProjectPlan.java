@@ -1,13 +1,18 @@
-package org.FlyingSparrow.YiSmartCloud.serve.vo;
+package org.FlyingSparrow.YiSmartCloud.serve.domain;
 
-import lombok.Data;
 import org.FlyingSparrow.YiSmartCloud.common.annotation.Excel;
+import org.FlyingSparrow.YiSmartCloud.common.core.domain.BaseEntity;
+import lombok.Data;
 
+/**
+ * 护理计划和项目关联对象 nursing_project_plan
+ * 
+ * @author ruoyi
+ * @date 2026-03-25
+ */
 @Data
-public class NursingProjectPlanVo {
-
-    /** 项目id */
-    private String projectId;
+public class NursingProjectPlan extends BaseEntity {
+    private static final long serialVersionUID = 1L;
 
     /** $column.columnComment */
     private Long id;
@@ -15,6 +20,10 @@ public class NursingProjectPlanVo {
     /** 计划id */
     @Excel(name = "计划id")
     private Long planId;
+
+    /** 项目id */
+    @Excel(name = "项目id")
+    private Long projectId;
 
     /** 计划执行时间 */
     @Excel(name = "计划执行时间")
@@ -27,4 +36,6 @@ public class NursingProjectPlanVo {
     /** 执行频次 */
     @Excel(name = "执行频次")
     private Long executeFrequency;
+
+
 }

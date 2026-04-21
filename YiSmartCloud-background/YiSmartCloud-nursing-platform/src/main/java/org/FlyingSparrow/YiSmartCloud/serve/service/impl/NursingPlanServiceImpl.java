@@ -6,6 +6,8 @@ import org.FlyingSparrow.YiSmartCloud.common.utils.DateUtils;
 import org.FlyingSparrow.YiSmartCloud.common.utils.bean.BeanUtils;
 import org.FlyingSparrow.YiSmartCloud.serve.dto.NursingPlanDto;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingProjectPlanMapper;
+import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingPlanVo;
+import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingProjectPlanVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingPlanMapper;
@@ -37,8 +39,17 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
      * @return 护理计划
      */
     @Override
-    public NursingPlan selectNursingPlanById(Long id) {
-        return getById(id);
+    public NursingPlanVo selectNursingPlanById(Long id) {
+        //查询护理计划
+        NursingPlan nursingPlan = nursingPlanMapper.selectNursingPlanById(id);
+        NursingPlanVo nursingPlanVo = new NursingPlanVo();
+        BeanUtils.copyProperties(nursingPlan,nursingPlanVo);
+
+        //根据护理计划ID查询护理项目的关系
+        List<NursingProjectPlanVo> list = nursingProjectPlanMapper.selectByNursingPlanId(id);
+        nursingPlanVo.setProjectPlans(list);
+
+        return nursingPlanVo;
     }
 
     /**

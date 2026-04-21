@@ -7,7 +7,9 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import org.FlyingSparrow.YiSmartCloud.common.core.domain.R;
 import org.FlyingSparrow.YiSmartCloud.serve.dto.NursingPlanDto;
+import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingPlanVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,9 +73,9 @@ public class NursingPlanController extends BaseController {
     @PreAuthorize("@ss.hasPermi('serve:plan:query')")
     @GetMapping(value = "/{id}")
     @ApiOperation("获取护理计划详细信息")
-    public AjaxResult getInfo(@ApiParam(value = "护理计划ID", required = true)
+    public R<NursingPlanVo> getInfo(@ApiParam(value = "护理计划ID", required = true)
                               @PathVariable("id") Long id) {
-        return success(nursingPlanService.selectNursingPlanById(id));
+        return R.ok(nursingPlanService.selectNursingPlanById(id));
     }
 
     /**

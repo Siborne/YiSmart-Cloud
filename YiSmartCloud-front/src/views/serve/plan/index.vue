@@ -336,6 +336,30 @@ const executeCycleOptions = ref([
   { label: "月", value: "2" },
 ]);
 
+const normalizeProjectId = (projectId) => {
+  if (projectId === undefined || projectId === null || projectId === "") {
+    return "";
+  }
+  return String(projectId);
+};
+
+const normalizeProjectPlans = (plans = []) => {
+  return plans.map((plan) => ({
+    ...plan,
+    projectId: normalizeProjectId(plan.projectId),
+  }));
+};
+
+const buildSubmitProjectPlans = (plans = []) => {
+  return plans.map((plan) => ({
+    ...plan,
+    projectId:
+      plan.projectId === "" || plan.projectId === null || plan.projectId === undefined
+        ? null
+        : Number(plan.projectId),
+  }));
+};
+
 /** 查询护理计划列表 */
 function getList() {
   loading.value = true;
@@ -353,7 +377,10 @@ onMounted(() => {
 // 查询所有护理项目
 const getProjectList = () => {
   getProjectAll().then((res) => {
-    projectOptions.value = res.data;
+    projectOptions.value = (res.data || []).map((item) => ({
+      ...item,
+      value: normalizeProjectId(item.value),
+    }));
   });
 };
 
@@ -441,7 +468,7 @@ function handleUpdate(row) {
   getPlan(_id).then((response) => {
     formData.value = response.data;
     formData.value.status = String(formData.value.status);
-    projectList.value = formData.value.projectPlans;
+    projectList.value = normalizeProjectPlans(formData.value.projectPlans);
     dialogVisible.value = true;
     title.value = "修改护理计划";
   });
@@ -452,7 +479,7 @@ const getDetails = (id) => {
   getPlan(id).then((response) => {
     formData.value = response.data;
     formData.value.status = String(formData.value.status);
-    projectList.value = formData.value.projectPlans;
+    projectList.value = normalizeProjectPlans(formData.value.projectPlans);
     dialogVisible.value = true;
     title.value = "修改护理计划";
   });
@@ -466,7 +493,7 @@ function submitForm() {
     proxy.$modal.msgError("请勿选择重复的护理项目");
     return;
   }
-  formData.value["projectPlans"] = projectList.value;
+  formData.value["projectPlans"] = buildSubmitProjectPlans(projectList.value);
   console.log(formData.value);
 
   proxy.$refs["planRef"].validate((valid) => {

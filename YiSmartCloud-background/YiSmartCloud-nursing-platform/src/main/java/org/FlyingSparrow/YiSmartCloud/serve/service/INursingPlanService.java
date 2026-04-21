@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingPlan;
 import org.FlyingSparrow.YiSmartCloud.serve.dto.NursingPlanDto;
+import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingPlanVo;
 
 /**
  * 护理计划Service接口
@@ -18,7 +19,7 @@ public interface INursingPlanService extends IService<NursingPlan> {
      * @param id 护理计划主键
      * @return 护理计划
      */
-    public NursingPlan selectNursingPlanById(Long id);
+    public NursingPlanVo selectNursingPlanById(Long id);
 
     /**
      * 查询护理计划列表
@@ -31,7 +32,7 @@ public interface INursingPlanService extends IService<NursingPlan> {
     /**
      * 新增护理计划
      *
-     * @param nursingPlan 护理计划
+     * @param dto 护理计划
      * @return 结果
      */
     public int insertNursingPlan(NursingPlanDto dto);

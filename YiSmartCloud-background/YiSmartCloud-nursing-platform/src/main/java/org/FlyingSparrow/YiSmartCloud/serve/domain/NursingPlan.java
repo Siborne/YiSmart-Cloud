@@ -19,7 +19,7 @@ public class NursingPlan extends BaseEntity {
 
     /** 排序号 */
     @Excel(name = "排序号")
-    private Long sortNo;
+    private Integer sortNo;
 
     /** 名称 */
     @Excel(name = "名称")

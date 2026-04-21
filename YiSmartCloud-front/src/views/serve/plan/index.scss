@@ -1,0 +1,66 @@
+@import '@/assets/styles/variables.module.scss';
+// 信息提示区域样式定义
+.info{
+    // 搜索PDF按钮样式
+    .searchPdf{
+      color:#409EFF ; // 按钮文字颜色设置为蓝色
+    }
+  }
+  
+  // 文本居中样式
+  .center{
+    text-align: center; // 将文本内容居中对齐
+  }
+  
+  // 家属信息表格样式定义
+  .family{
+    // 表头样式
+    .tableHead{
+      display: flex; // 使用弹性布局使得表头元素水平排列
+      background-color: #f3f8f9; // 设置背景颜色为淡灰色
+      height: 50px; line-height: 50px; // 设置表头高度及行高以适应内容
+      font-size: 14px; // 字体大小设置为14px
+      justify-content:center; // 使表头元素左右间距均匀分布
+      padding: 0 10px; // 内边距设置为左右20px
+      text-align: center;
+      &>div{
+        flex: 1;
+      }
+    }
+    // 表体样式
+    .tableBody{
+      // 表格列样式
+      height: 300px;
+      overflow-y: scroll;
+      .tableColumn{
+        display: flex; // 使用弹性布局使得表格列元素水平排列
+        justify-content: space-around; // 使表格列元素左右间距均匀分布
+        height: 50px; 
+        line-height: 50px; // 设置表格行高及高度以适应内容
+        .column {
+          flex: 1;
+          text-align: center;
+          padding: 0 10px;
+          .el-icon{
+            font-size: 16px;
+            margin:  0 5px;
+            
+            &.add{
+              color: $--color-main;
+            }
+            &.delect{
+              color: $red;
+            }
+          }
+        }
+      }
+    }
+  }
+  .elcolFlex{
+    display: flex !important;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .el-form-item{
+      width: 50%;
+    }
+  }
