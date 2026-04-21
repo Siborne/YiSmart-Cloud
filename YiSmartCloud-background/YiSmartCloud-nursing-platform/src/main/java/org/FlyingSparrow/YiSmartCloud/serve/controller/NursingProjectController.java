@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingProjectVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -106,5 +107,16 @@ public class NursingProjectController extends BaseController {
     @ApiOperation("删除护理项目")
     public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(nursingProjectService.deleteNursingProjectByIds(ids));
+    }
+
+    /**
+     * 查询护理项目列表
+     */
+    @GetMapping("/all")
+    @ApiOperation(value = "查询所有护理项目")
+    public AjaxResult listAll()
+    {
+        List<NursingProjectVo> list = nursingProjectService.selectAll();
+        return success(list);
     }
 }

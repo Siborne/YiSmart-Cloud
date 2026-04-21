@@ -2,6 +2,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
 import java.util.List;
 import org.FlyingSparrow.YiSmartCloud.common.utils.DateUtils;
+import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingProjectVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingProjectMapper;
@@ -86,5 +87,15 @@ public class NursingProjectServiceImpl extends ServiceImpl<NursingProjectMapper,
     @Override
     public int deleteNursingProjectById(Long id) {
                 return removeById(id) == true ? 1 : 0;
+    }
+
+    /**
+     * 查询所有护理项目
+     *
+     * @return 护理项目列表
+     */
+    @Override
+    public List<NursingProjectVo> selectAll() {
+        return nursingProjectMapper.getAll();
     }
 }

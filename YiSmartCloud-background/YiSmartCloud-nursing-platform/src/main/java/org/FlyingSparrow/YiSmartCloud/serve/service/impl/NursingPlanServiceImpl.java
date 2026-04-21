@@ -1,7 +1,11 @@
 package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
 import java.util.List;
+
 import org.FlyingSparrow.YiSmartCloud.common.utils.DateUtils;
+import org.FlyingSparrow.YiSmartCloud.common.utils.bean.BeanUtils;
+import org.FlyingSparrow.YiSmartCloud.serve.dto.NursingPlanDto;
+import org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingProjectPlanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingPlanMapper;
@@ -9,6 +13,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingPlan;
 import org.FlyingSparrow.YiSmartCloud.serve.service.INursingPlanService;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import java.util.Arrays;
 
 /**
@@ -22,6 +27,9 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
     @Autowired
     private NursingPlanMapper nursingPlanMapper;
 
+    @Autowired
+    private NursingProjectPlanMapper nursingProjectPlanMapper;
+
     /**
      * 查询护理计划
      *
@@ -30,7 +38,7 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
      */
     @Override
     public NursingPlan selectNursingPlanById(Long id) {
-                return getById(id);
+        return getById(id);
     }
 
     /**
@@ -47,12 +55,21 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
     /**
      * 新增护理计划
      *
-     * @param nursingPlan 护理计划
+     * @param dto 护理计划
      * @return 结果
      */
     @Override
-    public int insertNursingPlan(NursingPlan nursingPlan) {
-                        return save(nursingPlan) == true? 1 : 0;
+    public int insertNursingPlan(NursingPlanDto dto) {
+        // 1.保存护理计划
+        NursingPlan nursingPlan = new NursingPlan();
+        BeanUtils.copyProperties(dto, nursingPlan);
+        nursingPlan.setCreateTime(DateUtils.getNowDate());
+
+        nursingPlanMapper.insertNursingPlan(nursingPlan);
+
+        // 2.批量保存护理计划和护理项目的对应关系
+        int count = nursingProjectPlanMapper.batchInsert(dto.getProjectPlans(),nursingPlan.getId());
+        return count == 0 ? 0 : 1;
     }
 
     /**
@@ -63,7 +80,7 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
      */
     @Override
     public int updateNursingPlan(NursingPlan nursingPlan) {
-                return updateById(nursingPlan) == true ? 1 : 0;
+        return updateById(nursingPlan) == true ? 1 : 0;
     }
 
     /**
@@ -74,7 +91,7 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
      */
     @Override
     public int deleteNursingPlanByIds(Long[] ids) {
-                return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
+        return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
     }
 
     /**
@@ -85,6 +102,6 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
      */
     @Override
     public int deleteNursingPlanById(Long id) {
-                return removeById(id) == true ? 1 : 0;
+        return removeById(id) == true ? 1 : 0;
     }
 }

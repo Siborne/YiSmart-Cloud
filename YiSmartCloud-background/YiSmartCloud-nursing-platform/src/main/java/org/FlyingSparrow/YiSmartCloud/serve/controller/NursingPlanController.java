@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import org.FlyingSparrow.YiSmartCloud.serve.dto.NursingPlanDto;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,8 +83,8 @@ public class NursingPlanController extends BaseController {
     @Log(title = "护理计划", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增护理计划")
-    public AjaxResult add(@ApiParam(value = "护理计划实体", required = true) @RequestBody NursingPlan nursingPlan) {
-        return toAjax(nursingPlanService.insertNursingPlan(nursingPlan));
+    public AjaxResult add(@ApiParam(value = "护理计划实体", required = true) @RequestBody NursingPlanDto dto) {
+        return toAjax(nursingPlanService.insertNursingPlan(dto));
     }
 
     /**

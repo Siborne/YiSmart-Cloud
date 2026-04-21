@@ -3,6 +3,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingPlan;
+import org.FlyingSparrow.YiSmartCloud.serve.dto.NursingPlanDto;
 
 /**
  * 护理计划Service接口
@@ -33,7 +34,7 @@ public interface INursingPlanService extends IService<NursingPlan> {
      * @param nursingPlan 护理计划
      * @return 结果
      */
-    public int insertNursingPlan(NursingPlan nursingPlan);
+    public int insertNursingPlan(NursingPlanDto dto);
 
     /**
      * 修改护理计划

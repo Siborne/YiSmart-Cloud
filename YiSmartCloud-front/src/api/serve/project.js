@@ -42,3 +42,11 @@ export function delProject(id) {
     method: 'delete'
   })
 }
+
+//查询所有护理项目
+export function getProjectAll() {
+  return request({
+    url: '/serve/project/all',
+    method: 'get'
+  })
+}

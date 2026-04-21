@@ -1,9 +1,11 @@
 package org.FlyingSparrow.YiSmartCloud.serve.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingProjectVo;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingProject;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * 护理项目Mapper接口
@@ -13,6 +15,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingProject;
  */
 @Mapper
 public interface NursingProjectMapper extends BaseMapper<NursingProject> {
+
     /**
      * 查询护理项目
      *
@@ -60,4 +63,12 @@ public interface NursingProjectMapper extends BaseMapper<NursingProject> {
      * @return 结果
      */
     public int deleteNursingProjectByIds(Long[] ids);
+
+    /**
+     * 查询所有护理项目
+     *
+     * @return 护理项目列表
+     */
+    @Select("select name as label, id as value from nursing_project where status = 1")
+    public List<NursingProjectVo> getAll();
 }

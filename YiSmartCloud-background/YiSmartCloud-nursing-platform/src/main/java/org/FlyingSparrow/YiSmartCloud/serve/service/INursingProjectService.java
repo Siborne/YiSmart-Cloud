@@ -3,6 +3,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingProject;
+import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingProjectVo;
 
 /**
  * 护理项目Service接口
@@ -58,4 +59,11 @@ public interface INursingProjectService extends IService<NursingProject> {
      * @return 结果
      */
     public int deleteNursingProjectById(Long id);
+
+    /**
+     * 查询所有护理项目
+     *
+     * @return 护理项目列表
+     */
+    List<NursingProjectVo> selectAll();
 }
