@@ -32,6 +32,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
+    <select id="selectNursingPlanAll" resultMap="NursingPlanResult">
+        <include refid="selectNursingPlanVo"/>
+        where status = 1
+        order by sort_no asc, id asc
+    </select>
+
     <insert id="insertNursingPlan" parameterType="NursingPlan" useGeneratedKeys="true" keyProperty="id">
         insert into nursing_plan
         <trim prefix="(" suffix=")" suffixOverrides=",">

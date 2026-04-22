@@ -8,6 +8,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.dto.NursingPlanDto;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingProjectPlanMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingPlanVo;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingProjectPlanVo;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingPlanMapper;
@@ -15,6 +16,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingPlan;
 import org.FlyingSparrow.YiSmartCloud.serve.service.INursingPlanService;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 
@@ -25,6 +27,7 @@ import java.util.Arrays;
  * @date 2026-03-23
  */
 @Service
+@Transactional
 public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, NursingPlan> implements INursingPlanService {
     @Autowired
     private NursingPlanMapper nursingPlanMapper;
@@ -63,6 +66,11 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
         return nursingPlanMapper.selectNursingPlanList(nursingPlan);
     }
 
+    @Override
+    public List<NursingPlan> selectNursingPlanAll() {
+        return nursingPlanMapper.selectNursingPlanAll();
+    }
+
     /**
      * 新增护理计划
      *
@@ -86,12 +94,31 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
     /**
      * 修改护理计划
      *
-     * @param nursingPlan 护理计划
+     * @param dto 护理计划
      * @return 结果
      */
     @Override
-    public int updateNursingPlan(NursingPlan nursingPlan) {
-        return updateById(nursingPlan) == true ? 1 : 0;
+    @Transactional(rollbackFor = Exception.class)
+    public int updateNursingPlan(NursingPlanDto dto)
+    {
+        try {
+            //属性拷贝
+            NursingPlan nursingPlan = new NursingPlan();
+            BeanUtils.copyProperties(dto,nursingPlan);
+
+            //判断dto中的项目列表为空，如果不为空，则先删除护理计划与护理项目的关系，然后重新批量添加
+            if(dto.getProjectPlans() != null && dto.getProjectPlans().size() > 0){
+                //删除护理计划与护理项目的关系
+                nursingProjectPlanMapper.deleteByPlanId(dto.getId());
+                //批量添加护理计划与护理项目的关系
+                nursingProjectPlanMapper.batchInsert(dto.getProjectPlans(),dto.getId());
+            }
+
+            //别管项目列表是否为空，都要修改护理计划
+            return nursingPlanMapper.updateNursingPlan(nursingPlan);
+        } catch (BeansException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -101,6 +128,7 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteNursingPlanByIds(Long[] ids) {
         return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
     }
@@ -112,7 +140,11 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteNursingPlanById(Long id) {
-        return removeById(id) == true ? 1 : 0;
+        //删除关系
+        //删除护理计划与护理项目的关系
+        nursingProjectPlanMapper.deleteByPlanId(id);
+        return nursingPlanMapper.deleteNursingPlanById(id);
     }
 }

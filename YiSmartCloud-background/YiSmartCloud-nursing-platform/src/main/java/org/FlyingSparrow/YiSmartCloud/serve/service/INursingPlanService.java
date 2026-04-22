@@ -30,6 +30,13 @@ public interface INursingPlanService extends IService<NursingPlan> {
     public List<NursingPlan> selectNursingPlanList(NursingPlan nursingPlan);
 
     /**
+     * 查询所有启用状态的护理计划（下拉框）
+     *
+     * @return 护理计划集合
+     */
+    public List<NursingPlan> selectNursingPlanAll();
+
+    /**
      * 新增护理计划
      *
      * @param dto 护理计划
@@ -40,10 +47,10 @@ public interface INursingPlanService extends IService<NursingPlan> {
     /**
      * 修改护理计划
      *
-     * @param nursingPlan 护理计划
+     * @param dto 护理计划
      * @return 结果
      */
-    public int updateNursingPlan(NursingPlan nursingPlan);
+    public int updateNursingPlan(NursingPlanDto dto);
 
     /**
      * 批量删除护理计划

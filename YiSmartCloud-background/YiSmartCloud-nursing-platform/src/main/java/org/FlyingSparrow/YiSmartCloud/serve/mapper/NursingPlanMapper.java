@@ -30,6 +30,13 @@ public interface NursingPlanMapper extends BaseMapper<NursingPlan> {
     public List<NursingPlan> selectNursingPlanList(NursingPlan nursingPlan);
 
     /**
+     * 查询所有启用状态的护理计划（下拉框等）
+     *
+     * @return 护理计划集合
+     */
+    public List<NursingPlan> selectNursingPlanAll();
+
+    /**
      * 新增护理计划
      *
      * @param nursingPlan 护理计划

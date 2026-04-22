@@ -55,6 +55,15 @@ public class NursingPlanController extends BaseController {
     }
 
     /**
+     * 查询所有启用状态的护理计划（护理等级等下拉框）
+     */
+    @GetMapping("/all")
+    @ApiOperation("查询所有启用状态的护理计划")
+    public AjaxResult listAll() {
+        return success(nursingPlanService.selectNursingPlanAll());
+    }
+
+    /**
      * 导出护理计划列表
      */
     @PreAuthorize("@ss.hasPermi('serve:plan:export')")
@@ -96,8 +105,8 @@ public class NursingPlanController extends BaseController {
     @Log(title = "护理计划", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("修改护理计划")
-    public AjaxResult edit(@ApiParam(value = "护理计划实体", required = true) @RequestBody NursingPlan nursingPlan) {
-        return toAjax(nursingPlanService.updateNursingPlan(nursingPlan));
+    public AjaxResult edit(@ApiParam(value = "护理计划实体", required = true) @RequestBody NursingPlanDto dto) {
+        return toAjax(nursingPlanService.updateNursingPlan(dto));
     }
 
     /**
@@ -105,9 +114,9 @@ public class NursingPlanController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('serve:plan:remove')")
     @Log(title = "护理计划", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{ids}")
+    @DeleteMapping("/{id}")
     @ApiOperation("删除护理计划")
-    public AjaxResult remove(@PathVariable Long[] ids) {
-        return toAjax(nursingPlanService.deleteNursingPlanByIds(ids));
+    public AjaxResult remove(@PathVariable Long id) {
+        return toAjax(nursingPlanService.deleteNursingPlanById(id));
     }
 }

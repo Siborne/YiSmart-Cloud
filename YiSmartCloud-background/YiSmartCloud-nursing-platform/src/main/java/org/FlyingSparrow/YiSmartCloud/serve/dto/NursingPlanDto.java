@@ -32,5 +32,5 @@ public class NursingPlanDto {
     /**
      * 护理计划关联项目列表
      */
-    List<NursingProjectPlan> projectPlans;
+    List<NursingProjectPlanDto> projectPlans;
 }

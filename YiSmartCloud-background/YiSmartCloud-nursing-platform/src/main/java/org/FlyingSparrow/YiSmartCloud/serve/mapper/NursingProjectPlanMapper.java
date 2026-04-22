@@ -1,7 +1,9 @@
 package org.FlyingSparrow.YiSmartCloud.serve.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.FlyingSparrow.YiSmartCloud.serve.dto.NursingProjectPlanDto;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingProjectPlanVo;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingProjectPlan;
@@ -71,7 +73,7 @@ public interface NursingProjectPlanMapper extends BaseMapper<NursingProjectPlan>
      * @param planId 计划ID
      * @return 插入结果
      */
-    int batchInsert(@Param("list") List<NursingProjectPlan> projectPlans, @Param("planId") Long planId);
+    int batchInsert(@Param("list") List<NursingProjectPlanDto> projectPlans, @Param("planId") Long planId);
 
     /**
      * 根据计划ID查询计划项目关系
@@ -80,4 +82,13 @@ public interface NursingProjectPlanMapper extends BaseMapper<NursingProjectPlan>
      * @return 计划项目关系
      */
     List<NursingProjectPlanVo> selectByNursingPlanId(@Param("planId") Long planId);
+
+    /**
+     * 根据计划ID删除计划项目关系
+     *
+     * @param planId 计划ID
+     * @return 删除结果
+     */
+    @Delete("delete from nursing_project_plan where plan_id = #{planId}")
+    void deleteByPlanId(Long planId);
 }

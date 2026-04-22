@@ -3,7 +3,8 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingLevelMapper">
-    
+    <!-- plan_name 来自 nursing_plan，勿在 nursing_level 表增加该列；实体上 planName 已标记 @TableField(exist = false) -->
+
     <resultMap type="NursingLevel" id="NursingLevelResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
@@ -16,22 +17,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"    column="update_by"    />
         <result property="remark"    column="remark"    />
         <result property="updateTime"    column="update_time"    />
+        <result property="planName"    column="plan_name"    />
     </resultMap>
 
     <sql id="selectNursingLevelVo">
-        select id, name, lplan_id, fee, status, description, create_time, create_by, update_by, remark, update_time from nursing_level
+        select nl.id, nl.name, nl.lplan_id, nl.fee, nl.status, nl.description, nl.create_time, nl.create_by, nl.update_by, nl.remark, nl.update_time,
+               p.plan_name as plan_name
+        from nursing_level nl
+        left join nursing_plan p on nl.lplan_id = p.id
     </sql>
 
     <select id="selectNursingLevelList" parameterType="NursingLevel" resultMap="NursingLevelResult">
         <include refid="selectNursingLevelVo"/>
         <where>  
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="name != null  and name != ''"> and nl.name like concat('%', #{name}, '%')</if>
+            <if test="status != null"> and nl.status = #{status}</if>
         </where>
     </select>
     
     <select id="selectNursingLevelById" parameterType="Long" resultMap="NursingLevelResult">
         <include refid="selectNursingLevelVo"/>
-        where id = #{id}
+        where nl.id = #{id}
     </select>
 
     <insert id="insertNursingLevel" parameterType="NursingLevel" useGeneratedKeys="true" keyProperty="id">

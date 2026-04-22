@@ -72,7 +72,9 @@ public class NursingLevelController extends BaseController {
     @ApiOperation("获取护理等级详细信息")
     public AjaxResult getInfo(@ApiParam(value = "护理等级ID", required = true)
                               @PathVariable("id") Long id) {
-        return success(nursingLevelService.selectNursingLevelById(id));
+        NursingLevel nursingLevel = nursingLevelService.selectNursingLevelById(id);
+        // 详情走 XML JOIN，若无记录则明确提示（避免前端拿到空对象误判）
+        return nursingLevel == null ? AjaxResult.error("护理等级不存在或已删除") : success(nursingLevel);
     }
 
     /**

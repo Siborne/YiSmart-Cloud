@@ -13,5 +13,5 @@ public class NursingProjectVo {
     /**
      * 项目ID
      */
-    private Long value;
+    private String value;
 }
