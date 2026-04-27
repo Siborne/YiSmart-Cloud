@@ -1,0 +1,52 @@
+package org.FlyingSparrow.YiSmartCloud.serve.domain;
+
+import org.FlyingSparrow.YiSmartCloud.common.annotation.Excel;
+import org.FlyingSparrow.YiSmartCloud.common.core.domain.BaseEntity;
+import lombok.Data;
+
+/**
+ * 老人档案对象 elder_info
+ * 
+ * @author Siborne
+ * @date 2026-04-27
+ */
+@Data
+public class ElderInfo extends BaseEntity {
+    private static final long serialVersionUID = 1L;
+
+    /** 主键ID */
+    private Long id;
+
+    /** 老人姓名 */
+    @Excel(name = "老人姓名")
+    private String name;
+
+    /** 身份证号 */
+    @Excel(name = "身份证号")
+    private String idCard;
+
+    /** 年龄 */
+    @Excel(name = "年龄")
+    private Integer age;
+
+    /** 性别: 1-男, 2-女 */
+    @Excel(name = "性别: 1-男, 2-女")
+    private Integer gender;
+
+    /** 家属紧急联系电话 */
+    @Excel(name = "家属紧急联系电话")
+    private String contactPhone;
+
+    /** 健康状况简述 */
+    @Excel(name = "健康状况简述")
+    private String healthStatus;
+
+    /** 当前状态: 0-待入住, 1-在院, 2-已退住 */
+    @Excel(name = "当前状态: 0-待入住, 1-在院, 2-已退住")
+    private Integer status;
+
+    /** 逻辑删除 */
+    private Integer isDeleted;
+
+
+}

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.FlyingSparrow.YiSmartCloud.serve.mapper.VisitRecordMapper">
+    
+    <resultMap type="VisitRecord" id="VisitRecordResult">
+        <result property="id"    column="id"    />
+        <result property="elderId"    column="elder_id"    />
+        <result property="visitorName"    column="visitor_name"    />
+        <result property="visitorPhone"    column="visitor_phone"    />
+        <result property="visitTime"    column="visit_time"    />
+        <result property="visitReason"    column="visit_reason"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectVisitRecordVo">
+        select id, elder_id, visitor_name, visitor_phone, visit_time, visit_reason, status, create_time, update_time, is_deleted from visit_record
+    </sql>
+
+    <select id="selectVisitRecordList" parameterType="VisitRecord" resultMap="VisitRecordResult">
+        <include refid="selectVisitRecordVo"/>
+        <where>  
+            <if test="elderId != null "> and elder_id = #{elderId}</if>
+            <if test="visitorName != null  and visitorName != ''"> and visitor_name like concat('%', #{visitorName}, '%')</if>
+            <if test="visitorPhone != null  and visitorPhone != ''"> and visitor_phone = #{visitorPhone}</if>
+            <if test="visitTime != null "> and visit_time = #{visitTime}</if>
+            <if test="visitReason != null  and visitReason != ''"> and visit_reason = #{visitReason}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectVisitRecordById" parameterType="Long" resultMap="VisitRecordResult">
+        <include refid="selectVisitRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertVisitRecord" parameterType="VisitRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into visit_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="elderId != null">elder_id,</if>
+            <if test="visitorName != null and visitorName != ''">visitor_name,</if>
+            <if test="visitorPhone != null and visitorPhone != ''">visitor_phone,</if>
+            <if test="visitTime != null">visit_time,</if>
+            <if test="visitReason != null">visit_reason,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="elderId != null">#{elderId},</if>
+            <if test="visitorName != null and visitorName != ''">#{visitorName},</if>
+            <if test="visitorPhone != null and visitorPhone != ''">#{visitorPhone},</if>
+            <if test="visitTime != null">#{visitTime},</if>
+            <if test="visitReason != null">#{visitReason},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateVisitRecord" parameterType="VisitRecord">
+        update visit_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="elderId != null">elder_id = #{elderId},</if>
+            <if test="visitorName != null and visitorName != ''">visitor_name = #{visitorName},</if>
+            <if test="visitorPhone != null and visitorPhone != ''">visitor_phone = #{visitorPhone},</if>
+            <if test="visitTime != null">visit_time = #{visitTime},</if>
+            <if test="visitReason != null">visit_reason = #{visitReason},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteVisitRecordById" parameterType="Long">
+        delete from visit_record where id = #{id}
+    </delete>
+
+    <delete id="deleteVisitRecordByIds" parameterType="String">
+        delete from visit_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

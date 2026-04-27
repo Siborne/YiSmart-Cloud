@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.FlyingSparrow.YiSmartCloud.serve.mapper.HealthDataRecordMapper">
+    
+    <resultMap type="HealthDataRecord" id="HealthDataRecordResult">
+        <result property="id"    column="id"    />
+        <result property="elderId"    column="elder_id"    />
+        <result property="deviceNo"    column="device_no"    />
+        <result property="heartRate"    column="heart_rate"    />
+        <result property="bloodPressureHigh"    column="blood_pressure_high"    />
+        <result property="bloodPressureLow"    column="blood_pressure_low"    />
+        <result property="measureTime"    column="measure_time"    />
+        <result property="isAlert"    column="is_alert"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectHealthDataRecordVo">
+        select id, elder_id, device_no, heart_rate, blood_pressure_high, blood_pressure_low, measure_time, is_alert, create_time from health_data_record
+    </sql>
+
+    <select id="selectHealthDataRecordList" parameterType="HealthDataRecord" resultMap="HealthDataRecordResult">
+        <include refid="selectHealthDataRecordVo"/>
+        <where>  
+            <if test="elderId != null "> and elder_id = #{elderId}</if>
+            <if test="deviceNo != null  and deviceNo != ''"> and device_no = #{deviceNo}</if>
+            <if test="measureTime != null "> and measure_time = #{measureTime}</if>
+            <if test="isAlert != null "> and is_alert = #{isAlert}</if>
+        </where>
+    </select>
+    
+    <select id="selectHealthDataRecordById" parameterType="Long" resultMap="HealthDataRecordResult">
+        <include refid="selectHealthDataRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertHealthDataRecord" parameterType="HealthDataRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into health_data_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="elderId != null">elder_id,</if>
+            <if test="deviceNo != null">device_no,</if>
+            <if test="heartRate != null">heart_rate,</if>
+            <if test="bloodPressureHigh != null">blood_pressure_high,</if>
+            <if test="bloodPressureLow != null">blood_pressure_low,</if>
+            <if test="measureTime != null">measure_time,</if>
+            <if test="isAlert != null">is_alert,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="elderId != null">#{elderId},</if>
+            <if test="deviceNo != null">#{deviceNo},</if>
+            <if test="heartRate != null">#{heartRate},</if>
+            <if test="bloodPressureHigh != null">#{bloodPressureHigh},</if>
+            <if test="bloodPressureLow != null">#{bloodPressureLow},</if>
+            <if test="measureTime != null">#{measureTime},</if>
+            <if test="isAlert != null">#{isAlert},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHealthDataRecord" parameterType="HealthDataRecord">
+        update health_data_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="elderId != null">elder_id = #{elderId},</if>
+            <if test="deviceNo != null">device_no = #{deviceNo},</if>
+            <if test="heartRate != null">heart_rate = #{heartRate},</if>
+            <if test="bloodPressureHigh != null">blood_pressure_high = #{bloodPressureHigh},</if>
+            <if test="bloodPressureLow != null">blood_pressure_low = #{bloodPressureLow},</if>
+            <if test="measureTime != null">measure_time = #{measureTime},</if>
+            <if test="isAlert != null">is_alert = #{isAlert},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHealthDataRecordById" parameterType="Long">
+        delete from health_data_record where id = #{id}
+    </delete>
+
+    <delete id="deleteHealthDataRecordByIds" parameterType="String">
+        delete from health_data_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

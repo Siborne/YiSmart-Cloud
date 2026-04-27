@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.FlyingSparrow.YiSmartCloud.serve.mapper.CheckInRecordMapper">
+    
+    <resultMap type="CheckInRecord" id="CheckInRecordResult">
+        <result property="id"    column="id"    />
+        <result property="elderId"    column="elder_id"    />
+        <result property="bedId"    column="bed_id"    />
+        <result property="nursingLevelId"    column="nursing_level_id"    />
+        <result property="checkInDate"    column="check_in_date"    />
+        <result property="contractEndDate"    column="contract_end_date"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectCheckInRecordVo">
+        select id, elder_id, bed_id, nursing_level_id, check_in_date, contract_end_date, status, create_time, update_time, is_deleted from check_in_record
+    </sql>
+
+    <select id="selectCheckInRecordList" parameterType="CheckInRecord" resultMap="CheckInRecordResult">
+        <include refid="selectCheckInRecordVo"/>
+        <where>  
+            <if test="elderId != null "> and elder_id = #{elderId}</if>
+            <if test="bedId != null "> and bed_id = #{bedId}</if>
+            <if test="nursingLevelId != null "> and nursing_level_id = #{nursingLevelId}</if>
+            <if test="checkInDate != null "> and check_in_date = #{checkInDate}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectCheckInRecordById" parameterType="Long" resultMap="CheckInRecordResult">
+        <include refid="selectCheckInRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertCheckInRecord" parameterType="CheckInRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into check_in_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="elderId != null">elder_id,</if>
+            <if test="bedId != null">bed_id,</if>
+            <if test="nursingLevelId != null">nursing_level_id,</if>
+            <if test="checkInDate != null">check_in_date,</if>
+            <if test="contractEndDate != null">contract_end_date,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="elderId != null">#{elderId},</if>
+            <if test="bedId != null">#{bedId},</if>
+            <if test="nursingLevelId != null">#{nursingLevelId},</if>
+            <if test="checkInDate != null">#{checkInDate},</if>
+            <if test="contractEndDate != null">#{contractEndDate},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCheckInRecord" parameterType="CheckInRecord">
+        update check_in_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="elderId != null">elder_id = #{elderId},</if>
+            <if test="bedId != null">bed_id = #{bedId},</if>
+            <if test="nursingLevelId != null">nursing_level_id = #{nursingLevelId},</if>
+            <if test="checkInDate != null">check_in_date = #{checkInDate},</if>
+            <if test="contractEndDate != null">contract_end_date = #{contractEndDate},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCheckInRecordById" parameterType="Long">
+        delete from check_in_record where id = #{id}
+    </delete>
+
+    <delete id="deleteCheckInRecordByIds" parameterType="String">
+        delete from check_in_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

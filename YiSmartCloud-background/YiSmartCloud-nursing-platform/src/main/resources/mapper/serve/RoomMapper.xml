@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.FlyingSparrow.YiSmartCloud.serve.mapper.RoomMapper">
+    
+    <resultMap type="Room" id="RoomResult">
+        <result property="id"    column="id"    />
+        <result property="roomNo"    column="room_no"    />
+        <result property="floorId"    column="floor_id"    />
+        <result property="roomImage"    column="room_image"    />
+        <result property="bedFee"    column="bed_fee"    />
+        <result property="roomType"    column="room_type"    />
+        <result property="roomDesc"    column="room_desc"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectRoomVo">
+        select id, room_no, floor_id, room_image, bed_fee, room_type, room_desc, status, create_time, update_time, is_deleted from room
+    </sql>
+
+    <select id="selectRoomList" parameterType="Room" resultMap="RoomResult">
+        <include refid="selectRoomVo"/>
+        <where>  
+            <if test="roomNo != null  and roomNo != ''"> and room_no = #{roomNo}</if>
+            <if test="floorId != null "> and floor_id = #{floorId}</if>
+            <if test="roomType != null "> and room_type = #{roomType}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectRoomById" parameterType="Long" resultMap="RoomResult">
+        <include refid="selectRoomVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertRoom" parameterType="Room" useGeneratedKeys="true" keyProperty="id">
+        insert into room
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roomNo != null and roomNo != ''">room_no,</if>
+            <if test="floorId != null">floor_id,</if>
+            <if test="roomImage != null and roomImage != ''">room_image,</if>
+            <if test="bedFee != null">bed_fee,</if>
+            <if test="roomType != null">room_type,</if>
+            <if test="roomDesc != null and roomDesc != ''">room_desc,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roomNo != null and roomNo != ''">#{roomNo},</if>
+            <if test="floorId != null">#{floorId},</if>
+            <if test="roomImage != null and roomImage != ''">#{roomImage},</if>
+            <if test="bedFee != null">#{bedFee},</if>
+            <if test="roomType != null">#{roomType},</if>
+            <if test="roomDesc != null and roomDesc != ''">#{roomDesc},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRoom" parameterType="Room">
+        update room
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="roomNo != null and roomNo != ''">room_no = #{roomNo},</if>
+            <if test="floorId != null">floor_id = #{floorId},</if>
+            <if test="roomImage != null">room_image = #{roomImage},</if>
+            <if test="bedFee != null">bed_fee = #{bedFee},</if>
+            <if test="roomType != null">room_type = #{roomType},</if>
+            <if test="roomDesc != null">room_desc = #{roomDesc},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRoomById" parameterType="Long">
+        delete from room where id = #{id}
+    </delete>
+
+    <delete id="deleteRoomByIds" parameterType="String">
+        delete from room where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
