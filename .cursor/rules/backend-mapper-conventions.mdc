@@ -1,0 +1,13 @@
+---
+description: YiSmartCloud MyBatis mapper conventions
+globs: YiSmartCloud-background/**/mapper/**/*.xml
+alwaysApply: false
+---
+
+# 后端 Mapper/XML 约定（YiSmartCloud）
+- Mapper 接口与 XML 方法名保持一一对应，继续沿用 `selectXxxList/selectXxxById/insertXxx/updateXxx/deleteXxxById/deleteXxxByIds` 命名。
+- XML 中公共查询列抽到 `<sql id="selectXxxVo">`，列表与详情通过 `<include refid="..."/>` 复用，避免列清单漂移。
+- 动态条件使用 `<where>` + `<if>`，更新使用 `<trim prefix="SET" suffixOverrides=",">`，新增使用双 `<trim>` 模式。
+- 扩展展示字段（如 `plan_name`）必须在 `resultMap` 中显式映射，并在注释说明“来源于 JOIN，非本表列”。
+- 批量删除继续使用 `<foreach collection="array">` 绑定数组参数，避免字符串拼接 IN 条件。
+- 涉及多表查询时统一给主表和关联表起别名（如 `nl/p`），条件中明确前缀，避免字段歧义。

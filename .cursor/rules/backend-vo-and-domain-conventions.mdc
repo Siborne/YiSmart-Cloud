@@ -1,0 +1,13 @@
+---
+description: YiSmartCloud backend VO and domain conventions
+globs: YiSmartCloud-background/**/domain/**/*.java
+alwaysApply: false
+---
+
+# 后端 VO/Domain 约定（YiSmartCloud）
+
+- `domain` 下实体优先继承 `BaseEntity`，保留 RuoYi 的审计字段体系（`createTime/createBy/updateTime/updateBy/remark`）。
+- 数据库实体与展示字段分离：非表字段必须显式标记 `@TableField(exist = false)`，并在注释说明来源（如 JOIN 填充）。
+- 字段注解遵循现有风格：导出字段用 `@Excel`，需要前后端字段对齐时使用 `@JsonProperty`。
+- 业务对象中文注释保持“对象说明 + 关键约束”格式，复杂约束可补 1-2 行原因说明（如避免 MP 通用 SQL 误映射）。
+- VO 命名使用 `XxxVo`，仅用于返回和展示，不承担新增或更新入参语义。

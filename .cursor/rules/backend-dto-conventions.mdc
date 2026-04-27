@@ -1,0 +1,13 @@
+---
+description: YiSmartCloud backend DTO conventions
+globs: YiSmartCloud-background/**/*Dto.java
+alwaysApply: false
+---
+
+# 后端 DTO 约定（YiSmartCloud）
+
+- DTO 用于入参和跨层聚合，不直接承载持久化语义；避免混入 `@TableName/@TableField` 等数据库映射注解。
+- 命名保持 `XxxDto`，字段使用 `camelCase`，与前端 JSON 字段一致，减少额外转换。
+- 可复用 Lombok `@Data`，但业务含义不清的字段必须补中文注释，禁止保留模板残留注释（如 `$column.columnComment`）。
+- 对外接口文档字段优先补 `@ApiModelProperty`，与现有 `NursingPlanDto` 风格保持一致。
+- 聚合型 DTO（包含列表或子对象）仅组织结构，不写业务校验逻辑；校验统一放在 Service 层处理。

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.FlyingSparrow.YiSmartCloud.serve.mapper.FloorMapper">
+
+    <resultMap type="Floor" id="FloorResult">
+        <result property="id" column="id"/>
+        <result property="floorNo" column="floor_no"/>
+        <result property="floorName" column="floor_name"/>
+        <result property="status" column="status"/>
+        <result property="sortNo" column="sort_no"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="isDeleted" column="is_deleted"/>
+    </resultMap>
+
+    <sql id="selectFloorVo">
+        select id, floor_no, floor_name, status, sort_no, create_time, update_time, is_deleted from floor
+    </sql>
+
+    <select id="selectFloorList" parameterType="Floor" resultMap="FloorResult">
+        <include refid="selectFloorVo"/>
+        <where>
+            <if test="floorNo != null"> and floor_no = #{floorNo}</if>
+            <if test="floorName != null and floorName != ''"> and floor_name like concat('%', #{floorName}, '%')</if>
+            <if test="status != null"> and status = #{status}</if>
+        </where>
+        order by sort_no asc, floor_no asc, id asc
+    </select>
+
+    <select id="selectFloorById" parameterType="Long" resultMap="FloorResult">
+        <include refid="selectFloorVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFloor" parameterType="Floor" useGeneratedKeys="true" keyProperty="id">
+        insert into floor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="floorNo != null">floor_no,</if>
+            <if test="floorName != null and floorName != ''">floor_name,</if>
+            <if test="status != null">status,</if>
+            <if test="sortNo != null">sort_no,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="floorNo != null">#{floorNo},</if>
+            <if test="floorName != null and floorName != ''">#{floorName},</if>
+            <if test="status != null">#{status},</if>
+            <if test="sortNo != null">#{sortNo},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+        </trim>
+    </insert>
+
+    <update id="updateFloor" parameterType="Floor">
+        update floor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="floorNo != null">floor_no = #{floorNo},</if>
+            <if test="floorName != null">floor_name = #{floorName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="sortNo != null">sort_no = #{sortNo},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFloorById" parameterType="Long">
+        delete from floor where id = #{id}
+    </delete>
+
+    <delete id="deleteFloorByIds" parameterType="String">
+        delete from floor where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

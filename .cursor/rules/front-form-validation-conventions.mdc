@@ -1,0 +1,14 @@
+---
+description: YiSmartCloud front-end form validation conventions
+globs: YiSmartCloud-front/src/views/**/*.vue
+alwaysApply: false
+---
+
+# 前端表单与校验约定（YiSmartCloud）
+
+- 查询参数和编辑表单统一放在 `reactive` 中：`queryParams`、`form`、`rules`，并通过 `toRefs` 暴露。
+- 新增和修改弹窗共用同一套 `form`，打开前先执行 `reset()`，并调用 `proxy.resetForm("<formRef>")` 清理校验状态。
+- 提交逻辑统一使用 `proxy.$refs["<formRef>"].validate(valid => { ... })`，校验通过后再发请求。
+- 数字类字段优先使用 `el-input-number` 或在提交前显式做类型转换，避免把字符串传给后端数值字段。
+- 编辑回填时仅覆盖后端返回字段；展示型临时字段不要回传，避免污染提交 payload。
+- 成功提示保持当前风格：新增提示“新增成功”，修改提示“修改成功”，并在成功后刷新列表 `getList()`。

@@ -1,0 +1,13 @@
+---
+description: YiSmartCloud front-end permission token conventions
+globs: YiSmartCloud-front/src/views/**/*.vue
+alwaysApply: false
+---
+
+# 前端权限标识约定（YiSmartCloud）
+
+- 页面按钮权限统一使用 `v-hasPermi="['module:entity:action']"`，不要写硬编码角色判断替代。
+- 权限标识命名沿用 RuoYi 约定：`list/query/add/edit/remove/export`，与后端接口语义对应。
+- 一个业务模块内权限前缀保持一致，例如护理等级模块统一 `serve:level:*`，禁止混用同义前缀。
+- 列表查询、详情、新增、修改、删除、导出按钮的权限标识要与页面实际调用 API 一一对应。
+- 新页面上线前自查：页面里出现的每个 `v-hasPermi` 都能在后端 `@PreAuthorize` 找到同名标识。

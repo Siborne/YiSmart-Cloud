@@ -1,0 +1,13 @@
+---
+description: YiSmartCloud front-end Vue page conventions
+globs: YiSmartCloud-front/src/views/**/*.vue
+alwaysApply: false
+---
+
+# Vue 页面开发约定（YiSmartCloud）
+- 使用 Vue3 `script setup`，页面保持 RuoYi 风格：查询区、工具栏、表格、分页、弹窗表单。
+- 页面状态统一用 `ref` + `reactive`：`queryParams`、`form`、`rules` 放在 `reactive` 内，再用 `toRefs` 解构。
+- 列表页默认保留并复用函数命名：`getList`、`handleQuery`、`resetQuery`、`handleAdd`、`handleUpdate`、`handleDelete`、`handleExport`。
+- 权限按钮必须加 `v-hasPermi`，权限标识与后端 `@PreAuthorize("@ss.hasPermi('module:entity:action')")` 对齐。
+- 交互统一走 `proxy` 能力：表单重置用 `proxy.resetForm`，提示/确认用 `proxy.$modal`，导出用 `proxy.download`。
+- 保持中文业务注释风格（如“查询xx列表”“删除按钮操作”），仅在业务约束复杂时补充 1-2 行说明。

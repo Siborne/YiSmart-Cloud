@@ -1,0 +1,13 @@
+---
+description: YiSmartCloud backend Java RuoYi conventions
+globs: YiSmartCloud-background/**/*.java
+alwaysApply: false
+---
+
+# 后端 Java（RuoYi）开发约定（YiSmartCloud）
+- 严格遵守分层：`controller -> service -> mapper`，控制层不直接操作 mapper。
+- Controller 保持 RuoYi 注解组合：`@RestController`、`@RequestMapping`、`@PreAuthorize`、`@Log`、`@Api/@ApiOperation`。
+- CRUD 接口保持既有模式：列表 `startPage()+getDataTable`，新增/修改/删除返回 `toAjax(...)`，详情返回 `success(...)`。
+- Service 层承担业务校验与默认值填充，参数非法时抛 `ServiceException`，不要把校验散落到 Controller。
+- 事务写操作使用 `@Transactional(rollbackFor = Exception.class)`，时间字段使用 `DateUtils.getNowDate()` 保持一致。
+- 涉及 XML 自定义 SQL（尤其 JOIN 扩展字段）时，优先调用 Mapper 自定义方法，避免误用 MP 通用方法导致字段冲突。

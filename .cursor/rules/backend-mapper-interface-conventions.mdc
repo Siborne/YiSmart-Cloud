@@ -1,0 +1,13 @@
+---
+description: YiSmartCloud mapper interface conventions
+globs: YiSmartCloud-background/**/mapper/**/*.java
+alwaysApply: false
+---
+
+# 后端 Mapper 接口约定（YiSmartCloud）
+
+- Mapper 接口放在 `.../mapper`，使用 `@Mapper` 标注，并按 `XxxMapper` 命名。
+- 继续继承 `BaseMapper<Entity>`，但涉及 JOIN 和扩展字段场景优先声明并调用自定义方法，不依赖 MP 通用方法兜底。
+- 方法签名与 XML 严格一致（参数类型、返回类型、命名），避免接口与 SQL 映射断裂。
+- 批量删除参数使用 `Long[] ids`，与 XML `collection="array"` 保持匹配。
+- 接口注释沿用 RuoYi 风格（方法用途 + 参数说明 + 返回值），便于代码生成与维护一致性。

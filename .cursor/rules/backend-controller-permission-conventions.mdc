@@ -1,0 +1,13 @@
+---
+description: YiSmartCloud backend controller permission conventions
+globs: YiSmartCloud-background/**/controller/**/*.java
+alwaysApply: false
+---
+
+# 后端 Controller 权限约定（YiSmartCloud）
+
+- 受控接口必须标注 `@PreAuthorize("@ss.hasPermi('module:entity:action')")`，并与前端 `v-hasPermi` 保持完全一致。
+- CRUD 权限动作统一使用 `list/query/add/edit/remove/export`，避免同模块出现多套动作命名。
+- 写操作接口（新增/修改/删除/导出）保持 `@Log` 记录，`BusinessType` 与动作语义对应。
+- 控制层只做参数接收和流程编排，业务校验放在 Service；异常由统一异常处理机制返回。
+- 新增接口时同步补齐 Swagger 注解（`@ApiOperation`、必要时 `@ApiParam`），保证接口文档一致可读。
