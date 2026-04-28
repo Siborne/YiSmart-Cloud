@@ -85,6 +85,10 @@ pnpm-debug.log*
 dist/
 .nuxt/
 .output/
+.vite/
+
+# Vite runtime/generated temporary config snapshots
+**/vite.config.js.timestamp-*.mjs
 
 # Misc
 .DS_Store
