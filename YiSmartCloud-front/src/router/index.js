@@ -157,6 +157,20 @@ export const dynamicRoutes = [
         meta: { title: '修改生成配置', activeMenu: '/tool/gen' }
       }
     ]
+  },
+  {
+    path: '/serve/checkIn-apply',
+    component: Layout,
+    hidden: true,
+    permissions: ['serve:checkIn:add'],
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/serve/checkIn/apply'),
+        name: 'CheckInApply',
+        meta: { title: '发起入住申请', activeMenu: '/serve/checkIn' }
+      }
+    ]
   }
 ]
 
