@@ -41,8 +41,8 @@
       <el-form-item label="${comment}" prop="${column.javaField}">
         <el-date-picker clearable
           v-model="queryParams.${column.javaField}"
-          type="date"
-          value-format="yyyy-MM-dd"
+          type="datetime"
+          value-format="yyyy-MM-dd HH:mm:ss"
           placeholder="请选择${comment}">
         </el-date-picker>
       </el-form-item>
@@ -51,11 +51,11 @@
         <el-date-picker
           v-model="daterange${AttrName}"
           style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          type="datetimerange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          start-placeholder="开始时间"
+          end-placeholder="结束时间"
         ></el-date-picker>
       </el-form-item>
 #end
@@ -128,7 +128,7 @@
 #elseif($column.list && $column.htmlType == "datetime")
       <el-table-column label="${comment}" align="center" prop="${javaField}" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.${javaField}, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.${javaField}, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
 #elseif($column.list && $column.htmlType == "imageUpload")
@@ -271,8 +271,8 @@
         <el-form-item label="${comment}" prop="${field}">
           <el-date-picker clearable
             v-model="form.${field}"
-            type="date"
-            value-format="yyyy-MM-dd"
+            type="datetime"
+            value-format="yyyy-MM-dd HH:mm:ss"
             placeholder="请选择${comment}">
           </el-date-picker>
         </el-form-item>
@@ -315,7 +315,7 @@
 #elseif($column.list && $column.htmlType == "datetime")
           <el-table-column label="$comment" prop="${javaField}" width="240">
             <template slot-scope="scope">
-              <el-date-picker clearable v-model="scope.row.$javaField" type="date" value-format="yyyy-MM-dd" placeholder="请选择$comment" />
+              <el-date-picker clearable v-model="scope.row.$javaField" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" placeholder="请选择$comment" />
             </template>
           </el-table-column>
 #elseif($column.list && ($column.htmlType == "select" || $column.htmlType == "radio") && "" != $column.dictType)

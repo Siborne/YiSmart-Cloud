@@ -36,7 +36,7 @@ public class Room extends BaseEntity {
 
     /** 房间类型: 1-单人间, 2-双人间, 3-多人间 */
     @Excel(name = "房间类型: 1-单人间, 2-双人间, 3-多人间")
-    private Long roomType;
+    private Integer roomType;
 
     /** 房间介绍 */
     @Excel(name = "房间介绍")

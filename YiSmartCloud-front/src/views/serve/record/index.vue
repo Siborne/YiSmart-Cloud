@@ -28,8 +28,8 @@
       <el-form-item label="预计到访时间" prop="visitTime">
         <el-date-picker clearable
           v-model="queryParams.visitTime"
-          type="date"
-          value-format="YYYY-MM-DD"
+          type="datetime"
+          value-format="YYYY-MM-DD HH:mm:ss"
           placeholder="请选择预计到访时间">
         </el-date-picker>
       </el-form-item>
@@ -97,19 +97,19 @@
       <el-table-column label="访客手机号" align="center" prop="visitorPhone" />
       <el-table-column label="预计到访时间" align="center" prop="visitTime" width="180">
         <template #default="scope">
-          <span>{{ parseTime(scope.row.visitTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.visitTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="来访事由" align="center" prop="visitReason" />
       <el-table-column label="审批状态: 0-待审批, 1-准许, 2-拒绝, 3-已结束" align="center" prop="status" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template #default="scope">
-          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="更新时间" align="center" prop="updateTime" width="180">
         <template #default="scope">
-          <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -143,8 +143,8 @@
         <el-form-item label="预计到访时间" prop="visitTime">
           <el-date-picker clearable
             v-model="form.visitTime"
-            type="date"
-            value-format="YYYY-MM-DD"
+            type="datetime"
+            value-format="YYYY-MM-DD HH:mm:ss"
             placeholder="请选择预计到访时间">
           </el-date-picker>
         </el-form-item>

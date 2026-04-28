@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "mysql": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-server-mysql@latest"
+      ],
+      "env": {
+        "MYSQL_HOST": "192.168.100.168",
+        "MYSQL_PORT": "3306",
+        "MYSQL_USER": "root",
+        "MYSQL_PASS": "heima123",
+        "MYSQL_DB": "yismart_could",
+        "MYSQL_SSL": "true"
+      }
+    }
+  }
+}

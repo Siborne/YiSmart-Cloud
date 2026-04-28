@@ -53,7 +53,7 @@ public class GenUtils
         }
         else if (arraysContains(GenConstants.COLUMNTYPE_TIME, dataType))
         {
-            column.setJavaType(GenConstants.TYPE_DATE);
+            column.setJavaType("LocalDateTime");
             column.setHtmlType(GenConstants.HTML_DATETIME);
         }
         else if (arraysContains(GenConstants.COLUMNTYPE_NUMBER, dataType))
@@ -65,6 +65,12 @@ public class GenUtils
             if (str != null && str.length == 2 && Integer.parseInt(str[1]) > 0)
             {
                 column.setJavaType(GenConstants.TYPE_BIGDECIMAL);
+            }
+            // 常见整型默认映射为 Integer，避免 tinyint/int 被识别为 Long
+            else if ("tinyint".equals(dataType) || "smallint".equals(dataType) || "mediumint".equals(dataType)
+                    || "int".equals(dataType) || "integer".equals(dataType))
+            {
+                column.setJavaType(GenConstants.TYPE_INTEGER);
             }
             // 如果是整形
             else if (str != null && str.length == 1 && Integer.parseInt(str[0]) <= 10)

@@ -1,0 +1,19 @@
+---
+description: Require code change log in docs/code_review for every edit
+alwaysApply: true
+---
+
+# 代码变更记录强制规则
+
+- 每次进行任何代码变更（新增、修改、删除、重构）后，必须在 `docs/code_review` 下新增一个 `.md` 记录文件。
+- 若 `docs/code_review` 不存在，先创建目录，再写入记录文件。
+- 文件命名建议：`YYYY-MM-DD_HHMM_变更主题.md`（示例：`2026-04-29_0010_generator_type_mapping.md`）。
+- 一次连续任务的多个相关改动可写入同一个文件；非同一任务需新建文件。
+
+记录文件至少包含以下内容：
+
+- 变更背景/目的
+- 变更文件清单
+- 关键改动说明
+- 影响范围（接口、数据库、前端、兼容性）
+- 验证方式（已执行/未执行及原因）
