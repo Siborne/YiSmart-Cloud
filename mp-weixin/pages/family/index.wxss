@@ -1,0 +1,90 @@
+/* 水平间距 */
+/* 水平间距 */
+.data-v-cd2220b8:root {
+--essential-color-red:#FE6A3D;
+	--assist-color-green:#1DC779;
+	--assist-color-orange:#FFB302; 
+	--assist-color-error:#F56C6C; 
+	
+	--neutral-color-main:#151515;
+	--neutral-color-border:#E5E4E4;
+	--neutral-color-font:#888888;
+	--neutral-color-segmentation:#EEEEEE;
+	--neutral-color-white:#FFFFFF;
+  --neutral-color-black:#000000;
+	--neutral-color-placeholder:#878787;
+	--neutral-color-background:#F3F4F7;
+  --neutral-color-line:#F4F4F4;
+	--neutral-color-btn:#0F0F0F;
+	--neutral-color-btn-background:#E6E6E6;
+	--font-size-17:34rpx;
+	--font-size-16:32rpx;
+	--font-size-15:30rpx;
+	--font-size-14:28rpx;
+	--font-size-13:26rpx;
+	--font-size-12:24rpx;
+	--font-size-11:22rpx;
+	--font-size-10:20rpx;
+}
+.familyBox.data-v-cd2220b8 .fBox {
+  padding-bottom: 140rpx;
+}
+.familyBox.data-v-cd2220b8 .timeList .item {
+  padding: 30rpx 18rpx 20rpx;
+}
+.familyBox.data-v-cd2220b8 .timeList .itemCon {
+  display: flex;
+  padding: 0 12rpx 20rpx;
+}
+.familyBox.data-v-cd2220b8 .timeList .itemCon .rText {
+  padding-left: 20rpx;
+}
+.familyBox.data-v-cd2220b8 .timeList .itemCon .tit {
+  font-size: var(--font-size-16);
+  font-family: 500;
+  line-height: 44rpx;
+  padding-bottom: 12rpx;
+  color: var(--neutral-color-main);
+  display: flex;
+  align-items: center;
+}
+.familyBox.data-v-cd2220b8 .timeList .itemCon .tit .tag {
+  height: 36rpx;
+  line-height: 34rpx;
+  background: #FFECE7;
+  border-radius: 32px;
+  padding: 0 12rpx;
+  display: inline-block;
+  font-size: var(--font-size-11);
+  color: var(--essential-color-red);
+  margin-left: 12rpx;
+}
+.familyBox.data-v-cd2220b8 .timeList .itemCon .info {
+  font-size: var(--font-size-12);
+  color: var(--neutral-color-placeholder);
+  line-height: 34rpx;
+}
+.familyBox.data-v-cd2220b8 .timeList .itemCon .icon {
+  height: 36rpx;
+  line-height: 36rpx;
+}
+.familyBox.data-v-cd2220b8 .timeList .itemCon image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 16rpx;
+}
+.familyBox.data-v-cd2220b8 .timeList .foot {
+  border-top: 1px solid var(--neutral-color-line);
+  padding: 20rpx 12rpx 0;
+  display: flex;
+  justify-content: flex-end;
+}
+.familyBox.data-v-cd2220b8 .timeList .foot label {
+  display: inline-block;
+  height: 56rpx;
+  line-height: 54rpx;
+  color: var(--neutral-color-main);
+  font-size: var(--font-size-12);
+  padding: 0;
+  margin-left: 20rpx;
+}

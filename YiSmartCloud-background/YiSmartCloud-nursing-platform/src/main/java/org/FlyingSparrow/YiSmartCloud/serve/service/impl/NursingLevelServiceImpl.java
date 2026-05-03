@@ -1,8 +1,9 @@
 package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.FlyingSparrow.YiSmartCloud.common.constant.CacheConstants;
 import org.FlyingSparrow.YiSmartCloud.common.exception.ServiceException;
 import org.FlyingSparrow.YiSmartCloud.common.utils.DateUtils;
 import org.FlyingSparrow.YiSmartCloud.common.utils.StringUtils;
@@ -10,6 +11,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingLevel;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingLevelMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.service.INursingLevelService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +37,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, NursingLevel> implements INursingLevelService {
 
     private final NursingLevelMapper nursingLevelMapper;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
     /**
      * 详情：必须用 XML JOIN，否则拿不到 planName，且不可误用 {@code getById}（会把 planName 拼进单表 SQL）。
@@ -76,7 +79,9 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
         }
         nursingLevel.setCreateTime(DateUtils.getNowDate());
         nursingLevel.setUpdateTime(DateUtils.getNowDate());
-        return nursingLevelMapper.insertNursingLevel(nursingLevel);
+        int rows = nursingLevelMapper.insertNursingLevel(nursingLevel);
+        evictListAllCache();
+        return rows;
     }
 
     /**
@@ -90,7 +95,9 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
         }
         nursingLevel.setPlanName(null);
         nursingLevel.setUpdateTime(DateUtils.getNowDate());
-        return nursingLevelMapper.updateNursingLevel(nursingLevel);
+        int rows = nursingLevelMapper.updateNursingLevel(nursingLevel);
+        evictListAllCache();
+        return rows;
     }
 
     @Override
@@ -99,7 +106,9 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
         if (ids == null || ids.length == 0) {
             throw new ServiceException("待删除的护理等级主键不能为空");
         }
-        return nursingLevelMapper.deleteNursingLevelByIds(ids);
+        int rows = nursingLevelMapper.deleteNursingLevelByIds(ids);
+        evictListAllCache();
+        return rows;
     }
 
     @Override
@@ -108,14 +117,28 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
         if (id == null) {
             throw new ServiceException("护理等级主键不能为空");
         }
-        return nursingLevelMapper.deleteNursingLevelById(id);
+        int rows = nursingLevelMapper.deleteNursingLevelById(id);
+        evictListAllCache();
+        return rows;
     }
 
     @Override
-    public List<NursingLevel> listAll(){
-        LambdaQueryWrapper<NursingLevel> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(NursingLevel::getStatus, 1);
-        return list(queryWrapper);
+    @SuppressWarnings("unchecked")
+    public List<NursingLevel> listAll() {
+        List<NursingLevel> cached = (List<NursingLevel>) redisTemplate.opsForValue().get(CacheConstants.NURSING_LEVEL_LIST_ALL_KEY);
+        if (cached != null) {
+            return cached;
+        }
+        List<NursingLevel> list = nursingLevelMapper.listAll();
+        if (list == null) {
+            list = Collections.emptyList();
+        }
+        redisTemplate.opsForValue().set(CacheConstants.NURSING_LEVEL_LIST_ALL_KEY, list);
+        return list;
+    }
+
+    private void evictListAllCache() {
+        redisTemplate.delete(CacheConstants.NURSING_LEVEL_LIST_ALL_KEY);
     }
 
 }

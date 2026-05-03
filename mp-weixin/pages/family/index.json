@@ -1,0 +1,9 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "家人",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "unbind-popup": "../../components/Operate/index",
+    "list": "./components/List"
+  }
+}

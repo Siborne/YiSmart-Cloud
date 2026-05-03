@@ -40,6 +40,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where nl.id = #{id}
     </select>
 
+    <!-- 与 listAll 缓存一致：仅启用状态，且带 plan_name，避免走 MP 单表丢失扩展字段 -->
+    <select id="listAll" resultMap="NursingLevelResult">
+        <include refid="selectNursingLevelVo"/>
+        where nl.status = 1
+        order by nl.id asc
+    </select>
+
     <insert id="insertNursingLevel" parameterType="NursingLevel" useGeneratedKeys="true" keyProperty="id">
         insert into nursing_level
         <trim prefix="(" suffix=")" suffixOverrides=",">

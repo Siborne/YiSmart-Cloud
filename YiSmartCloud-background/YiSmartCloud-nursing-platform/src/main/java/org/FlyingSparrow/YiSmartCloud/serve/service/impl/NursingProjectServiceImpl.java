@@ -1,9 +1,12 @@
 package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
+import java.util.Collections;
 import java.util.List;
-import org.FlyingSparrow.YiSmartCloud.common.utils.DateUtils;
+
+import org.FlyingSparrow.YiSmartCloud.common.constant.CacheConstants;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingProjectVo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingProjectMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingProject;
@@ -22,6 +25,8 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class NursingProjectServiceImpl extends ServiceImpl<NursingProjectMapper, NursingProject> implements INursingProjectService {
     private final NursingProjectMapper nursingProjectMapper;
+
+    private final RedisTemplate<Object, Object> redisTemplate;
 
     /**
      * 查询护理项目
@@ -53,7 +58,9 @@ public class NursingProjectServiceImpl extends ServiceImpl<NursingProjectMapper,
      */
     @Override
     public int insertNursingProject(NursingProject nursingProject) {
-                        return save(nursingProject) == true? 1 : 0;
+        int rows = save(nursingProject) ? 1 : 0;
+        evictNursingProjectAllCache();
+        return rows;
     }
 
     /**
@@ -64,7 +71,9 @@ public class NursingProjectServiceImpl extends ServiceImpl<NursingProjectMapper,
      */
     @Override
     public int updateNursingProject(NursingProject nursingProject) {
-                return updateById(nursingProject) == true ? 1 : 0;
+        int rows = updateById(nursingProject) ? 1 : 0;
+        evictNursingProjectAllCache();
+        return rows;
     }
 
     /**
@@ -75,7 +84,9 @@ public class NursingProjectServiceImpl extends ServiceImpl<NursingProjectMapper,
      */
     @Override
     public int deleteNursingProjectByIds(Long[] ids) {
-                return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
+        int rows = removeByIds(Arrays.asList(ids)) ? 1 : 0;
+        evictNursingProjectAllCache();
+        return rows;
     }
 
     /**
@@ -86,7 +97,9 @@ public class NursingProjectServiceImpl extends ServiceImpl<NursingProjectMapper,
      */
     @Override
     public int deleteNursingProjectById(Long id) {
-                return removeById(id) == true ? 1 : 0;
+        int rows = removeById(id) ? 1 : 0;
+        evictNursingProjectAllCache();
+        return rows;
     }
 
     /**
@@ -95,7 +108,21 @@ public class NursingProjectServiceImpl extends ServiceImpl<NursingProjectMapper,
      * @return 护理项目列表
      */
     @Override
+    @SuppressWarnings("unchecked")
     public List<NursingProjectVo> selectAll() {
-        return nursingProjectMapper.getAll();
+        List<NursingProjectVo> cached = (List<NursingProjectVo>) redisTemplate.opsForValue().get(CacheConstants.NURSING_PROJECT_ALL_KEY);
+        if (cached != null) {
+            return cached;
+        }
+        List<NursingProjectVo> list = nursingProjectMapper.getAll();
+        if (list == null) {
+            list = Collections.emptyList();
+        }
+        redisTemplate.opsForValue().set(CacheConstants.NURSING_PROJECT_ALL_KEY, list);
+        return list;
+    }
+
+    private void evictNursingProjectAllCache() {
+        redisTemplate.delete(CacheConstants.NURSING_PROJECT_ALL_KEY);
     }
 }

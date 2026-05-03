@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "订单取消原因",
+  "enablePullDownRefresh": false,
+  "backgroundColor": "#f4f3f7",
+  "usingComponents": {}
+}

@@ -1,7 +1,9 @@
 package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
+import org.FlyingSparrow.YiSmartCloud.common.constant.CacheConstants;
 import org.FlyingSparrow.YiSmartCloud.common.utils.DateUtils;
 import org.FlyingSparrow.YiSmartCloud.common.utils.bean.BeanUtils;
 import org.FlyingSparrow.YiSmartCloud.serve.dto.NursingPlanDto;
@@ -10,6 +12,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingPlanVo;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingProjectPlanVo;
 import org.springframework.beans.BeansException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingPlanMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingPlan;
@@ -33,6 +36,8 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
     private final NursingPlanMapper nursingPlanMapper;
 
     private final NursingProjectPlanMapper nursingProjectPlanMapper;
+
+    private final RedisTemplate<Object, Object> redisTemplate;
 
     /**
      * 查询护理计划
@@ -66,8 +71,18 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<NursingPlan> selectNursingPlanAll() {
-        return nursingPlanMapper.selectNursingPlanAll();
+        List<NursingPlan> cached = (List<NursingPlan>) redisTemplate.opsForValue().get(CacheConstants.NURSING_PLAN_ALL_KEY);
+        if (cached != null) {
+            return cached;
+        }
+        List<NursingPlan> list = nursingPlanMapper.selectNursingPlanAll();
+        if (list == null) {
+            list = Collections.emptyList();
+        }
+        redisTemplate.opsForValue().set(CacheConstants.NURSING_PLAN_ALL_KEY, list);
+        return list;
     }
 
     /**
@@ -87,6 +102,7 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
 
         // 2.批量保存护理计划和护理项目的对应关系
         int count = nursingProjectPlanMapper.batchInsert(dto.getProjectPlans(),nursingPlan.getId());
+        evictNursingPlanAllCache();
         return count == 0 ? 0 : 1;
     }
 
@@ -114,7 +130,9 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
             }
 
             //别管项目列表是否为空，都要修改护理计划
-            return nursingPlanMapper.updateNursingPlan(nursingPlan);
+            int rows = nursingPlanMapper.updateNursingPlan(nursingPlan);
+            evictNursingPlanAllCache();
+            return rows;
         } catch (BeansException e) {
             throw new RuntimeException(e);
         }
@@ -129,7 +147,9 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int deleteNursingPlanByIds(Long[] ids) {
-        return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
+        int rows = removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
+        evictNursingPlanAllCache();
+        return rows;
     }
 
     /**
@@ -144,6 +164,14 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
         //删除关系
         //删除护理计划与护理项目的关系
         nursingProjectPlanMapper.deleteByPlanId(id);
-        return nursingPlanMapper.deleteNursingPlanById(id);
+        int rows = nursingPlanMapper.deleteNursingPlanById(id);
+        evictNursingPlanAllCache();
+        return rows;
+    }
+
+    private void evictNursingPlanAllCache() {
+        redisTemplate.delete(CacheConstants.NURSING_PLAN_ALL_KEY);
+        // 护理等级「全部启用」JOIN 计划名称，计划变更后需一并失效
+        redisTemplate.delete(CacheConstants.NURSING_LEVEL_LIST_ALL_KEY);
     }
 }

@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "绑定家人",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "bound-form": "./components/BoundForm"
+  }
+}

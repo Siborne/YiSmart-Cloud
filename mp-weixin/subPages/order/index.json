@@ -1,0 +1,10 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "我的订单",
+  "enablePullDownRefresh": false,
+  "backgroundColor": "#f4f3f7",
+  "usingComponents": {
+    "delete-popup": "../../components/Operate/index",
+    "list": "./components/list"
+  }
+}

@@ -41,4 +41,19 @@ public class CacheConstants
      * 登录账户密码错误次数 redis key
      */
     public static final String PWD_ERR_CNT_KEY = "pwd_err_cnt:";
+
+    /**
+     * 护理等级「全部启用列表」redis key（冒号分层命名，便于按前缀管理与排查）
+     */
+    public static final String NURSING_LEVEL_LIST_ALL_KEY = "nursingLevel:all";
+
+    /**
+     * 护理计划「全部启用列表」（下拉等）redis key
+     */
+    public static final String NURSING_PLAN_ALL_KEY = "nursingPlan:all";
+
+    /**
+     * 护理项目「全部启用下拉项」redis key（label/value 列表）
+     */
+    public static final String NURSING_PROJECT_ALL_KEY = "nursingProject:all";
 }

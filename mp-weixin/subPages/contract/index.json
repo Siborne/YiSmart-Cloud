@@ -1,0 +1,10 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "我的合同",
+  "backgroundColor": "#f4f3f7",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "list": "./components/List",
+    "pdf-popup": "./components/PdfPopup"
+  }
+}

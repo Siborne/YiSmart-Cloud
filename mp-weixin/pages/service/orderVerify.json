@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "确认订单",
+  "enablePullDownRefresh": false,
+  "backgroundColor": "#f4f3f7",
+  "usingComponents": {}
+}

@@ -1,0 +1,10 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "心率",
+  "backgroundColor": "#f4f3f7",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "qiun-data-charts": "../../uni_modules/qiun-data-charts/components/qiun-data-charts/qiun-data-charts",
+    "empty-page": "../../components/EmptyPage/index"
+  }
+}

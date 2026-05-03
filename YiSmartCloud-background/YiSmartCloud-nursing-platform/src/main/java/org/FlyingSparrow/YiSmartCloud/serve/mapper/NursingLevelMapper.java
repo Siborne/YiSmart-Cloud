@@ -60,4 +60,9 @@ public interface NursingLevelMapper extends BaseMapper<NursingLevel> {
      * @return 结果
      */
     public int deleteNursingLevelByIds(Long[] ids);
+
+    /**
+     * 查询全部「启用」护理等级（含计划名称 JOIN），供下拉与缓存加载。
+     */
+    public List<NursingLevel> listAll();
 }

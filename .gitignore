@@ -195,6 +195,31 @@ coverage/
 # pnpm-lock.yaml
 
 # ==================== #
+#  WeChat Miniprogram  #
+#  (mp-weixin / uni-app) #
+# ==================== #
+
+# 微信开发者工具「项目私有配置」：本机/个人偏好，会覆盖 project.config.json，不宜入库
+mp-weixin/project.private.config.json
+**/project.private.config.json
+
+# 在小程序目录执行「构建 npm」后的输出（若后续启用 npm 组件）
+mp-weixin/miniprogram_npm/
+**/miniprogram_npm/
+
+# 小程序 source map（体积与源码映射；若工具链生成可忽略）
+mp-weixin/**/*.map
+
+# uni-app 发行/编译输出目录（源码在仓库内且发行到 mp-weixin 时常见）
+unpackage/
+
+# HBuilderX 本地工程状态
+.hbuilderx/
+
+# 微信云函数依赖（云函数目录内 node_modules）
+**/cloudfunctions/**/node_modules/
+
+# ==================== #
 #  Custom Project      #
 # ==================== #
 
@@ -211,3 +236,6 @@ coverage/
 # application-dev.yml
 # application-prod.yml
 # config/application.properties
+
+# 忽略reference文件里面的所有文件
+reference/

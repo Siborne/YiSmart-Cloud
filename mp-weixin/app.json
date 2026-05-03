@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/family/index",
+    "pages/family/binding",
+    "pages/service/index",
+    "pages/service/details",
+    "pages/service/orderVerify",
+    "pages/login/index",
+    "pages/my/index",
+    "components/Foot/index",
+    "components/uni-phone/index"
+  ],
+  "subPackages": [
+    {
+      "root": "subPages",
+      "pages": [
+        "healthy/index",
+        "wuDataDetail/index",
+        "appointment/index",
+        "appointment/components/PickerView",
+        "appointment/list/index",
+        "appointment/components/des",
+        "introduce/index",
+        "bill/index",
+        "contract/index",
+        "order/index",
+        "order/cancel",
+        "order/details",
+        "success/index",
+        "search/index",
+        "pay/index"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "颐智云",
+    "backgroundColor": "#F8F8F8",
+    "onReachBottomDistance": 50,
+    "enablePullDownRefresh": true
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "123"
+    }
+  },
+  "usingComponents": {
+    "nav-bar": "/components/Navbar/index",
+    "net-fail": "/components/NetFail/index",
+    "uni-footer": "/components/Foot/index"
+  }
+}

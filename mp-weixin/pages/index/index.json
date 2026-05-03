@@ -1,0 +1,11 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "颐智云",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "phone": "../../components/uni-phone/index",
+    "fast-menu": "./components/FastMenu",
+    "hot-list": "./components/HotList",
+    "appointment": "./components/Appointment"
+  }
+}

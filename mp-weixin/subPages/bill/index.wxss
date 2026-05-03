@@ -1,0 +1,166 @@
+/* 水平间距 */
+/* 水平间距 */
+.data-v-047f72df:root {
+--essential-color-red:#FE6A3D;
+	--assist-color-green:#1DC779;
+	--assist-color-orange:#FFB302; 
+	--assist-color-error:#F56C6C; 
+	
+	--neutral-color-main:#151515;
+	--neutral-color-border:#E5E4E4;
+	--neutral-color-font:#888888;
+	--neutral-color-segmentation:#EEEEEE;
+	--neutral-color-white:#FFFFFF;
+  --neutral-color-black:#000000;
+	--neutral-color-placeholder:#878787;
+	--neutral-color-background:#F3F4F7;
+  --neutral-color-line:#F4F4F4;
+	--neutral-color-btn:#0F0F0F;
+	--neutral-color-btn-background:#E6E6E6;
+	--font-size-17:34rpx;
+	--font-size-16:32rpx;
+	--font-size-15:30rpx;
+	--font-size-14:28rpx;
+	--font-size-13:26rpx;
+	--font-size-12:24rpx;
+	--font-size-11:22rpx;
+	--font-size-10:20rpx;
+}
+.billBox.data-v-047f72df .timeList {
+  margin-top: 140rpx;
+}
+.billBox.data-v-047f72df .timeList .itemCon {
+  padding-bottom: 28rpx;
+}
+.billBox.data-v-047f72df .timeList .itemCon .rText {
+  flex: 1;
+  padding-left: 0;
+}
+.billBox.data-v-047f72df .timeList .itemCon .rText .itemTit {
+  padding-left: 0;
+  padding-right: 0;
+}
+.billBox.data-v-047f72df .timeList .itemCon .rText .itemTit text:first-child {
+  font-size: var(--font-size-12);
+  color: var(--neutral-color-font);
+  font-weight: normal;
+}
+.billBox.data-v-047f72df .timeList .itemCon .rText .tit {
+  margin-top: 0;
+  padding-bottom: 20rpx;
+}
+.billBox.data-v-047f72df .timeList .itemCon .rText .info, .billBox.data-v-047f72df .timeList .itemCon .rText .tip {
+  display: flex;
+}
+.billBox.data-v-047f72df .timeList .itemCon .rText .info label:first-child, .billBox.data-v-047f72df .timeList .itemCon .rText .tip label:first-child {
+  flex: 1;
+  line-height: 34rpx;
+}
+.billBox.data-v-047f72df .timeList .itemCon .rText .tip {
+  font-size: var(--font-size-16);
+  font-weight: 700;
+  padding-bottom: 20rpx;
+}
+.billBox.data-v-047f72df .timeList .itemCon .rText .font-col {
+  font-size: var(--font-size-14);
+  padding-left: 12rpx;
+}
+.billBox.data-v-047f72df .timeList .item {
+  padding-top: 20rpx;
+}
+.billBox.data-v-047f72df .tabName {
+  display: flex;
+  padding: 20rpx;
+  background-color: #f4f3f7;
+}
+.billBox.data-v-047f72df .tabName .tabItem {
+  margin: 10rpx;
+  height: 20rpx;
+  line-height: 20rpx;
+  color: #000;
+  flex: 1;
+  text-align: right;
+}
+.billBox.data-v-047f72df .tabName .tabItem .uni-icons {
+  padding-left: 12rpx;
+}
+.data-v-047f72df .detailsBox .billCon {
+  padding: 0 30rpx 80rpx;
+}
+.data-v-047f72df .detailsBox .billCon .con {
+  border-bottom: 1px solid var(--neutral-color-line);
+  margin-bottom: 16rpx;
+  padding-bottom: 16rpx;
+}
+.data-v-047f72df .detailsBox .billCon .con:last-child {
+  border: 0 none;
+}
+.data-v-047f72df .detailsBox .billCon .con .item {
+  display: flex;
+  padding: 20rpx 0;
+  margin: 0;
+  line-height: 36rpx;
+  color: var(--neutral-color-main);
+}
+.data-v-047f72df .detailsBox .billCon .con .item > label {
+  display: inline-block;
+}
+.data-v-047f72df .detailsBox .billCon .con .item > label:first-child {
+  width: 154rpx;
+  color: var(--neutral-color-placeholder);
+  font-weight: normal;
+}
+.data-v-047f72df .detailsBox .billCon .con .item > label.col {
+  color: var(--neutral-color-placeholder);
+}
+.data-v-047f72df .detailsBox .billCon .con .item > label:last-child {
+  flex: 1;
+  text-align: right;
+  font-weight: 700;
+  font-size: var(--font-size-14);
+}
+.data-v-047f72df .detailsBox .billCon .con .item > label:last-child label {
+  font-size: var(--font-size-11);
+}
+.data-v-047f72df .detailsBox .billCon .con.pay {
+  padding-top: 20rpx;
+}
+.data-v-047f72df .detailsBox .billCon .con.pay .amount {
+  color: var(--essential-color-red);
+}
+.data-v-047f72df .detailsBox .billCon .con.pay .amount > label:first-child {
+  font-size: 36rpx;
+}
+.data-v-047f72df .detailsBox .billCon .con.pay .amount > label:last-child {
+  font-size: 46rpx;
+  color: var(--essential-color-red);
+  font-weight: 700;
+}
+.data-v-047f72df .detailsBox .uni-title {
+  padding-bottom: 10rpx;
+  font-size: var(--font-size-16);
+  color: var(--neutral-color-main);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+.data-v-047f72df .detailsBox .uni-title .day {
+  display: inline-block;
+  line-height: 36rpx;
+  height: 36rpx;
+  width: 64rpx;
+  background: #FFECE7;
+  border-radius: 32rpx;
+  color: var(--essential-color-red);
+  font-size: var(--font-size-11);
+  font-weight: normal;
+  text-align: center;
+  margin-right: 28rpx;
+  margin-left: 12rpx;
+}
+.data-v-047f72df .detailsBox .uni-title .time {
+  font-size: var(--font-size-12);
+  color: var(--neutral-color-font);
+  font-weight: normal;
+  font-weight: 700;
+}

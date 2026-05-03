@@ -4,6 +4,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingProjectMapper">
     
+    <resultMap type="org.FlyingSparrow.YiSmartCloud.serve.vo.NursingProjectVo" id="NursingProjectVoResult">
+        <result property="label" column="label"/>
+        <result property="value" column="value"/>
+    </resultMap>
+
     <resultMap type="NursingProject" id="NursingProjectResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
@@ -35,6 +40,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectNursingProjectById" parameterType="Long" resultMap="NursingProjectResult">
         <include refid="selectNursingProjectVo"/>
         where id = #{id}
+    </select>
+
+    <!-- 启用项目下拉：name -> label，id -> value（字符串，与前端选项一致） -->
+    <select id="getAll" resultMap="NursingProjectVoResult">
+        select name as label, cast(id as char) as value
+        from nursing_project
+        where status = 1
+        order by order_no asc, id asc
     </select>
 
     <insert id="insertNursingProject" parameterType="NursingProject" useGeneratedKeys="true" keyProperty="id">

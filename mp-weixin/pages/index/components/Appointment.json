@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "visit-popup": "./VisitPopup",
+    "look-popup": "../../../components/Binding/index"
+  }
+}
