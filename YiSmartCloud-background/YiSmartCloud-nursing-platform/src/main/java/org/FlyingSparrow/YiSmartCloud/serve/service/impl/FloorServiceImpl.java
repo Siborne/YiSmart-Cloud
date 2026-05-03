@@ -1,6 +1,8 @@
 package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
 import java.util.List;
+
+import org.FlyingSparrow.YiSmartCloud.serve.vo.TreeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.FloorMapper;
@@ -47,5 +49,15 @@ public class FloorServiceImpl extends ServiceImpl<FloorMapper, Floor> implements
     @Override
     public int deleteFloorById(Long id) {
         return floorMapper.deleteFloorById(id);
+    }
+
+    /**
+     * 查询楼层房间床位
+     * @param status
+     * @return
+     */
+    @Override
+    public List<TreeVo> getRoomAndBedByBedStatus(Integer status) {
+        return floorMapper.getRoomAndBedByBedStatus(status);
     }
 }

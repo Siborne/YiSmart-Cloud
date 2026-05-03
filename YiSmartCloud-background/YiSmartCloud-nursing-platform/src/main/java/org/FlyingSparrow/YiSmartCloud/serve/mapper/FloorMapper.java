@@ -1,12 +1,13 @@
 package org.FlyingSparrow.YiSmartCloud.serve.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.FlyingSparrow.YiSmartCloud.serve.vo.TreeVo;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.Floor;
 
 /**
- * Â¥²ãÐÅÏ¢Mapper½Ó¿Ú
+ * Â¥ï¿½ï¿½ï¿½ï¿½Ï¢Mapperï¿½Ó¿ï¿½
  *
  * @author Siborne
  * @date 2026-04-28
@@ -14,50 +15,52 @@ import org.FlyingSparrow.YiSmartCloud.serve.domain.Floor;
 @Mapper
 public interface FloorMapper extends BaseMapper<Floor> {
     /**
-     * ²éÑ¯Â¥²ãÐÅÏ¢
+     * ï¿½ï¿½Ñ¯Â¥ï¿½ï¿½ï¿½ï¿½Ï¢
      *
-     * @param id Â¥²ãÐÅÏ¢Ö÷¼ü
-     * @return Â¥²ãÐÅÏ¢
+     * @param id Â¥ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
+     * @return Â¥ï¿½ï¿½ï¿½ï¿½Ï¢
      */
     public Floor selectFloorById(Long id);
 
     /**
-     * ²éÑ¯Â¥²ãÐÅÏ¢ÁÐ±í
+     * ï¿½ï¿½Ñ¯Â¥ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Ð±ï¿½
      *
-     * @param floor Â¥²ãÐÅÏ¢
-     * @return Â¥²ãÐÅÏ¢¼¯ºÏ
+     * @param floor Â¥ï¿½ï¿½ï¿½ï¿½Ï¢
+     * @return Â¥ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
      */
     public List<Floor> selectFloorList(Floor floor);
 
     /**
-     * ÐÂÔöÂ¥²ãÐÅÏ¢
+     * ï¿½ï¿½ï¿½ï¿½Â¥ï¿½ï¿½ï¿½ï¿½Ï¢
      *
-     * @param floor Â¥²ãÐÅÏ¢
-     * @return ½á¹û
+     * @param floor Â¥ï¿½ï¿½ï¿½ï¿½Ï¢
+     * @return ï¿½ï¿½ï¿½
      */
     public int insertFloor(Floor floor);
 
     /**
-     * ÐÞ¸ÄÂ¥²ãÐÅÏ¢
+     * ï¿½Þ¸ï¿½Â¥ï¿½ï¿½ï¿½ï¿½Ï¢
      *
-     * @param floor Â¥²ãÐÅÏ¢
-     * @return ½á¹û
+     * @param floor Â¥ï¿½ï¿½ï¿½ï¿½Ï¢
+     * @return ï¿½ï¿½ï¿½
      */
     public int updateFloor(Floor floor);
 
     /**
-     * É¾³ýÂ¥²ãÐÅÏ¢
+     * É¾ï¿½ï¿½Â¥ï¿½ï¿½ï¿½ï¿½Ï¢
      *
-     * @param id Â¥²ãÐÅÏ¢Ö÷¼ü
-     * @return ½á¹û
+     * @param id Â¥ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
+     * @return ï¿½ï¿½ï¿½
      */
     public int deleteFloorById(Long id);
 
     /**
-     * ÅúÁ¿É¾³ýÂ¥²ãÐÅÏ¢
+     * ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½Â¥ï¿½ï¿½ï¿½ï¿½Ï¢
      *
-     * @param ids ÐèÒªÉ¾³ýµÄÊý¾ÝÖ÷¼ü¼¯ºÏ
-     * @return ½á¹û
+     * @param ids ï¿½ï¿½ÒªÉ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @return ï¿½ï¿½ï¿½
      */
     public int deleteFloorByIds(Long[] ids);
+
+    List<TreeVo> getRoomAndBedByBedStatus(Integer status);
 }

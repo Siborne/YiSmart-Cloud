@@ -151,7 +151,16 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="入住床位" prop="config.bedNumber">
-              <el-input v-model="form.config.bedNumber" placeholder="请输入床位号" />
+              <el-cascader
+                v-model="selectedBedPath"
+                :options="bedOptions"
+                placeholder="请选择入住床位"
+                clearable
+                filterable
+                :show-all-levels="false"
+                style="width: 100%"
+                @change="handleBedChange"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -270,6 +279,7 @@
 <script setup name="CheckInApply">
 import { addCheckIn } from "@/api/serve/checkIn"
 import { listAllLevel } from "@/api/serve/level"
+import { getRoomAndBedByBedStatus } from "@/api/serve/floor"
 
 const { proxy } = getCurrentInstance()
 const router = useRouter()
@@ -277,6 +287,8 @@ const checkInApplyRef = ref()
 const submitting = ref(false)
 const feePreviewOpen = ref(false)
 const nursingLevelOptions = ref([])
+const bedOptions = ref([])
+const selectedBedPath = ref([])
 
 const relationOptions = ["子女", "配偶", "亲属", "朋友", "监护人", "其他"]
 
@@ -357,7 +369,7 @@ const rules = {
   "elder.idCardNo": [{ required: true, message: "身份证号不能为空", trigger: "blur" }],
   "config.startDate": [{ required: true, message: "请选择入住期限", trigger: "change" }],
   "config.nursingLevelName": [{ required: true, message: "护理等级不能为空", trigger: "change" }],
-  "config.bedNumber": [{ required: true, message: "入住床位不能为空", trigger: "blur" }],
+  "config.bedNumber": [{ required: true, message: "入住床位不能为空", trigger: "change" }],
 }
 
 const monthlyTotalFee = computed(() => {
@@ -407,6 +419,39 @@ function loadNursingLevelOptions() {
     })
 }
 
+function loadBedOptions() {
+  getRoomAndBedByBedStatus(0)
+    .then((response) => {
+      bedOptions.value = response.data || []
+    })
+    .catch(() => {
+      bedOptions.value = []
+    })
+}
+
+function findOptionPathByValues(options, values) {
+  const path = []
+  let currentOptions = options
+  for (const value of values) {
+    const matched = (currentOptions || []).find((item) => item.value === value)
+    if (!matched) {
+      return []
+    }
+    path.push(matched)
+    currentOptions = matched.children
+  }
+  return path
+}
+
+function handleBedChange(values) {
+  if (!values || !values.length) {
+    form.config.bedNumber = ""
+    return
+  }
+  const optionPath = findOptionPathByValues(bedOptions.value, values)
+  form.config.bedNumber = optionPath[optionPath.length - 1]?.label || ""
+}
+
 function submitForm() {
   checkInApplyRef.value.validate((valid) => {
     if (!valid) {
@@ -437,6 +482,7 @@ function submitForm() {
 
 onMounted(() => {
   loadNursingLevelOptions()
+  loadBedOptions()
 })
 </script>
 

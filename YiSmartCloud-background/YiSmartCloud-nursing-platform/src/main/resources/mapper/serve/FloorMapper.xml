@@ -80,4 +80,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <resultMap id="TreeVoResultMap" type="org.FlyingSparrow.YiSmartCloud.serve.vo.TreeVo">
+        <id column="fid" property="value"></id>
+        <result column="floor_name" property="label"></result>
+        <collection property="children" ofType="org.FlyingSparrow.YiSmartCloud.serve.vo.TreeVo">
+            <id column="rid" property="value"></id>
+            <result column="room_no" property="label"></result>
+            <collection property="children" ofType="org.FlyingSparrow.YiSmartCloud.serve.vo.TreeVo">
+                <id column="bid" property="value"></id>
+                <result column="bed_no" property="label"></result>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="getRoomAndBedByBedStatus" resultMap="TreeVoResultMap">
+        select f.id fid, f.floor_name, r.id rid, r.room_no, b.id bid, b.bed_no
+        from floor f
+                 left join room r on f.id = r.floor_id
+                 left join bed b on r.id = b.room_id
+        where b.bed_status = #{status}
+        order by f.id, r.id, b.id
+    </select>
 </mapper>
