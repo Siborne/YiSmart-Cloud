@@ -168,7 +168,21 @@ export const dynamicRoutes = [
         path: 'index',
         component: () => import('@/views/serve/checkIn/apply'),
         name: 'CheckInApply',
-        meta: { title: '发起入住申请', activeMenu: '/serve/checkIn' }
+        meta: { title: '发起入住申请', activeMenu: '/enterQuit/checkIn' }
+      }
+    ]
+  },
+  {
+    path: '/serve/checkIn-view',
+    component: Layout,
+    hidden: true,
+    permissions: ['serve:checkIn:query'],
+    children: [
+      {
+        path: 'index/:id',
+        component: () => import('@/views/serve/checkIn/apply'),
+        name: 'CheckInView',
+        meta: { title: '入住申请详情', activeMenu: '/enterQuit/checkIn' }
       }
     ]
   }

@@ -17,10 +17,27 @@ export function getCheckIn(id) {
   })
 }
 
+// 查询入住详情（与申请页同结构的聚合数据）
+export function getCheckInDetail(id) {
+  return request({
+    url: '/serve/checkIn/detail/' + id,
+    method: 'get'
+  })
+}
+
 // 新增入住登记
 export function addCheckIn(data) {
   return request({
     url: '/serve/checkIn',
+    method: 'post',
+    data: data
+  })
+}
+
+// 申请入住（聚合表单）
+export function applyCheckIn(data) {
+  return request({
+    url: '/serve/checkIn/apply',
     method: 'post',
     data: data
   })

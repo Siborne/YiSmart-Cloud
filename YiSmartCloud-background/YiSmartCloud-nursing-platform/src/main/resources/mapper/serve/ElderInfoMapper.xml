@@ -10,7 +10,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="idCard"    column="id_card"    />
         <result property="age"    column="age"    />
         <result property="gender"    column="gender"    />
+        <result property="birthday"    column="birthday"    />
         <result property="contactPhone"    column="contact_phone"    />
+        <result property="address"    column="address"    />
+        <result property="portraitImg"    column="portrait_img"    />
+        <result property="idCardPortraitImg"    column="id_card_portrait_img"    />
+        <result property="idCardNationalEmblemImg"    column="id_card_national_emblem_img"    />
         <result property="healthStatus"    column="health_status"    />
         <result property="status"    column="status"    />
         <result property="createTime"    column="create_time"    />
@@ -19,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectElderInfoVo">
-        select id, name, id_card, age, gender, contact_phone, health_status, status, create_time, update_time, is_deleted from elder_info
+        select id, name, id_card, age, gender, birthday, contact_phone, address, portrait_img, id_card_portrait_img, id_card_national_emblem_img, health_status, status, create_time, update_time, is_deleted from elder_info
     </sql>
 
     <select id="selectElderInfoList" parameterType="ElderInfo" resultMap="ElderInfoResult">
@@ -47,7 +52,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="idCard != null and idCard != ''">id_card,</if>
             <if test="age != null">age,</if>
             <if test="gender != null">gender,</if>
+            <if test="birthday != null and birthday != ''">birthday,</if>
             <if test="contactPhone != null">contact_phone,</if>
+            <if test="address != null and address != ''">address,</if>
+            <if test="portraitImg != null and portraitImg != ''">portrait_img,</if>
+            <if test="idCardPortraitImg != null and idCardPortraitImg != ''">id_card_portrait_img,</if>
+            <if test="idCardNationalEmblemImg != null and idCardNationalEmblemImg != ''">id_card_national_emblem_img,</if>
             <if test="healthStatus != null">health_status,</if>
             <if test="status != null">status,</if>
             <if test="createTime != null">create_time,</if>
@@ -59,7 +69,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="idCard != null and idCard != ''">#{idCard},</if>
             <if test="age != null">#{age},</if>
             <if test="gender != null">#{gender},</if>
+            <if test="birthday != null and birthday != ''">#{birthday},</if>
             <if test="contactPhone != null">#{contactPhone},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="portraitImg != null and portraitImg != ''">#{portraitImg},</if>
+            <if test="idCardPortraitImg != null and idCardPortraitImg != ''">#{idCardPortraitImg},</if>
+            <if test="idCardNationalEmblemImg != null and idCardNationalEmblemImg != ''">#{idCardNationalEmblemImg},</if>
             <if test="healthStatus != null">#{healthStatus},</if>
             <if test="status != null">#{status},</if>
             <if test="createTime != null">#{createTime},</if>
@@ -75,7 +90,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="idCard != null and idCard != ''">id_card = #{idCard},</if>
             <if test="age != null">age = #{age},</if>
             <if test="gender != null">gender = #{gender},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
             <if test="contactPhone != null">contact_phone = #{contactPhone},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="portraitImg != null">portrait_img = #{portraitImg},</if>
+            <if test="idCardPortraitImg != null">id_card_portrait_img = #{idCardPortraitImg},</if>
+            <if test="idCardNationalEmblemImg != null">id_card_national_emblem_img = #{idCardNationalEmblemImg},</if>
             <if test="healthStatus != null">health_status = #{healthStatus},</if>
             <if test="status != null">status = #{status},</if>
             <if test="createTime != null">create_time = #{createTime},</if>

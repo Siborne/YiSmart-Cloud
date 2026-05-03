@@ -33,9 +33,24 @@ public class ElderInfo extends BaseEntity {
     @Excel(name = "性别: 1-男, 2-女")
     private Integer gender;
 
+    /** 出生日期 yyyy-MM-dd */
+    private String birthday;
+
     /** 家属紧急联系电话 */
     @Excel(name = "家属紧急联系电话")
     private String contactPhone;
+
+    /** 家庭住址 */
+    private String address;
+
+    /** 一寸照片（URL） */
+    private String portraitImg;
+
+    /** 身份证人像面（URL） */
+    private String idCardPortraitImg;
+
+    /** 身份证国徽面（URL） */
+    private String idCardNationalEmblemImg;
 
     /** 健康状况简述 */
     @Excel(name = "健康状况简述")

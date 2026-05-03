@@ -56,7 +56,7 @@ public class Contract extends BaseEntity {
     /** 结束时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "结束时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
-    private Date endDate;
+    private LocalDateTime endDate;
 
     /** 状态 (0: 未生效, 1: 已生效, 2: 已过期, 3: 已失效) */
     @Excel(name = "状态 (0: 未生效, 1: 已生效, 2: 已过期, 3: 已失效)")
