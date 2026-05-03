@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,6 +23,8 @@ import org.FlyingSparrow.YiSmartCloud.serve.service.IContractService;
 import org.FlyingSparrow.YiSmartCloud.common.utils.poi.ExcelUtil;
 import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * 合同Controller
  *
@@ -33,10 +34,10 @@ import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 @RestController
 @RequestMapping("/serve/contract")
 @Api(tags =  "合同相关接口")
+@RequiredArgsConstructor
 public class ContractController extends BaseController
 {
-    @Autowired
-    private IContractService contractService;
+    private final IContractService contractService;
 
 /**
  * 查询合同列表

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.FlyingSparrow.YiSmartCloud.common.core.domain.R;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,6 +26,8 @@ import org.FlyingSparrow.YiSmartCloud.serve.service.INursingLevelService;
 import org.FlyingSparrow.YiSmartCloud.common.utils.poi.ExcelUtil;
 import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * 护理等级Controller
  *
@@ -36,9 +37,9 @@ import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 @RestController
 @RequestMapping("/serve/level")
 @Api(tags = "护理等级相关接口")
+@RequiredArgsConstructor
 public class NursingLevelController extends BaseController {
-    @Autowired
-    private INursingLevelService nursingLevelService;
+    private final INursingLevelService nursingLevelService;
 
     /**
      * 查询护理等级列表

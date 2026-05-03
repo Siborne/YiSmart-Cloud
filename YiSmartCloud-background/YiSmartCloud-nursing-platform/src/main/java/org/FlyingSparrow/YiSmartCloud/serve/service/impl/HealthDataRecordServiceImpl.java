@@ -2,7 +2,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.HealthDataRecordMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.HealthDataRecord;
@@ -18,9 +18,9 @@ import java.util.Arrays;
  * @date 2026-04-27
  */
 @Service
+@RequiredArgsConstructor
 public class HealthDataRecordServiceImpl extends ServiceImpl<HealthDataRecordMapper, HealthDataRecord> implements IHealthDataRecordService {
-    @Autowired
-    private HealthDataRecordMapper healthDataRecordMapper;
+    private final HealthDataRecordMapper healthDataRecordMapper;
 
     /**
      * 查询健康监测数据

@@ -13,7 +13,6 @@ import org.FlyingSparrow.YiSmartCloud.common.utils.poi.ExcelUtil;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.Floor;
 import org.FlyingSparrow.YiSmartCloud.serve.service.IFloorService;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.TreeVo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,13 +26,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/serve/floor")
 @Api(tags = "楼层信息相关接口")
+@RequiredArgsConstructor
 public class FloorController extends BaseController {
 
-    @Autowired
-    private IFloorService floorService;
+    private final IFloorService floorService;
 
     /**
      * 查询楼层信息列表

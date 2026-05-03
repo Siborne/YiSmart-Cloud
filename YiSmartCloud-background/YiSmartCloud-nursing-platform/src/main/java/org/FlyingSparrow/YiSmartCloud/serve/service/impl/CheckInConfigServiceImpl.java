@@ -2,7 +2,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.CheckInConfigMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.CheckInConfig;
@@ -18,9 +18,9 @@ import java.util.Arrays;
  * @date 2026-04-29
  */
 @Service
+@RequiredArgsConstructor
 public class CheckInConfigServiceImpl extends ServiceImpl<CheckInConfigMapper, CheckInConfig> implements ICheckInConfigService {
-    @Autowired
-    private CheckInConfigMapper checkInConfigMapper;
+    private final CheckInConfigMapper checkInConfigMapper;
 
     /**
      * 查询入住配置

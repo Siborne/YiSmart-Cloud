@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingProjectVo;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,6 +26,8 @@ import org.FlyingSparrow.YiSmartCloud.serve.service.INursingProjectService;
 import org.FlyingSparrow.YiSmartCloud.common.utils.poi.ExcelUtil;
 import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * 护理项目Controller
  *
@@ -36,9 +37,9 @@ import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 @RestController
 @RequestMapping("/serve/project")
 @Api(tags = "护理项目相关接口")
+@RequiredArgsConstructor
 public class NursingProjectController extends BaseController {
-    @Autowired
-    private INursingProjectService nursingProjectService;
+    private final INursingProjectService nursingProjectService;
 
     /**
      * 查询护理项目列表

@@ -2,7 +2,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.ElderInfoMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.ElderInfo;
@@ -18,9 +18,9 @@ import java.util.Arrays;
  * @date 2026-04-27
  */
 @Service
+@RequiredArgsConstructor
 public class ElderInfoServiceImpl extends ServiceImpl<ElderInfoMapper, ElderInfo> implements IElderInfoService {
-    @Autowired
-    private ElderInfoMapper elderInfoMapper;
+    private final ElderInfoMapper elderInfoMapper;
 
     /**
      * 查询老人档案

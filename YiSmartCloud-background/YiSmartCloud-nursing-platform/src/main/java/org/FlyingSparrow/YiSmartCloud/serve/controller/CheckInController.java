@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.FlyingSparrow.YiSmartCloud.serve.dto.CheckInApplyDto;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.CheckInDetailVo;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,6 +27,8 @@ import org.FlyingSparrow.YiSmartCloud.serve.service.ICheckInService;
 import org.FlyingSparrow.YiSmartCloud.common.utils.poi.ExcelUtil;
 import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * 入住登记Controller
  *
@@ -37,9 +38,9 @@ import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 @RestController
 @RequestMapping("/serve/checkIn")
 @Api(tags = "入住登记相关接口")
+@RequiredArgsConstructor
 public class CheckInController extends BaseController {
-    @Autowired
-    private ICheckInService checkInService;
+    private final ICheckInService checkInService;
 
     /**
      * 查询入住登记列表

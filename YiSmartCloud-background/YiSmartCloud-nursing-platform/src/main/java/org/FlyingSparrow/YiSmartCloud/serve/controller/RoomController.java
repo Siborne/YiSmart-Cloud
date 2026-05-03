@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.FlyingSparrow.YiSmartCloud.common.core.domain.R;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.RoomVo;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,6 +27,8 @@ import org.FlyingSparrow.YiSmartCloud.serve.service.IRoomService;
 import org.FlyingSparrow.YiSmartCloud.common.utils.poi.ExcelUtil;
 import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * 房间信息Controller
  *
@@ -37,9 +38,9 @@ import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 @RestController
 @RequestMapping("/serve/room")
 @Api(tags = "房间信息相关接口")
+@RequiredArgsConstructor
 public class RoomController extends BaseController {
-    @Autowired
-    private IRoomService roomService;
+    private final IRoomService roomService;
 
     /**
      * 查询房间信息列表

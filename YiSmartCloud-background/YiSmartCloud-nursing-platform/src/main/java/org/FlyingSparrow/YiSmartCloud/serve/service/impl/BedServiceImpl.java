@@ -2,7 +2,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.BedMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.Bed;
@@ -17,9 +17,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * @date 2026-04-27
  */
 @Service
+@RequiredArgsConstructor
 public class BedServiceImpl extends ServiceImpl<BedMapper, Bed> implements IBedService {
-    @Autowired
-    private BedMapper bedMapper;
+    private final BedMapper bedMapper;
 
     /**
      * 查询床位信息

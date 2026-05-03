@@ -9,7 +9,7 @@ import java.util.Objects;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.alibaba.fastjson2.JSON;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.FlyingSparrow.YiSmartCloud.common.exception.base.BaseException;
 import org.FlyingSparrow.YiSmartCloud.common.utils.CodeGenerator;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.Bed;
@@ -27,7 +27,6 @@ import org.FlyingSparrow.YiSmartCloud.serve.vo.CheckInDetailVo;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.CheckInElderVo;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.ElderFamilyVo;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.CheckInMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.CheckIn;
@@ -45,15 +44,14 @@ import java.util.Arrays;
  * @date 2026-04-29
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CheckInServiceImpl extends ServiceImpl<CheckInMapper, CheckIn> implements ICheckInService {
-    @Autowired
-    private CheckInMapper checkInMapper;
 
-
+    private final CheckInMapper checkInMapper;
     private final ElderInfoMapper elderInfoMapper;
-
     private final BedMapper bedMapper;
+    private final CheckInConfigMapper checkInConfigMapper;
+    private final ContractMapper contractMapper;
 
     /**
      * 查询入住登记
@@ -233,9 +231,6 @@ public class CheckInServiceImpl extends ServiceImpl<CheckInMapper, CheckIn> impl
         return detailVo;
     }
 
-    @Autowired
-    private CheckInConfigMapper checkInConfigMapper;
-
     /**
      * 新增入住配置
      *
@@ -271,8 +266,6 @@ public class CheckInServiceImpl extends ServiceImpl<CheckInMapper, CheckIn> impl
         checkInMapper.insert(checkIn);
         return checkIn;
     }
-
-    private final ContractMapper contractMapper;
 
     /**
      * 新增合同

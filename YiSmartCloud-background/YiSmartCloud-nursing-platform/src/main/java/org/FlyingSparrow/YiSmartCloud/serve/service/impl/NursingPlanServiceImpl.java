@@ -9,7 +9,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingProjectPlanMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingPlanVo;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingProjectPlanVo;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingPlanMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingPlan;
@@ -28,12 +28,11 @@ import java.util.Arrays;
  */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, NursingPlan> implements INursingPlanService {
-    @Autowired
-    private NursingPlanMapper nursingPlanMapper;
+    private final NursingPlanMapper nursingPlanMapper;
 
-    @Autowired
-    private NursingProjectPlanMapper nursingProjectPlanMapper;
+    private final NursingProjectPlanMapper nursingProjectPlanMapper;
 
     /**
      * 查询护理计划

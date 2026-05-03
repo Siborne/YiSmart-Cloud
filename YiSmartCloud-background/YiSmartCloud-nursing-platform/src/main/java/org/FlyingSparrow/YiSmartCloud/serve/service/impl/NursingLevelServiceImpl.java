@@ -9,7 +9,7 @@ import org.FlyingSparrow.YiSmartCloud.common.utils.StringUtils;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingLevel;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingLevelMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.service.INursingLevelService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,10 +31,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * @author Siborne
  */
 @Service
+@RequiredArgsConstructor
 public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, NursingLevel> implements INursingLevelService {
 
-    @Autowired
-    private NursingLevelMapper nursingLevelMapper;
+    private final NursingLevelMapper nursingLevelMapper;
 
     /**
      * 详情：必须用 XML JOIN，否则拿不到 planName，且不可误用 {@code getById}（会把 planName 拼进单表 SQL）。

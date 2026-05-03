@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,6 +23,8 @@ import org.FlyingSparrow.YiSmartCloud.serve.service.IBillDetailService;
 import org.FlyingSparrow.YiSmartCloud.common.utils.poi.ExcelUtil;
 import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * 费用账单明细Controller
  *
@@ -33,10 +34,10 @@ import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 @RestController
 @RequestMapping("/serve/detail")
 @Api(tags =  "费用账单明细相关接口")
+@RequiredArgsConstructor
 public class BillDetailController extends BaseController
 {
-    @Autowired
-    private IBillDetailService billDetailService;
+    private final IBillDetailService billDetailService;
 
 /**
  * 查询费用账单明细列表

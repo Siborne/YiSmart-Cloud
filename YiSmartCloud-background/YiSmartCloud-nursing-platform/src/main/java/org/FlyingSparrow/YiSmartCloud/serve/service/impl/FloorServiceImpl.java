@@ -3,7 +3,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 import java.util.List;
 
 import org.FlyingSparrow.YiSmartCloud.serve.vo.TreeVo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.FloorMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.Floor;
@@ -17,9 +17,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * @date 2026-04-28
  */
 @Service
+@RequiredArgsConstructor
 public class FloorServiceImpl extends ServiceImpl<FloorMapper, Floor> implements IFloorService {
-    @Autowired
-    private FloorMapper floorMapper;
+    private final FloorMapper floorMapper;
 
     @Override
     public Floor selectFloorById(Long id) {

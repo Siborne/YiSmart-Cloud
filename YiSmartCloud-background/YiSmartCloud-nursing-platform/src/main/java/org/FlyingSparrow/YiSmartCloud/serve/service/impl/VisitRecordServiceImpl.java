@@ -2,7 +2,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.VisitRecordMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.VisitRecord;
@@ -18,9 +18,9 @@ import java.util.Arrays;
  * @date 2026-04-27
  */
 @Service
+@RequiredArgsConstructor
 public class VisitRecordServiceImpl extends ServiceImpl<VisitRecordMapper, VisitRecord> implements IVisitRecordService {
-    @Autowired
-    private VisitRecordMapper visitRecordMapper;
+    private final VisitRecordMapper visitRecordMapper;
 
     /**
      * 查询访客预约记录

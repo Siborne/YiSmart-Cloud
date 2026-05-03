@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,6 +23,8 @@ import org.FlyingSparrow.YiSmartCloud.serve.service.ICheckInConfigService;
 import org.FlyingSparrow.YiSmartCloud.common.utils.poi.ExcelUtil;
 import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * 入住配置Controller
  *
@@ -33,10 +34,10 @@ import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 @RestController
 @RequestMapping("/serve/checkInConfig")
 @Api(tags =  "入住配置相关接口")
+@RequiredArgsConstructor
 public class CheckInConfigController extends BaseController
 {
-    @Autowired
-    private ICheckInConfigService checkInConfigService;
+    private final ICheckInConfigService checkInConfigService;
 
 /**
  * 查询入住配置列表

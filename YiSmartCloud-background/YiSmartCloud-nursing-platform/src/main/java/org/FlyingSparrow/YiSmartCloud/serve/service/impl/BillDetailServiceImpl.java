@@ -2,7 +2,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.BillDetailMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.BillDetail;
@@ -18,9 +18,9 @@ import java.util.Arrays;
  * @date 2026-04-27
  */
 @Service
+@RequiredArgsConstructor
 public class BillDetailServiceImpl extends ServiceImpl<BillDetailMapper, BillDetail> implements IBillDetailService {
-    @Autowired
-    private BillDetailMapper billDetailMapper;
+    private final BillDetailMapper billDetailMapper;
 
     /**
      * 查询费用账单明细

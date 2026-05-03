@@ -3,7 +3,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 import java.util.List;
 import org.FlyingSparrow.YiSmartCloud.common.utils.DateUtils;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingProjectVo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.NursingProjectMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingProject;
@@ -19,9 +19,9 @@ import java.util.Arrays;
  * @date 2026-03-23
  */
 @Service
+@RequiredArgsConstructor
 public class NursingProjectServiceImpl extends ServiceImpl<NursingProjectMapper, NursingProject> implements INursingProjectService {
-    @Autowired
-    private NursingProjectMapper nursingProjectMapper;
+    private final NursingProjectMapper nursingProjectMapper;
 
     /**
      * 查询护理项目

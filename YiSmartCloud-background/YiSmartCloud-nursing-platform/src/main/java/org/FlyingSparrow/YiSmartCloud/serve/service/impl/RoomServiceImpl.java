@@ -3,7 +3,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 import java.util.List;
 
 import org.FlyingSparrow.YiSmartCloud.serve.vo.RoomVo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.RoomMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.Room;
@@ -18,9 +18,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  * @date 2026-04-27
  */
 @Service
+@RequiredArgsConstructor
 public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IRoomService {
-    @Autowired
-    private RoomMapper roomMapper;
+    private final RoomMapper roomMapper;
 
     /**
      * 查询房间信息

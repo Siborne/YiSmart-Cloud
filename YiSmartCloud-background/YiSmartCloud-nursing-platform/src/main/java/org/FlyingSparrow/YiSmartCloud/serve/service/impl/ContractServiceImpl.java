@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.ContractMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.Contract;
@@ -20,9 +20,9 @@ import java.util.Arrays;
  * @date 2026-04-29
  */
 @Service
+@RequiredArgsConstructor
 public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> implements IContractService {
-    @Autowired
-    private ContractMapper contractMapper;
+    private final ContractMapper contractMapper;
 
     /**
      * 查询合同

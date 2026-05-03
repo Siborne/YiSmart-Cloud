@@ -11,7 +11,6 @@ import org.FlyingSparrow.YiSmartCloud.common.core.domain.R;
 import org.FlyingSparrow.YiSmartCloud.serve.dto.NursingPlanDto;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.NursingPlanVo;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,6 +28,8 @@ import org.FlyingSparrow.YiSmartCloud.serve.service.INursingPlanService;
 import org.FlyingSparrow.YiSmartCloud.common.utils.poi.ExcelUtil;
 import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * 护理计划Controller
  *
@@ -38,9 +39,9 @@ import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 @RestController
 @RequestMapping("/serve/plan")
 @Api(tags = "护理计划相关接口")
+@RequiredArgsConstructor
 public class NursingPlanController extends BaseController {
-    @Autowired
-    private INursingPlanService nursingPlanService;
+    private final INursingPlanService nursingPlanService;
 
     /**
      * 查询护理计划列表
