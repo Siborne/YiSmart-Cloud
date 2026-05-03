@@ -3,8 +3,12 @@ package org.FlyingSparrow.YiSmartCloud.serve.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import org.FlyingSparrow.YiSmartCloud.common.core.domain.R;
+import org.FlyingSparrow.YiSmartCloud.serve.vo.RoomVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,25 +38,24 @@ import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/serve/room")
-@Api(tags =  "房间信息相关接口")
-public class RoomController extends BaseController
-{
+@Api(tags = "房间信息相关接口")
+public class RoomController extends BaseController {
     @Autowired
     private IRoomService roomService;
     @Autowired
     private IFloorService floorService;
 
-/**
- * 查询房间信息列表
- */
-@PreAuthorize("@ss.hasPermi('serve:room:list')")
-@GetMapping("/list")
-@ApiOperation("查询房间信息列表")
-public TableDataInfo list(Room room) {
-    startPage();
-    List<Room> list = roomService.selectRoomList(room);
-    return getDataTable(list);
-}
+    /**
+     * 查询房间信息列表
+     */
+    @PreAuthorize("@ss.hasPermi('serve:room:list')")
+    @GetMapping("/list")
+    @ApiOperation("查询房间信息列表")
+    public TableDataInfo list(Room room) {
+        startPage();
+        List<Room> list = roomService.selectRoomList(room);
+        return getDataTable(list);
+    }
 
     /**
      * 导出房间信息列表
@@ -61,8 +64,7 @@ public TableDataInfo list(Room room) {
     @Log(title = "房间信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ApiOperation("导出房间信息列表")
-    public void export(HttpServletResponse response, Room room)
-    {
+    public void export(HttpServletResponse response, Room room) {
         List<Room> list = roomService.selectRoomList(room);
         ExcelUtil<Room> util = new ExcelUtil<Room>(Room.class);
         util.exportExcel(response, list, "房间信息数据");
@@ -75,8 +77,7 @@ public TableDataInfo list(Room room) {
     @GetMapping(value = "/{id}")
     @ApiOperation("获取房间信息详细信息")
     public AjaxResult getInfo(@ApiParam(value = "房间信息ID", required = true)
-                              @PathVariable("id") Long id)
-    {
+                              @PathVariable("id") Long id) {
         return success(roomService.selectRoomById(id));
     }
 
@@ -87,8 +88,7 @@ public TableDataInfo list(Room room) {
     @Log(title = "房间信息", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增房间信息")
-    public AjaxResult add(@ApiParam(value = "房间信息实体", required = true) @RequestBody Room room)
-    {
+    public AjaxResult add(@ApiParam(value = "房间信息实体", required = true) @RequestBody Room room) {
         return toAjax(roomService.insertRoom(room));
     }
 
@@ -99,8 +99,7 @@ public TableDataInfo list(Room room) {
     @Log(title = "房间信息", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("修改房间信息")
-    public AjaxResult edit(@ApiParam(value = "房间信息实体", required = true)  @RequestBody Room room)
-    {
+    public AjaxResult edit(@ApiParam(value = "房间信息实体", required = true) @RequestBody Room room) {
         return toAjax(roomService.updateRoom(room));
     }
 
@@ -111,8 +110,7 @@ public TableDataInfo list(Room room) {
     @Log(title = "房间信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     @ApiOperation("删除房间信息")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(roomService.deleteRoomByIds(ids));
     }
 
@@ -122,8 +120,7 @@ public TableDataInfo list(Room room) {
     @PreAuthorize("@ss.hasPermi('serve:room:list')")
     @GetMapping("/floor/list")
     @ApiOperation("查询楼层信息列表")
-    public TableDataInfo floorList(Floor floor)
-    {
+    public TableDataInfo floorList(Floor floor) {
         startPage();
         List<Floor> list = floorService.selectFloorList(floor);
         return getDataTable(list);
@@ -135,8 +132,7 @@ public TableDataInfo list(Room room) {
     @PreAuthorize("@ss.hasPermi('serve:room:list')")
     @GetMapping("/floor/options")
     @ApiOperation("查询楼层下拉数据")
-    public AjaxResult floorOptions()
-    {
+    public AjaxResult floorOptions() {
         List<Floor> list = floorService.selectFloorList(new Floor());
         return success(list);
     }
@@ -147,8 +143,7 @@ public TableDataInfo list(Room room) {
     @PreAuthorize("@ss.hasPermi('serve:room:query')")
     @GetMapping("/floor/{id}")
     @ApiOperation("获取楼层信息详细信息")
-    public AjaxResult floorInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult floorInfo(@PathVariable("id") Long id) {
         return success(floorService.selectFloorById(id));
     }
 
@@ -159,8 +154,7 @@ public TableDataInfo list(Room room) {
     @Log(title = "楼层信息", businessType = BusinessType.INSERT)
     @PostMapping("/floor")
     @ApiOperation("新增楼层信息")
-    public AjaxResult addFloor(@RequestBody Floor floor)
-    {
+    public AjaxResult addFloor(@RequestBody Floor floor) {
         return toAjax(floorService.insertFloor(floor));
     }
 
@@ -171,8 +165,7 @@ public TableDataInfo list(Room room) {
     @Log(title = "楼层信息", businessType = BusinessType.UPDATE)
     @PutMapping("/floor")
     @ApiOperation("修改楼层信息")
-    public AjaxResult editFloor(@RequestBody Floor floor)
-    {
+    public AjaxResult editFloor(@RequestBody Floor floor) {
         return toAjax(floorService.updateFloor(floor));
     }
 
@@ -183,8 +176,15 @@ public TableDataInfo list(Room room) {
     @Log(title = "楼层信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/floor/{ids}")
     @ApiOperation("删除楼层信息")
-    public AjaxResult removeFloor(@PathVariable Long[] ids)
-    {
+    public AjaxResult removeFloor(@PathVariable Long[] ids) {
         return toAjax(floorService.deleteFloorByIds(ids));
     }
+
+    @GetMapping("/one/{id}")
+    @ApiOperation("按照房间id查询楼层、房间、价格")
+    public R<RoomVo> getRoomById(@ApiParam(value = "房间ID", required = true) @PathVariable("id") Long id){
+        RoomVo roomVo = roomService.getRoomById(id);
+        return R.ok(roomVo);
+    }
+
 }

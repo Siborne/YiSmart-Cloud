@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -28,4 +29,7 @@ public class TreeVo {
      */
     @ApiModelProperty(value = "子菜单")
     private List<TreeVo> children;
+
+    @ApiModelProperty(value = "床位费用")
+    private BigDecimal bedFee;
 }

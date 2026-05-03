@@ -157,7 +157,6 @@
                 placeholder="请选择入住床位"
                 clearable
                 filterable
-                :show-all-levels="false"
                 style="width: 100%"
                 @change="handleBedChange"
               />
@@ -446,10 +445,13 @@ function findOptionPathByValues(options, values) {
 function handleBedChange(values) {
   if (!values || !values.length) {
     form.config.bedNumber = ""
+    form.config.bedFee = 0
     return
   }
   const optionPath = findOptionPathByValues(bedOptions.value, values)
-  form.config.bedNumber = optionPath[optionPath.length - 1]?.label || ""
+  const bedNode = optionPath[optionPath.length - 1]
+  form.config.bedNumber = bedNode?.label || ""
+  form.config.bedFee = Number(bedNode?.bedFee || 0)
 }
 
 function submitForm() {

@@ -1,0 +1,18 @@
+---
+description: YiSmartCloud repo stack and Maven module map
+alwaysApply: true
+---
+
+# 项目栈与模块（YiSmartCloud）
+
+- **技术栈（根 POM）**：Java 11、Spring Boot 2.5.x、RuoYi 3.8.9、Spring Security、MyBatis-Plus、PageHelper、Redis（按环境）、Vue 3 前端；接口文档为 **Knife4j + Swagger 2**。
+- **后端根目录**：`YiSmartCloud-background/`（Maven 父工程 `YiSmartCloud`）。
+- **Maven 模块速查**：
+  - `YiSmartCloud-admin`：Spring Boot **启动入口**，聚合依赖，不写大块业务逻辑。
+  - `YiSmartCloud-framework`：安全、拦截器、数据源等框架能力。
+  - `YiSmartCloud-system`：若依系统管理（用户、角色、菜单等）。
+  - `YiSmartCloud-common`：通用工具、`BaseController`、`AjaxResult`、`SecurityUtils` 等。
+  - **`YiSmartCloud-nursing-platform`**：颐养/护理 **业务默认落点**（`serve` 包、Mapper XML）。
+  - `YiSmartCloud-generator`：代码生成；`YiSmartCloud-quartz`：定时任务；`YiSmartCloud-oss`：对象存储。
+- **业务 HTTP 前缀**：护理相关接口多为 **`/serve/...`**，与前端 `src/api/serve/`、`/dev-api` 代理一致。
+- **编码与变更记录**：全仓库 UTF-8；代码变更需在 `docs/code_review` 追加说明（见对应规则）。

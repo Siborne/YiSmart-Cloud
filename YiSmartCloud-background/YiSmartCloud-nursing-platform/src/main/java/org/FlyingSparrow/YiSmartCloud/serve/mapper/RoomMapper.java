@@ -1,6 +1,7 @@
 package org.FlyingSparrow.YiSmartCloud.serve.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.FlyingSparrow.YiSmartCloud.serve.vo.RoomVo;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.Room;
@@ -60,4 +61,6 @@ public interface RoomMapper extends BaseMapper<Room> {
      * @return 结果
      */
     public int deleteRoomByIds(Long[] ids);
+
+    RoomVo getRoomById(Long id);
 }

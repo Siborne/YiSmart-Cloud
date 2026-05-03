@@ -3,6 +3,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.Room;
+import org.FlyingSparrow.YiSmartCloud.serve.vo.RoomVo;
 
 /**
  * 房间信息Service接口
@@ -58,4 +59,11 @@ public interface IRoomService extends IService<Room> {
      * @return 结果
      */
     public int deleteRoomById(Long id);
+
+    /**
+     * 按照房间id查询楼层、房间、价格
+     * @param id
+     * @return
+     */
+    RoomVo getRoomById(Long id);
 }

@@ -1,13 +1,16 @@
 ---
 description: YiSmartCloud backend VO and domain conventions
-globs: YiSmartCloud-background/**/domain/**/*.java
+globs:
+  - YiSmartCloud-background/**/domain/**/*.java
+  - YiSmartCloud-background/**/vo/**/*.java
 alwaysApply: false
 ---
 
-# 后端 VO/Domain 约定（YiSmartCloud）
+# 后端 Domain / VO 约定（YiSmartCloud）
 
-- `domain` 下实体优先继承 `BaseEntity`，保留 RuoYi 的审计字段体系（`createTime/createBy/updateTime/updateBy/remark`）。
-- 数据库实体与展示字段分离：非表字段必须显式标记 `@TableField(exist = false)`，并在注释说明来源（如 JOIN 填充）。
-- 字段注解遵循现有风格：导出字段用 `@Excel`，需要前后端字段对齐时使用 `@JsonProperty`。
-- 业务对象中文注释保持“对象说明 + 关键约束”格式，复杂约束可补 1-2 行原因说明（如避免 MP 通用 SQL 误映射）。
-- VO 命名使用 `XxxVo`，仅用于返回和展示，不承担新增或更新入参语义。
+- **`domain`**：与表对应的持久化实体（或聚合根），优先继承 `BaseEntity`，保留 RuoYi 审计字段（`createTime/createBy/updateTime/updateBy/remark`）。使用 MyBatis-Plus 映射时，非表字段须 `@TableField(exist = false)` 并在注释说明来源（如 JOIN 填充）。
+- **`vo`**（如 `serve/vo`）：仅用于接口返回、下拉树、级联等展示结构（如 `TreeVo`），**不承担**持久化或标准入参语义；命名 `XxxVo`，可配合 `@ApiModel` / `@ApiModelProperty`（`io.swagger.annotations`）与现有 `TreeVo` 风格一致。
+- 数据库实体与展示结构分离：`domain` 管表字段与导出；纯展示、树节点字段放在 `vo`，避免把树形 DTO 字段堆进实体。
+- 字段注解：`domain` 导出列用 `@Excel`；需要与前端 JSON 键对齐时用 `@JsonProperty`。
+- 中文注释保持“对象说明 + 关键约束”，复杂约束可补 1-2 行原因（如避免 MP 通用 SQL 误映射）。
+- 入参聚合仍优先使用 `XxxDto`（见 dto 规则），不要用 `XxxVo` 承载新增/修改请求体。

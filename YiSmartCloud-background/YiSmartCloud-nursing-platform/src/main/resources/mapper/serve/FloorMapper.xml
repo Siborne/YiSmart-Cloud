@@ -90,12 +90,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <collection property="children" ofType="org.FlyingSparrow.YiSmartCloud.serve.vo.TreeVo">
                 <id column="bid" property="value"></id>
                 <result column="bed_no" property="label"></result>
+                <result column="bed_fee" property="bedFee"></result>
             </collection>
         </collection>
     </resultMap>
 
     <select id="getRoomAndBedByBedStatus" resultMap="TreeVoResultMap">
-        select f.id fid, f.floor_name, r.id rid, r.room_no, b.id bid, b.bed_no
+        select f.id fid, f.floor_name, r.id rid, r.room_no, b.id bid, b.bed_no, r.bed_fee
         from floor f
                  left join room r on f.id = r.floor_id
                  left join bed b on r.id = b.room_id

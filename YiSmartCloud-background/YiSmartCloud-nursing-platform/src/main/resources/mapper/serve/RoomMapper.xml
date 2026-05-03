@@ -92,4 +92,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="getRoomById" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.RoomVo">
+        select f.name floorName,f.id floorId,r.id roomId,r.code ,rt.price
+        from floor f left join room r on f.id = r.floor_id
+                     left join  room_type rt on rt.name = r.type_name
+        where r.id = #{id}
+    </select>
 </mapper>

@@ -8,6 +8,8 @@ alwaysApply: false
 
 - 受控接口必须标注 `@PreAuthorize("@ss.hasPermi('module:entity:action')")`，并与前端 `v-hasPermi` 保持完全一致。
 - CRUD 权限动作统一使用 `list/query/add/edit/remove/export`，避免同模块出现多套动作命名。
+- **权限闭环**：新增接口权限标识需同步到若依「菜单管理」按钮权限（或等价 SQL 脚本），否则动态路由与 `v-hasPermi` 无法生效。
 - 写操作接口（新增/修改/删除/导出）保持 `@Log` 记录，`BusinessType` 与动作语义对应。
 - 控制层只做参数接收和流程编排，业务校验放在 Service；异常由统一异常处理机制返回。
-- 新增接口时同步补齐 Swagger 注解（`@ApiOperation`、必要时 `@ApiParam`），保证接口文档一致可读。
+- **接口文档**：项目使用 **Knife4j** 与 **Swagger 2** 注解（`io.swagger.annotations`，如 `@Api`、`@ApiOperation`、`@ApiParam`）。新增接口保持该套注解，**不要**混用 springdoc/OpenAPI 3 除非全项目统一迁移。
+- **防重复提交**：对易被连点、重复提交的写接口（如提交订单、重复扣款场景），可按 RuoYi 惯例在方法上加 `@RepeatSubmit`（`org.FlyingSparrow.YiSmartCloud.common.annotation.RepeatSubmit`），与框架拦截器配合。

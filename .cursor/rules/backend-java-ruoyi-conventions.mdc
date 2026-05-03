@@ -5,9 +5,13 @@ alwaysApply: false
 ---
 
 # 后端 Java（RuoYi）开发约定（YiSmartCloud）
+- **模块落点**：颐养/护理业务代码（`serve` 包下的 controller、service、domain、vo、mapper 与 `resources/mapper/serve`）默认放在 **`YiSmartCloud-nursing-platform`**；启动入口在 `YiSmartCloud-admin`。非系统级需求不要把业务 Controller 塞进 `YiSmartCloud-system` 或 `YiSmartCloud-admin` 的 `web.controller`。
+- 根包名固定为 **`org.FlyingSparrow.YiSmartCloud`**，与现有模块一致。
 - 严格遵守分层：`controller -> service -> mapper`，控制层不直接操作 mapper。
 - Controller 保持 RuoYi 注解组合：`@RestController`、`@RequestMapping`、`@PreAuthorize`、`@Log`、`@Api/@ApiOperation`。
 - CRUD 接口保持既有模式：列表 `startPage()+getDataTable`，新增/修改/删除返回 `toAjax(...)`，详情返回 `success(...)`。
+- **MyBatis-Plus 与 Service**：业务模块普遍使用 `IService` / `ServiceImpl<Mapper, Entity>` 搭配 `BaseMapper`；简单单表 CRUD 可用 MP 能力，**JOIN、树形、统计、扩展列**须在 Mapper 中声明方法并由 **XML** 实现（见 mapper 规则），避免与通用 `select*` 字段冲突。
 - Service 层承担业务校验与默认值填充，参数非法时抛 `ServiceException`，不要把校验散落到 Controller。
 - 事务写操作使用 `@Transactional(rollbackFor = Exception.class)`，时间字段使用 `DateUtils.getNowDate()` 保持一致。
+- **日期类型**：`BaseEntity` 审计字段与部分代码使用 `java.util.Date`，业务实体字段也可能使用 `java.time.LocalDateTime`。**新增字段优先与同模块、同聚合内已有实体保持一致**；跨层 JSON 注意序列化配置，避免混用导致反序列化失败。
 - 涉及 XML 自定义 SQL（尤其 JOIN 扩展字段）时，优先调用 Mapper 自定义方法，避免误用 MP 通用方法导致字段冲突。
