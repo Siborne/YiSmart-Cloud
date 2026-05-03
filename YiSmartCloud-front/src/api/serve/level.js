@@ -42,3 +42,11 @@ export function delLevel(id) {
     method: 'delete'
   })
 }
+
+// 查询所有启用护理等级
+export function listAllLevel() {
+  return request({
+    url: '/serve/level/listAll',
+    method: 'get'
+  })
+}

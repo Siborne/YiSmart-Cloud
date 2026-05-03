@@ -133,7 +133,20 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="护理等级" prop="config.nursingLevelName">
-              <el-input v-model="form.config.nursingLevelName" placeholder="请选择/输入护理等级" />
+              <el-select
+                v-model="form.config.nursingLevelName"
+                placeholder="请选择护理等级"
+                clearable
+                filterable
+                style="width: 100%"
+              >
+                <el-option
+                  v-for="item in nursingLevelOptions"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.name"
+                />
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -256,12 +269,14 @@
 
 <script setup name="CheckInApply">
 import { addCheckIn } from "@/api/serve/checkIn"
+import { listAllLevel } from "@/api/serve/level"
 
 const { proxy } = getCurrentInstance()
 const router = useRouter()
 const checkInApplyRef = ref()
 const submitting = ref(false)
 const feePreviewOpen = ref(false)
+const nursingLevelOptions = ref([])
 
 const relationOptions = ["子女", "配偶", "亲属", "朋友", "监护人", "其他"]
 
@@ -341,7 +356,7 @@ const rules = {
   "elder.name": [{ required: true, message: "老人姓名不能为空", trigger: "blur" }],
   "elder.idCardNo": [{ required: true, message: "身份证号不能为空", trigger: "blur" }],
   "config.startDate": [{ required: true, message: "请选择入住期限", trigger: "change" }],
-  "config.nursingLevelName": [{ required: true, message: "护理等级不能为空", trigger: "blur" }],
+  "config.nursingLevelName": [{ required: true, message: "护理等级不能为空", trigger: "change" }],
   "config.bedNumber": [{ required: true, message: "入住床位不能为空", trigger: "blur" }],
 }
 
@@ -382,6 +397,16 @@ function goBack() {
   router.push("/serve/checkIn")
 }
 
+function loadNursingLevelOptions() {
+  listAllLevel()
+    .then((response) => {
+      nursingLevelOptions.value = response.data || []
+    })
+    .catch(() => {
+      nursingLevelOptions.value = []
+    })
+}
+
 function submitForm() {
   checkInApplyRef.value.validate((valid) => {
     if (!valid) {
@@ -409,6 +434,10 @@ function submitForm() {
       })
   })
 }
+
+onMounted(() => {
+  loadNursingLevelOptions()
+})
 </script>
 
 <style scoped>
