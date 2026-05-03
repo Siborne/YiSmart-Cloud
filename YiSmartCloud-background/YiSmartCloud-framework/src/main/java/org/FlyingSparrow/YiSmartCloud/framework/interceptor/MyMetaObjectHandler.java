@@ -9,31 +9,39 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+import static org.FlyingSparrow.YiSmartCloud.framework.datasource.DynamicDataSourceContextHolder.log;
+
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
         this.strictInsertFill(metaObject, "createTime", Date.class, new Date());
-        this.strictInsertFill(metaObject, "createBy", String.class, loadUserId()+"");
+        this.strictInsertFill(metaObject, "createBy", String.class, loadUserId() + "");
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         this.strictUpdateFill(metaObject, "updateTime", Date.class, new Date());
-        this.strictUpdateFill(metaObject, "updateBy", String.class, loadUserId()+"");
+        this.strictUpdateFill(metaObject, "updateBy", String.class, loadUserId() + "");
     }
 
     /**
      * 获取当前登录人的ID
+     *
      * @return
      */
-    public static Long loadUserId(){
+    public static Long loadUserId() {
         //获取当前登录人的id
-        LoginUser loginUser = SecurityUtils.getLoginUser();
-        if(ObjectUtils.isNotEmpty(loginUser)){
-            return loginUser.getUserId();
+        try {
+            LoginUser loginUser = SecurityUtils.getLoginUser();
+            if (ObjectUtils.isNotEmpty(loginUser)) {
+                return loginUser.getUserId();
+            }
+            return 1L;
+        } catch (Exception e) {
+            log.error("获取当前登录人的ID异常！,异常信息：{}", e);
+            return 1L;
         }
-        return 1L;
     }
 }

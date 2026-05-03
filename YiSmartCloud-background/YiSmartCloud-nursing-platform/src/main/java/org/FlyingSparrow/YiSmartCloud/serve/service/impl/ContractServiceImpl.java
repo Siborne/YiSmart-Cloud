@@ -1,7 +1,9 @@
 package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.ContractMapper;
@@ -86,5 +88,24 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
     @Override
     public int deleteContractById(Long id) {
                 return removeById(id) == true ? 1 : 0;
+    }
+
+    /**
+     * 更新合同状态
+     */
+    @Override
+    public void updateContractStatus() {
+        //1.查询状态为0的合同  && 合同开始时间小于等于当前时间
+        List<Contract> list = list(Wrappers.<Contract>lambdaQuery()
+                .eq(Contract::getStatus, 0)
+                .le(Contract::getStartDate, LocalDateTime.now()));
+
+        //2.修改状态为1
+        list.forEach(item->{
+            item.setStatus(1);
+        });
+
+        //3.批量更新
+        updateBatchById(list);
     }
 }
