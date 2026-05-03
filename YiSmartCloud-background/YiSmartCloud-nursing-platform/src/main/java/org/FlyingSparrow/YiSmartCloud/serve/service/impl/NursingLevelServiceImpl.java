@@ -2,6 +2,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.FlyingSparrow.YiSmartCloud.common.exception.ServiceException;
 import org.FlyingSparrow.YiSmartCloud.common.utils.DateUtils;
 import org.FlyingSparrow.YiSmartCloud.common.utils.StringUtils;
@@ -15,12 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
- * 护理等级业务实现。
- * <p>
- * 列表/详情中计划名称通过 {@link NursingLevelMapper#selectNursingLevelList} /
- * {@link NursingLevelMapper#selectNursingLevelById}（XML 内 JOIN nursing_plan）填充；
- * 持久化一律走 XML 的 insert/update/delete，避免 MP 通用方法与扩展字段冲突。
- *
+ * 护理等级业务实现。
+
+ * <p>
+
+ * 列表/详情中计划名称通过 {@link NursingLevelMapper#selectNursingLevelList} /
+
+ * {@link NursingLevelMapper#selectNursingLevelById}（XML 内 JOIN nursing_plan）填充；
+
+ * 持久化一律走 XML 的 insert/update/delete，避免 MP 通用方法与扩展字段冲突。
+
+ *
+
  * @author Siborne
  */
 @Service
@@ -46,7 +53,8 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
     }
 
     /**
-     * 新增：业务约定首次未传状态时默认为禁用（0），与字典 nursing_level_status 一致。
+     * 新增：业务约定首次未传状态时默认为禁用（0），与字典 nursing_level_status 一致。
+
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -102,4 +110,12 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
         }
         return nursingLevelMapper.deleteNursingLevelById(id);
     }
+
+    @Override
+    public List<NursingLevel> listAll(){
+        LambdaQueryWrapper<NursingLevel> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(NursingLevel::getStatus, 1);
+        return list(queryWrapper);
+    }
+
 }

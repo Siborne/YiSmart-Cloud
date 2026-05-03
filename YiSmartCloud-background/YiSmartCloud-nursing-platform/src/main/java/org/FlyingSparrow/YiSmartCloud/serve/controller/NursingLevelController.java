@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import org.FlyingSparrow.YiSmartCloud.common.core.domain.R;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -108,5 +109,14 @@ public class NursingLevelController extends BaseController {
     @ApiOperation("删除护理等级")
     public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(nursingLevelService.deleteNursingLevelByIds(ids));
+    }
+
+    /**
+     * 查询所有的护理等级
+     * @return
+     */
+    @GetMapping("/listAll")
+    public R<List<NursingLevel>> listAll(){
+        return R.ok(nursingLevelService.listAll());
     }
 }
