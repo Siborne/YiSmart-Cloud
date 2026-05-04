@@ -6,16 +6,16 @@ import org.springframework.stereotype.Component;
 import lombok.Data;
 
 /**
- * °Ù¶ÈÇ§·« OpenAI ¼æÈİ¶Ô»°ÅäÖÃ£¨ÃÜÔ¿½ö·Å±¾µØ/»·¾³ÅäÖÃ£¬ÎğÌá½»ÕæÊµ Key£©¡£
+ * ç™¾åº¦åƒå¸† OpenAI å…¼å®¹å¯¹è¯é…ç½®ï¼ˆå¯†é’¥ä»…æ”¾æœ¬åœ°/ç¯å¢ƒé…ç½®ï¼Œå‹¿æäº¤çœŸå® Keyï¼‰ã€‚
  */
 @Data
 @Component
 @ConfigurationProperties(prefix = "yi.qianfan")
 public class QianfanProperties {
 
-    /** API Key£¬ĞÎÈç bce-v3/... */
+    /** API Keyï¼Œå½¢å¦‚ bce-v3/... */
     private String apiKey = "";
 
-    /** Ä£ĞÍÃû£¬Èç deepseek-r1-distill-qianfan-70b */
+    /** æ¨¡å‹åï¼Œå¦‚ deepseek-r1-distill-qianfan-70b */
     private String model = "deepseek-r1-distill-qianfan-70b";
 }

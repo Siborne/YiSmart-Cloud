@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
- * Ç§·«·µ»ØµÄÌå¼ì·ÖÎö JSON ½á¹¹£¨Óë²úÆ·Ô¼¶¨×Ö¶ÎÒ»ÖÂ£©¡£
+ * åƒå¸†è¿”å›çš„ä½“æ£€åˆ†æ JSON ç»“æ„ï¼ˆä¸äº§å“çº¦å®šå­—æ®µä¸€è‡´ï¼‰ã€‚
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

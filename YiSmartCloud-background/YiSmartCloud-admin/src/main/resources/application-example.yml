@@ -1,135 +1,135 @@
-# ÏîÄ¿Ïà¹ØÅäÖÃ
+# é¡¹ç›®ç›¸å…³é…ç½®
 ruoyi:
-  # Ãû³Æ
+  # åç§°
   name: RuoYi
-  # °æ±¾
+  # ç‰ˆæœ¬
   version: 3.8.9
-  # °æÈ¨Äê·İ
+  # ç‰ˆæƒå¹´ä»½
   copyrightYear: 2025
-  # ÎÄ¼şÂ·¾¶ Ê¾Àı£¨ WindowsÅäÖÃD:/ruoyi/uploadPath£¬LinuxÅäÖÃ /home/ruoyi/uploadPath£©
+  # æ–‡ä»¶è·¯å¾„ ç¤ºä¾‹ï¼ˆ Windowsé…ç½®D:/ruoyi/uploadPathï¼ŒLinuxé…ç½® /home/ruoyi/uploadPathï¼‰
   profile: D:/ruoyi/uploadPath
-  # »ñÈ¡ipµØÖ·¿ª¹Ø
+  # è·å–ipåœ°å€å¼€å…³
   addressEnabled: false
-  # ÑéÖ¤ÂëÀàĞÍ math Êı×Ö¼ÆËã char ×Ö·ûÑéÖ¤
+  # éªŒè¯ç ç±»å‹ math æ•°å­—è®¡ç®— char å­—ç¬¦éªŒè¯
   captchaType: math
 
-# ¿ª·¢»·¾³ÅäÖÃ
+# å¼€å‘ç¯å¢ƒé…ç½®
 server:
-  # ·şÎñÆ÷µÄHTTP¶Ë¿Ú£¬Ä¬ÈÏÎª8080
+  # æœåŠ¡å™¨çš„HTTPç«¯å£ï¼Œé»˜è®¤ä¸º8080
   port: 8080
   servlet:
-    # Ó¦ÓÃµÄ·ÃÎÊÂ·¾¶
+    # åº”ç”¨çš„è®¿é—®è·¯å¾„
     context-path: /
   tomcat:
-    # tomcatµÄURI±àÂë
+    # tomcatçš„URIç¼–ç 
     uri-encoding: UTF-8
-    # Á¬½ÓÊıÂúºóµÄÅÅ¶ÓÊı£¬Ä¬ÈÏÎª100
+    # è¿æ¥æ•°æ»¡åçš„æ’é˜Ÿæ•°ï¼Œé»˜è®¤ä¸º100
     accept-count: 1000
     threads:
-      # tomcat×î´óÏß³ÌÊı£¬Ä¬ÈÏÎª200
+      # tomcatæœ€å¤§çº¿ç¨‹æ•°ï¼Œé»˜è®¤ä¸º200
       max: 800
-      # TomcatÆô¶¯³õÊ¼»¯µÄÏß³ÌÊı£¬Ä¬ÈÏÖµ10
+      # Tomcatå¯åŠ¨åˆå§‹åŒ–çš„çº¿ç¨‹æ•°ï¼Œé»˜è®¤å€¼10
       min-spare: 100
 
-# ÈÕÖ¾ÅäÖÃ
+# æ—¥å¿—é…ç½®
 logging:
   level:
     com.ruoyi: debug
     org.springframework: warn
 
-# ÓÃ»§ÅäÖÃ
+# ç”¨æˆ·é…ç½®
 user:
   password:
-    # ÃÜÂë×î´ó´íÎó´ÎÊı
+    # å¯†ç æœ€å¤§é”™è¯¯æ¬¡æ•°
     maxRetryCount: 5
-    # ÃÜÂëËø¶¨Ê±¼ä£¨Ä¬ÈÏ10·ÖÖÓ£©
+    # å¯†ç é”å®šæ—¶é—´ï¼ˆé»˜è®¤10åˆ†é’Ÿï¼‰
     lockTime: 10
 
-# SpringÅäÖÃ
+# Springé…ç½®
 spring:
-  # ×ÊÔ´ĞÅÏ¢
+  # èµ„æºä¿¡æ¯
   messages:
-    # ¹ú¼Ê»¯×ÊÔ´ÎÄ¼şÂ·¾¶
+    # å›½é™…åŒ–èµ„æºæ–‡ä»¶è·¯å¾„
     basename: i18n/messages
   profiles:
     active: druid
-  # ÎÄ¼şÉÏ´«
+  # æ–‡ä»¶ä¸Šä¼ 
   servlet:
     multipart:
-      # µ¥¸öÎÄ¼ş´óĞ¡£¨½¡¿µÆÀ¹À PDF ÔÊĞí×î´ó 60MB£¬´Ë´¦ÂÔ·Å´óÒÔÈİÄÉ multipart ±ß½ç¿ªÏú£©
+      # å•ä¸ªæ–‡ä»¶å¤§å°ï¼ˆå¥åº·è¯„ä¼° PDF å…è®¸æœ€å¤§ 60MBï¼Œæ­¤å¤„ç•¥æ”¾å¤§ä»¥å®¹çº³ multipart è¾¹ç•Œå¼€é”€ï¼‰
       max-file-size: 70MB
-      # ÉèÖÃ×ÜÉÏ´«µÄÎÄ¼ş´óĞ¡
+      # è®¾ç½®æ€»ä¸Šä¼ çš„æ–‡ä»¶å¤§å°
       max-request-size: 75MB
-  # ·şÎñÄ£¿é
+  # æœåŠ¡æ¨¡å—
   devtools:
     restart:
-      # ÈÈ²¿Êğ¿ª¹Ø
+      # çƒ­éƒ¨ç½²å¼€å…³
       enabled: true
-  # redis ÅäÖÃ
+  # redis é…ç½®
   redis:
-    # µØÖ·
+    # åœ°å€
     host: 127.0.0.1
-    # ¶Ë¿Ú£¬Ä¬ÈÏÎª6379
+    # ç«¯å£ï¼Œé»˜è®¤ä¸º6379
     port: 6379
-    # Êı¾İ¿âË÷Òı
+    # æ•°æ®åº“ç´¢å¼•
     database: 0
-    # ÃÜÂë£¨Ã»ÓĞ¿ÉÁô¿Õ£©
+    # å¯†ç ï¼ˆæ²¡æœ‰å¯ç•™ç©ºï¼‰
     password: your-redis-password
-    # Á¬½Ó³¬Ê±Ê±¼ä
+    # è¿æ¥è¶…æ—¶æ—¶é—´
     timeout: 10s
     lettuce:
       pool:
-        # Á¬½Ó³ØÖĞµÄ×îĞ¡¿ÕÏĞÁ¬½Ó
+        # è¿æ¥æ± ä¸­çš„æœ€å°ç©ºé—²è¿æ¥
         min-idle: 0
-        # Á¬½Ó³ØÖĞµÄ×î´ó¿ÕÏĞÁ¬½Ó
+        # è¿æ¥æ± ä¸­çš„æœ€å¤§ç©ºé—²è¿æ¥
         max-idle: 8
-        # Á¬½Ó³ØµÄ×î´óÊı¾İ¿âÁ¬½ÓÊı
+        # è¿æ¥æ± çš„æœ€å¤§æ•°æ®åº“è¿æ¥æ•°
         max-active: 8
-        # #Á¬½Ó³Ø×î´ó×èÈûµÈ´ıÊ±¼ä£¨Ê¹ÓÃ¸ºÖµ±íÊ¾Ã»ÓĞÏŞÖÆ£©
+        # #è¿æ¥æ± æœ€å¤§é˜»å¡ç­‰å¾…æ—¶é—´ï¼ˆä½¿ç”¨è´Ÿå€¼è¡¨ç¤ºæ²¡æœ‰é™åˆ¶ï¼‰
         max-wait: -1ms
 
-# tokenÅäÖÃ
+# tokené…ç½®
 token:
-  # ÁîÅÆ×Ô¶¨Òå±êÊ¶
+  # ä»¤ç‰Œè‡ªå®šä¹‰æ ‡è¯†
   header: Authorization
-  # ÁîÅÆÃÜÔ¿£¨ÇëÎñ±Ø¸ü»»ÎªÄã×Ô¼ºµÄËæ»ú×Ö·û´®£©
+  # ä»¤ç‰Œå¯†é’¥ï¼ˆè¯·åŠ¡å¿…æ›´æ¢ä¸ºä½ è‡ªå·±çš„éšæœºå­—ç¬¦ä¸²ï¼‰
   secret: replace-with-your-jwt-secret
-  # ÁîÅÆÓĞĞ§ÆÚ£¨Ä¬ÈÏ30·ÖÖÓ£©
+  # ä»¤ç‰Œæœ‰æ•ˆæœŸï¼ˆé»˜è®¤30åˆ†é’Ÿï¼‰
   expireTime: 30
 
-# MyBatisPlusÅäÖÃ
+# MyBatisPlusé…ç½®
 mybatis-plus:
-  # ËÑË÷Ö¸¶¨°ü±ğÃû
+  # æœç´¢æŒ‡å®šåŒ…åˆ«å
   typeAliasesPackage: org.FlyingSparrow.YiSmartCloud.**.domain
-  # ÅäÖÃmapperµÄÉ¨Ãè£¬ÕÒµ½ËùÓĞµÄmapper.xmlÓ³ÉäÎÄ¼ş
+  # é…ç½®mapperçš„æ‰«æï¼Œæ‰¾åˆ°æ‰€æœ‰çš„mapper.xmlæ˜ å°„æ–‡ä»¶
   mapperLocations: classpath*:mapper/**/*Mapper.xml
-  # È«¾ÖÅäÖÃ
+  # å…¨å±€é…ç½®
   global-config:
     db-config:
-      id-type: auto   #idÉú³É²ßÂÔÎª×ÔÔö
+      id-type: auto   #idç”Ÿæˆç­–ç•¥ä¸ºè‡ªå¢
   configuration:
-    map-underscore-to-camel-case: true    #×Ö¶ÎÓëÊôĞÔ£¬×Ô¶¯×ª»»ÎªÍÕ·åÃüÃû
+    map-underscore-to-camel-case: true    #å­—æ®µä¸å±æ€§ï¼Œè‡ªåŠ¨è½¬æ¢ä¸ºé©¼å³°å‘½å
 
-# PageHelper·ÖÒ³²å¼ş
+# PageHelperåˆ†é¡µæ’ä»¶
 pagehelper:
   helperDialect: mysql
   supportMethodsArguments: true
   params: count=countSql
 
-# SwaggerÅäÖÃ
+# Swaggeré…ç½®
 swagger:
-  # ÊÇ·ñ¿ªÆôswagger
+  # æ˜¯å¦å¼€å¯swagger
   enabled: true
-  # ÇëÇóÇ°×º
+  # è¯·æ±‚å‰ç¼€
   pathMapping: /dev-api
 
-# ·ÀÖ¹XSS¹¥»÷
+# é˜²æ­¢XSSæ”»å‡»
 xss:
-  # ¹ıÂË¿ª¹Ø
+  # è¿‡æ»¤å¼€å…³
   enabled: true
-  # ÅÅ³ıÁ´½Ó£¨¶à¸öÓÃ¶ººÅ·Ö¸ô£©
+  # æ’é™¤é“¾æ¥ï¼ˆå¤šä¸ªç”¨é€—å·åˆ†éš”ï¼‰
   excludes: /system/notice
-  # Æ¥ÅäÁ´½Ó
+  # åŒ¹é…é“¾æ¥
   urlPatterns: /system/*,/monitor/*,/tool/*
 
 aliyun:
@@ -139,7 +139,7 @@ aliyun:
     accessKeySecret: your-access-key-secret
     bucketName: your-bucket-name
 
-# °Ù¶ÈÇ§·« OpenAI ¼æÈİ¶Ô»°£¨Ê¾Àı²Ö¿âÁô¿Õ£»±¾µØ profile »ò»·¾³±äÁ¿ÖĞÌîĞ´£©
+# ç™¾åº¦åƒå¸† OpenAI å…¼å®¹å¯¹è¯ï¼ˆç¤ºä¾‹ä»“åº“ç•™ç©ºï¼›æœ¬åœ° profile æˆ–ç¯å¢ƒå˜é‡ä¸­å¡«å†™ï¼‰
 yi:
   qianfan:
     api-key: ""

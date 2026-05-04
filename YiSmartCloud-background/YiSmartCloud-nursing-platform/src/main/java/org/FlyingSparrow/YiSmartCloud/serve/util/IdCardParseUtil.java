@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.FlyingSparrow.YiSmartCloud.common.utils.StringUtils;
 
 /**
- * 18 Î»´óÂ½Éí·İÖ¤ºÅ½âÎö£¨³öÉúÈÕÆÚ¡¢ĞÔ±ğ¡¢ÄêÁä£©¡£
+ * 18 ä½å¤§é™†èº«ä»½è¯å·è§£æï¼ˆå‡ºç”Ÿæ—¥æœŸã€æ€§åˆ«ã€å¹´é¾„ï¼‰ã€‚
  */
 public final class IdCardParseUtil {
 
@@ -39,7 +39,7 @@ public final class IdCardParseUtil {
     }
 
     /**
-     * ĞÔ±ğ£º0 ÄĞ£¬1 Å®£¨ÓëÏîÄ¿ elder ×Ö¶ÎÔ¼¶¨Ò»ÖÂ£©¡£
+     * æ€§åˆ«ï¼š0 ç”·ï¼Œ1 å¥³ï¼ˆä¸é¡¹ç›® elder å­—æ®µçº¦å®šä¸€è‡´ï¼‰ã€‚
      */
     public static Optional<Integer> genderFrom18(String idCardNo) {
         if (StringUtils.isEmpty(idCardNo)) {

@@ -5,21 +5,21 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * Ìá½»Ìå¼ì±¨¸æ½øĞĞ AI ·ÖÎö£¨Redis ÖĞĞèÒÑÓĞ¸ÃÉí·İÖ¤ºÅ¶ÔÓ¦µÄ PDF ÕıÎÄ£©¡£
+ * æäº¤ä½“æ£€æŠ¥å‘Šè¿›è¡Œ AI åˆ†æï¼ˆRedis ä¸­éœ€å·²æœ‰è¯¥èº«ä»½è¯å·å¯¹åº”çš„ PDF æ­£æ–‡ï¼‰ã€‚
  */
 @Data
-@ApiModel("½¡¿µÆÀ¹À·ÖÎöÇëÇó")
+@ApiModel("å¥åº·è¯„ä¼°åˆ†æè¯·æ±‚")
 public class HealthAssessmentAnalyzeRequest {
 
-    @ApiModelProperty(value = "ÀÏÈËĞÕÃû", required = true)
+    @ApiModelProperty(value = "è€äººå§“å", required = true)
     private String elderName;
 
-    @ApiModelProperty(value = "Éí·İÖ¤ºÅ", required = true)
+    @ApiModelProperty(value = "èº«ä»½è¯å·", required = true)
     private String idCard;
 
-    @ApiModelProperty(value = "Ìå¼ìµ¥Î»", required = true)
+    @ApiModelProperty(value = "ä½“æ£€å•ä½", required = true)
     private String physicalExamInstitution;
 
-    @ApiModelProperty(value = "Ìå¼ì±¨¸æ OSS URL£¨ÉÏ´«½Ó¿Ú·µ»Ø£©", required = true)
+    @ApiModelProperty(value = "ä½“æ£€æŠ¥å‘Š OSS URLï¼ˆä¸Šä¼ æ¥å£è¿”å›ï¼‰", required = true)
     private String physicalReportUrl;
 }

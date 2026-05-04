@@ -40,8 +40,11 @@
         <aliyun.sdk.oss>3.10.2</aliyun.sdk.oss>
         <!-- 百度千帆 OpenAI 兼容接口，见 https://cloud.baidu.com/doc/qianfan-docs/s/nm9l6oc8e -->
         <openai-java.version>0.22.0</openai-java.version>
-        <!-- openai-java 需要 Jackson 2.13+（JsonMapper.Builder#withCoercionConfig），高于 Spring Boot 2.5 默认 -->
-        <jackson-bom.version>2.15.4</jackson-bom.version>
+        <!-- openai-java-client-okhttp 0.22 的 Kotlin 源码依赖 OkHttp 4（HttpUrl.Companion、callTimeout），其 POM 若解析到 3.14.x 会在运行时报 NoSuchFieldError: Companion -->
+        <okhttp.version>4.12.0</okhttp.version>
+        <!-- openai-java-core 0.22 官方 POM 使用 Jackson 2.18.1 + kotlin-stdlib 1.9.23；若仅用 2.15.x 会压低 kotlin 至 1.5.x，与 SDK 字节码不兼容（如 HttpMethod 类初始化失败） -->
+        <jackson-bom.version>2.18.1</jackson-bom.version>
+        <kotlin.version>1.9.23</kotlin.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -81,6 +84,33 @@
                 <version>${jackson-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- 显式锁定版本：Spring Boot 2.5 的 BOM 会压低 Kotlin，导致与 openai-java-core（Kotlin 1.9 编译）不兼容 -->
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib-common</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib-jdk7</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib-jdk8</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-reflect</artifactId>
+                <version>${kotlin.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -308,6 +338,18 @@
                 <groupId>com.openai</groupId>
                 <artifactId>openai-java</artifactId>
                 <version>${openai-java.version}</version>
+            </dependency>
+
+            <!-- 统一 OkHttp 4，避免 openai-java 与错误传递的 okhttp 3.x 二进制不兼容 -->
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>logging-interceptor</artifactId>
+                <version>${okhttp.version}</version>
             </dependency>
            <!-- &lt;!&ndash; 添加 Lombok 依赖管理 &ndash;&gt;
             <dependency>

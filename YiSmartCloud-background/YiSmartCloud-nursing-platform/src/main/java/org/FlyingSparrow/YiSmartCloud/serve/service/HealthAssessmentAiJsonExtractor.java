@@ -3,7 +3,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service;
 import org.FlyingSparrow.YiSmartCloud.common.utils.StringUtils;
 
 /**
- * ´Ó´óÄ£ĞÍ·µ»ØÎÄ±¾ÖĞÌáÈ¡ JSON ¶ÔÏó×Ö·û´®¡£
+ * ä»å¤§æ¨¡å‹è¿”å›æ–‡æœ¬ä¸­æå– JSON å¯¹è±¡å­—ç¬¦ä¸²ã€‚
  */
 public final class HealthAssessmentAiJsonExtractor {
 
