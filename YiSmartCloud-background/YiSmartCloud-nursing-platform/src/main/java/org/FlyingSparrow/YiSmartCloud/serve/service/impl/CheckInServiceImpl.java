@@ -12,6 +12,7 @@ import com.alibaba.fastjson2.JSON;
 import lombok.RequiredArgsConstructor;
 import org.FlyingSparrow.YiSmartCloud.common.exception.base.BaseException;
 import org.FlyingSparrow.YiSmartCloud.common.utils.CodeGenerator;
+import org.FlyingSparrow.YiSmartCloud.common.utils.StringUtils;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.Bed;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.CheckInConfig;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.Contract;
@@ -310,8 +311,13 @@ public class CheckInServiceImpl extends ServiceImpl<CheckInMapper, CheckIn> impl
         // elder_info 字典：1-男，2-女；入住 DTO：0-男，1-女
         elderInfo.setGender(checkInElderDto.getSex() == null ? null : (checkInElderDto.getSex() == 1 ? 2 : 1));
         elderInfo.setContactPhone(checkInElderDto.getPhone());
-        elderInfo.setBirthday(checkInElderDto.getBirthday());
-        elderInfo.setAddress(checkInElderDto.getAddress());
+        String birthday = StringUtils.trim(checkInElderDto.getBirthday());
+        if (StringUtils.isEmpty(birthday)) {
+            birthday = birthdayFromIdCard18(checkInElderDto.getIdCardNo());
+        }
+        elderInfo.setBirthday(StringUtils.isEmpty(birthday) ? null : birthday);
+        String address = StringUtils.trim(checkInElderDto.getAddress());
+        elderInfo.setAddress(StringUtils.isEmpty(address) ? null : address);
         elderInfo.setPortraitImg(checkInElderDto.getImage());
         elderInfo.setIdCardPortraitImg(checkInElderDto.getIdCardPortraitImg());
         elderInfo.setIdCardNationalEmblemImg(checkInElderDto.getIdCardNationalEmblemImg());
@@ -344,5 +350,25 @@ public class CheckInServiceImpl extends ServiceImpl<CheckInMapper, CheckIn> impl
             return null;
         }
         return elderList.stream().max(Comparator.comparing(ElderInfo::getId)).orElse(null);
+    }
+
+    /**
+     * 从 18 位身份证号解析出生日期 yyyy-MM-dd（入住申请未填生日时的兜底）
+     */
+    private String birthdayFromIdCard18(String idCardNo) {
+        if (StringUtils.isEmpty(idCardNo)) {
+            return null;
+        }
+        String digits = idCardNo.trim().replaceAll("\\s+", "");
+        if (digits.length() != 18) {
+            return null;
+        }
+        String ymd = digits.substring(6, 14);
+        for (int i = 0; i < ymd.length(); i++) {
+            if (!Character.isDigit(ymd.charAt(i))) {
+                return null;
+            }
+        }
+        return ymd.substring(0, 4) + "-" + ymd.substring(4, 6) + "-" + ymd.substring(6, 8);
     }
 }

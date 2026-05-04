@@ -9,6 +9,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.domain.VisitRecord;
 import org.FlyingSparrow.YiSmartCloud.serve.service.IVisitRecordService;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import java.util.Arrays;
 
 /**
@@ -30,7 +31,7 @@ public class VisitRecordServiceImpl extends ServiceImpl<VisitRecordMapper, Visit
      */
     @Override
     public VisitRecord selectVisitRecordById(Long id) {
-                return getById(id);
+        return getById(id);
     }
 
     /**
@@ -52,7 +53,7 @@ public class VisitRecordServiceImpl extends ServiceImpl<VisitRecordMapper, Visit
      */
     @Override
     public int insertVisitRecord(VisitRecord visitRecord) {
-                        return save(visitRecord) == true? 1 : 0;
+        return save(visitRecord) == true ? 1 : 0;
     }
 
     /**
@@ -63,7 +64,7 @@ public class VisitRecordServiceImpl extends ServiceImpl<VisitRecordMapper, Visit
      */
     @Override
     public int updateVisitRecord(VisitRecord visitRecord) {
-                return updateById(visitRecord) == true ? 1 : 0;
+        return updateById(visitRecord) == true ? 1 : 0;
     }
 
     /**
@@ -74,7 +75,7 @@ public class VisitRecordServiceImpl extends ServiceImpl<VisitRecordMapper, Visit
      */
     @Override
     public int deleteVisitRecordByIds(Long[] ids) {
-                return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
+        return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
     }
 
     /**
@@ -85,6 +86,6 @@ public class VisitRecordServiceImpl extends ServiceImpl<VisitRecordMapper, Visit
      */
     @Override
     public int deleteVisitRecordById(Long id) {
-                return removeById(id) == true ? 1 : 0;
+        return removeById(id) == true ? 1 : 0;
     }
 }

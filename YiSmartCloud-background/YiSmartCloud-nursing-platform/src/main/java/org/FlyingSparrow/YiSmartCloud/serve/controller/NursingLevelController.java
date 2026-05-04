@@ -114,10 +114,11 @@ public class NursingLevelController extends BaseController {
 
     /**
      * 查询所有的护理等级
+     *
      * @return
      */
     @GetMapping("/listAll")
-    public R<List<NursingLevel>> listAll(){
+    public R<List<NursingLevel>> listAll() {
         return R.ok(nursingLevelService.listAll());
     }
 }

@@ -13,6 +13,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingProject;
 import org.FlyingSparrow.YiSmartCloud.serve.service.INursingProjectService;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import java.util.Arrays;
 
 /**
@@ -36,7 +37,7 @@ public class NursingProjectServiceImpl extends ServiceImpl<NursingProjectMapper,
      */
     @Override
     public NursingProject selectNursingProjectById(Long id) {
-                return getById(id);
+        return getById(id);
     }
 
     /**

@@ -1,7 +1,9 @@
 package org.FlyingSparrow.YiSmartCloud.serve.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+
 import java.util.List;
+
 import org.FlyingSparrow.YiSmartCloud.serve.domain.Floor;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.TreeVo;
 
@@ -62,6 +64,7 @@ public interface IFloorService extends IService<Floor> {
 
     /**
      * Query rooms and beds by bed status
+     *
      * @param status Bed status
      * @return Tree structure of rooms and beds
      */

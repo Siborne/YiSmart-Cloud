@@ -52,9 +52,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="idCard != null and idCard != ''">id_card,</if>
             <if test="age != null">age,</if>
             <if test="gender != null">gender,</if>
-            <if test="birthday != null and birthday != ''">birthday,</if>
+            <if test="birthday != null">birthday,</if>
             <if test="contactPhone != null">contact_phone,</if>
-            <if test="address != null and address != ''">address,</if>
+            <if test="address != null">address,</if>
             <if test="portraitImg != null and portraitImg != ''">portrait_img,</if>
             <if test="idCardPortraitImg != null and idCardPortraitImg != ''">id_card_portrait_img,</if>
             <if test="idCardNationalEmblemImg != null and idCardNationalEmblemImg != ''">id_card_national_emblem_img,</if>
@@ -69,9 +69,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="idCard != null and idCard != ''">#{idCard},</if>
             <if test="age != null">#{age},</if>
             <if test="gender != null">#{gender},</if>
-            <if test="birthday != null and birthday != ''">#{birthday},</if>
+            <if test="birthday != null">#{birthday},</if>
             <if test="contactPhone != null">#{contactPhone},</if>
-            <if test="address != null and address != ''">#{address},</if>
+            <if test="address != null">#{address},</if>
             <if test="portraitImg != null and portraitImg != ''">#{portraitImg},</if>
             <if test="idCardPortraitImg != null and idCardPortraitImg != ''">#{idCardPortraitImg},</if>
             <if test="idCardNationalEmblemImg != null and idCardNationalEmblemImg != ''">#{idCardNationalEmblemImg},</if>

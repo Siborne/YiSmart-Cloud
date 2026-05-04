@@ -185,6 +185,20 @@ export const dynamicRoutes = [
         meta: { title: '入住申请详情', activeMenu: '/enterQuit/checkIn' }
       }
     ]
+  },
+  {
+    path: '/serve/assessment-view',
+    component: Layout,
+    hidden: true,
+    permissions: ['serve:assessment:query'],
+    children: [
+      {
+        path: 'index/:id',
+        component: () => import('@/views/serve/assessment/detail'),
+        name: 'HealthAssessmentDetail',
+        meta: { title: '健康管理', activeMenu: '/assessment' }
+      }
+    ]
   }
 ]
 

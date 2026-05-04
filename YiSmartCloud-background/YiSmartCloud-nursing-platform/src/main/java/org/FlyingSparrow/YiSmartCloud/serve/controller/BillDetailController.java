@@ -3,8 +3,10 @@ package org.FlyingSparrow.YiSmartCloud.serve.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,23 +35,22 @@ import lombok.RequiredArgsConstructor;
  */
 @RestController
 @RequestMapping("/serve/detail")
-@Api(tags =  "费用账单明细相关接口")
+@Api(tags = "费用账单明细相关接口")
 @RequiredArgsConstructor
-public class BillDetailController extends BaseController
-{
+public class BillDetailController extends BaseController {
     private final IBillDetailService billDetailService;
 
-/**
- * 查询费用账单明细列表
- */
-@PreAuthorize("@ss.hasPermi('serve:detail:list')")
-@GetMapping("/list")
-@ApiOperation("查询费用账单明细列表")
-public TableDataInfo list(BillDetail billDetail) {
-    startPage();
-    List<BillDetail> list = billDetailService.selectBillDetailList(billDetail);
-    return getDataTable(list);
-}
+    /**
+     * 查询费用账单明细列表
+     */
+    @PreAuthorize("@ss.hasPermi('serve:detail:list')")
+    @GetMapping("/list")
+    @ApiOperation("查询费用账单明细列表")
+    public TableDataInfo list(BillDetail billDetail) {
+        startPage();
+        List<BillDetail> list = billDetailService.selectBillDetailList(billDetail);
+        return getDataTable(list);
+    }
 
     /**
      * 导出费用账单明细列表
@@ -58,8 +59,7 @@ public TableDataInfo list(BillDetail billDetail) {
     @Log(title = "费用账单明细", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ApiOperation("导出费用账单明细列表")
-    public void export(HttpServletResponse response, BillDetail billDetail)
-    {
+    public void export(HttpServletResponse response, BillDetail billDetail) {
         List<BillDetail> list = billDetailService.selectBillDetailList(billDetail);
         ExcelUtil<BillDetail> util = new ExcelUtil<BillDetail>(BillDetail.class);
         util.exportExcel(response, list, "费用账单明细数据");
@@ -72,8 +72,7 @@ public TableDataInfo list(BillDetail billDetail) {
     @GetMapping(value = "/{id}")
     @ApiOperation("获取费用账单明细详细信息")
     public AjaxResult getInfo(@ApiParam(value = "费用账单明细ID", required = true)
-                              @PathVariable("id") Long id)
-    {
+                              @PathVariable("id") Long id) {
         return success(billDetailService.selectBillDetailById(id));
     }
 
@@ -84,8 +83,7 @@ public TableDataInfo list(BillDetail billDetail) {
     @Log(title = "费用账单明细", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增费用账单明细")
-    public AjaxResult add(@ApiParam(value = "费用账单明细实体", required = true) @RequestBody BillDetail billDetail)
-    {
+    public AjaxResult add(@ApiParam(value = "费用账单明细实体", required = true) @RequestBody BillDetail billDetail) {
         return toAjax(billDetailService.insertBillDetail(billDetail));
     }
 
@@ -96,8 +94,7 @@ public TableDataInfo list(BillDetail billDetail) {
     @Log(title = "费用账单明细", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("修改费用账单明细")
-    public AjaxResult edit(@ApiParam(value = "费用账单明细实体", required = true)  @RequestBody BillDetail billDetail)
-    {
+    public AjaxResult edit(@ApiParam(value = "费用账单明细实体", required = true) @RequestBody BillDetail billDetail) {
         return toAjax(billDetailService.updateBillDetail(billDetail));
     }
 
@@ -108,8 +105,7 @@ public TableDataInfo list(BillDetail billDetail) {
     @Log(title = "费用账单明细", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     @ApiOperation("删除费用账单明细")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(billDetailService.deleteBillDetailByIds(ids));
     }
 }

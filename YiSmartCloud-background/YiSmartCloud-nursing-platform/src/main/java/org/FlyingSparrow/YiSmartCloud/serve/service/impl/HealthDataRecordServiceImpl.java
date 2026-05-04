@@ -9,6 +9,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.domain.HealthDataRecord;
 import org.FlyingSparrow.YiSmartCloud.serve.service.IHealthDataRecordService;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import java.util.Arrays;
 
 /**
@@ -30,7 +31,7 @@ public class HealthDataRecordServiceImpl extends ServiceImpl<HealthDataRecordMap
      */
     @Override
     public HealthDataRecord selectHealthDataRecordById(Long id) {
-                return getById(id);
+        return getById(id);
     }
 
     /**
@@ -52,7 +53,7 @@ public class HealthDataRecordServiceImpl extends ServiceImpl<HealthDataRecordMap
      */
     @Override
     public int insertHealthDataRecord(HealthDataRecord healthDataRecord) {
-                        return save(healthDataRecord) == true? 1 : 0;
+        return save(healthDataRecord) == true ? 1 : 0;
     }
 
     /**
@@ -63,7 +64,7 @@ public class HealthDataRecordServiceImpl extends ServiceImpl<HealthDataRecordMap
      */
     @Override
     public int updateHealthDataRecord(HealthDataRecord healthDataRecord) {
-                return updateById(healthDataRecord) == true ? 1 : 0;
+        return updateById(healthDataRecord) == true ? 1 : 0;
     }
 
     /**
@@ -74,7 +75,7 @@ public class HealthDataRecordServiceImpl extends ServiceImpl<HealthDataRecordMap
      */
     @Override
     public int deleteHealthDataRecordByIds(Long[] ids) {
-                return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
+        return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
     }
 
     /**
@@ -85,6 +86,6 @@ public class HealthDataRecordServiceImpl extends ServiceImpl<HealthDataRecordMap
      */
     @Override
     public int deleteHealthDataRecordById(Long id) {
-                return removeById(id) == true ? 1 : 0;
+        return removeById(id) == true ? 1 : 0;
     }
 }

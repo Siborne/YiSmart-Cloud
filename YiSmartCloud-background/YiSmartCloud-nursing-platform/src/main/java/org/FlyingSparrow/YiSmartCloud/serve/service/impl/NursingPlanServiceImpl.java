@@ -50,7 +50,7 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
         //查询护理计划
         NursingPlan nursingPlan = nursingPlanMapper.selectNursingPlanById(id);
         NursingPlanVo nursingPlanVo = new NursingPlanVo();
-        BeanUtils.copyProperties(nursingPlan,nursingPlanVo);
+        BeanUtils.copyProperties(nursingPlan, nursingPlanVo);
 
         //根据护理计划ID查询护理项目的关系
         List<NursingProjectPlanVo> list = nursingProjectPlanMapper.selectByNursingPlanId(id);
@@ -101,7 +101,7 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
         nursingPlanMapper.insertNursingPlan(nursingPlan);
 
         // 2.批量保存护理计划和护理项目的对应关系
-        int count = nursingProjectPlanMapper.batchInsert(dto.getProjectPlans(),nursingPlan.getId());
+        int count = nursingProjectPlanMapper.batchInsert(dto.getProjectPlans(), nursingPlan.getId());
         evictNursingPlanAllCache();
         return count == 0 ? 0 : 1;
     }
@@ -114,19 +114,18 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int updateNursingPlan(NursingPlanDto dto)
-    {
+    public int updateNursingPlan(NursingPlanDto dto) {
         try {
             //属性拷贝
             NursingPlan nursingPlan = new NursingPlan();
-            BeanUtils.copyProperties(dto,nursingPlan);
+            BeanUtils.copyProperties(dto, nursingPlan);
 
             //判断dto中的项目列表为空，如果不为空，则先删除护理计划与护理项目的关系，然后重新批量添加
-            if(dto.getProjectPlans() != null && dto.getProjectPlans().size() > 0){
+            if (dto.getProjectPlans() != null && dto.getProjectPlans().size() > 0) {
                 //删除护理计划与护理项目的关系
                 nursingProjectPlanMapper.deleteByPlanId(dto.getId());
                 //批量添加护理计划与护理项目的关系
-                nursingProjectPlanMapper.batchInsert(dto.getProjectPlans(),dto.getId());
+                nursingProjectPlanMapper.batchInsert(dto.getProjectPlans(), dto.getId());
             }
 
             //别管项目列表是否为空，都要修改护理计划

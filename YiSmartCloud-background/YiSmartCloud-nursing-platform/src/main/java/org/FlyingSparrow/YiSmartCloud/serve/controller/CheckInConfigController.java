@@ -3,8 +3,10 @@ package org.FlyingSparrow.YiSmartCloud.serve.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,23 +35,22 @@ import lombok.RequiredArgsConstructor;
  */
 @RestController
 @RequestMapping("/serve/checkInConfig")
-@Api(tags =  "入住配置相关接口")
+@Api(tags = "入住配置相关接口")
 @RequiredArgsConstructor
-public class CheckInConfigController extends BaseController
-{
+public class CheckInConfigController extends BaseController {
     private final ICheckInConfigService checkInConfigService;
 
-/**
- * 查询入住配置列表
- */
-@PreAuthorize("@ss.hasPermi('serve:checkInConfig:list')")
-@GetMapping("/list")
-@ApiOperation("查询入住配置列表")
-public TableDataInfo list(CheckInConfig checkInConfig) {
-    startPage();
-    List<CheckInConfig> list = checkInConfigService.selectCheckInConfigList(checkInConfig);
-    return getDataTable(list);
-}
+    /**
+     * 查询入住配置列表
+     */
+    @PreAuthorize("@ss.hasPermi('serve:checkInConfig:list')")
+    @GetMapping("/list")
+    @ApiOperation("查询入住配置列表")
+    public TableDataInfo list(CheckInConfig checkInConfig) {
+        startPage();
+        List<CheckInConfig> list = checkInConfigService.selectCheckInConfigList(checkInConfig);
+        return getDataTable(list);
+    }
 
     /**
      * 导出入住配置列表
@@ -58,8 +59,7 @@ public TableDataInfo list(CheckInConfig checkInConfig) {
     @Log(title = "入住配置", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ApiOperation("导出入住配置列表")
-    public void export(HttpServletResponse response, CheckInConfig checkInConfig)
-    {
+    public void export(HttpServletResponse response, CheckInConfig checkInConfig) {
         List<CheckInConfig> list = checkInConfigService.selectCheckInConfigList(checkInConfig);
         ExcelUtil<CheckInConfig> util = new ExcelUtil<CheckInConfig>(CheckInConfig.class);
         util.exportExcel(response, list, "入住配置数据");
@@ -72,8 +72,7 @@ public TableDataInfo list(CheckInConfig checkInConfig) {
     @GetMapping(value = "/{id}")
     @ApiOperation("获取入住配置详细信息")
     public AjaxResult getInfo(@ApiParam(value = "入住配置ID", required = true)
-                              @PathVariable("id") Long id)
-    {
+                              @PathVariable("id") Long id) {
         return success(checkInConfigService.selectCheckInConfigById(id));
     }
 
@@ -84,8 +83,7 @@ public TableDataInfo list(CheckInConfig checkInConfig) {
     @Log(title = "入住配置", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增入住配置")
-    public AjaxResult add(@ApiParam(value = "入住配置实体", required = true) @RequestBody CheckInConfig checkInConfig)
-    {
+    public AjaxResult add(@ApiParam(value = "入住配置实体", required = true) @RequestBody CheckInConfig checkInConfig) {
         return toAjax(checkInConfigService.insertCheckInConfig(checkInConfig));
     }
 
@@ -96,8 +94,7 @@ public TableDataInfo list(CheckInConfig checkInConfig) {
     @Log(title = "入住配置", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("修改入住配置")
-    public AjaxResult edit(@ApiParam(value = "入住配置实体", required = true)  @RequestBody CheckInConfig checkInConfig)
-    {
+    public AjaxResult edit(@ApiParam(value = "入住配置实体", required = true) @RequestBody CheckInConfig checkInConfig) {
         return toAjax(checkInConfigService.updateCheckInConfig(checkInConfig));
     }
 
@@ -108,8 +105,7 @@ public TableDataInfo list(CheckInConfig checkInConfig) {
     @Log(title = "入住配置", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     @ApiOperation("删除入住配置")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(checkInConfigService.deleteCheckInConfigByIds(ids));
     }
 }

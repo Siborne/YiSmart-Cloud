@@ -3,8 +3,10 @@ package org.FlyingSparrow.YiSmartCloud.serve.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,23 +35,22 @@ import lombok.RequiredArgsConstructor;
  */
 @RestController
 @RequestMapping("/serve/info")
-@Api(tags =  "老人档案相关接口")
+@Api(tags = "老人档案相关接口")
 @RequiredArgsConstructor
-public class ElderInfoController extends BaseController
-{
+public class ElderInfoController extends BaseController {
     private final IElderInfoService elderInfoService;
 
-/**
- * 查询老人档案列表
- */
-@PreAuthorize("@ss.hasPermi('serve:info:list')")
-@GetMapping("/list")
-@ApiOperation("查询老人档案列表")
-public TableDataInfo list(ElderInfo elderInfo) {
-    startPage();
-    List<ElderInfo> list = elderInfoService.selectElderInfoList(elderInfo);
-    return getDataTable(list);
-}
+    /**
+     * 查询老人档案列表
+     */
+    @PreAuthorize("@ss.hasPermi('serve:info:list')")
+    @GetMapping("/list")
+    @ApiOperation("查询老人档案列表")
+    public TableDataInfo list(ElderInfo elderInfo) {
+        startPage();
+        List<ElderInfo> list = elderInfoService.selectElderInfoList(elderInfo);
+        return getDataTable(list);
+    }
 
     /**
      * 导出老人档案列表
@@ -58,8 +59,7 @@ public TableDataInfo list(ElderInfo elderInfo) {
     @Log(title = "老人档案", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ApiOperation("导出老人档案列表")
-    public void export(HttpServletResponse response, ElderInfo elderInfo)
-    {
+    public void export(HttpServletResponse response, ElderInfo elderInfo) {
         List<ElderInfo> list = elderInfoService.selectElderInfoList(elderInfo);
         ExcelUtil<ElderInfo> util = new ExcelUtil<ElderInfo>(ElderInfo.class);
         util.exportExcel(response, list, "老人档案数据");
@@ -72,8 +72,7 @@ public TableDataInfo list(ElderInfo elderInfo) {
     @GetMapping(value = "/{id}")
     @ApiOperation("获取老人档案详细信息")
     public AjaxResult getInfo(@ApiParam(value = "老人档案ID", required = true)
-                              @PathVariable("id") Long id)
-    {
+                              @PathVariable("id") Long id) {
         return success(elderInfoService.selectElderInfoById(id));
     }
 
@@ -84,8 +83,7 @@ public TableDataInfo list(ElderInfo elderInfo) {
     @Log(title = "老人档案", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增老人档案")
-    public AjaxResult add(@ApiParam(value = "老人档案实体", required = true) @RequestBody ElderInfo elderInfo)
-    {
+    public AjaxResult add(@ApiParam(value = "老人档案实体", required = true) @RequestBody ElderInfo elderInfo) {
         return toAjax(elderInfoService.insertElderInfo(elderInfo));
     }
 
@@ -96,8 +94,7 @@ public TableDataInfo list(ElderInfo elderInfo) {
     @Log(title = "老人档案", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("修改老人档案")
-    public AjaxResult edit(@ApiParam(value = "老人档案实体", required = true)  @RequestBody ElderInfo elderInfo)
-    {
+    public AjaxResult edit(@ApiParam(value = "老人档案实体", required = true) @RequestBody ElderInfo elderInfo) {
         return toAjax(elderInfoService.updateElderInfo(elderInfo));
     }
 
@@ -108,8 +105,7 @@ public TableDataInfo list(ElderInfo elderInfo) {
     @Log(title = "老人档案", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     @ApiOperation("删除老人档案")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(elderInfoService.deleteElderInfoByIds(ids));
     }
 }

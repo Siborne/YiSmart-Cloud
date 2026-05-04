@@ -9,6 +9,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.domain.CheckInRecord;
 import org.FlyingSparrow.YiSmartCloud.serve.service.ICheckInRecordService;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import java.util.Arrays;
 
 /**
@@ -30,7 +31,7 @@ public class CheckInRecordServiceImpl extends ServiceImpl<CheckInRecordMapper, C
      */
     @Override
     public CheckInRecord selectCheckInRecordById(Long id) {
-                return getById(id);
+        return getById(id);
     }
 
     /**
@@ -52,7 +53,7 @@ public class CheckInRecordServiceImpl extends ServiceImpl<CheckInRecordMapper, C
      */
     @Override
     public int insertCheckInRecord(CheckInRecord checkInRecord) {
-                        return save(checkInRecord) == true? 1 : 0;
+        return save(checkInRecord) == true ? 1 : 0;
     }
 
     /**
@@ -63,7 +64,7 @@ public class CheckInRecordServiceImpl extends ServiceImpl<CheckInRecordMapper, C
      */
     @Override
     public int updateCheckInRecord(CheckInRecord checkInRecord) {
-                return updateById(checkInRecord) == true ? 1 : 0;
+        return updateById(checkInRecord) == true ? 1 : 0;
     }
 
     /**
@@ -74,7 +75,7 @@ public class CheckInRecordServiceImpl extends ServiceImpl<CheckInRecordMapper, C
      */
     @Override
     public int deleteCheckInRecordByIds(Long[] ids) {
-                return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
+        return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
     }
 
     /**
@@ -85,6 +86,6 @@ public class CheckInRecordServiceImpl extends ServiceImpl<CheckInRecordMapper, C
      */
     @Override
     public int deleteCheckInRecordById(Long id) {
-                return removeById(id) == true ? 1 : 0;
+        return removeById(id) == true ? 1 : 0;
     }
 }

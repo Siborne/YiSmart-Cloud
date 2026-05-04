@@ -9,6 +9,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.domain.ElderInfo;
 import org.FlyingSparrow.YiSmartCloud.serve.service.IElderInfoService;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import java.util.Arrays;
 
 /**
@@ -30,7 +31,7 @@ public class ElderInfoServiceImpl extends ServiceImpl<ElderInfoMapper, ElderInfo
      */
     @Override
     public ElderInfo selectElderInfoById(Long id) {
-                return getById(id);
+        return getById(id);
     }
 
     /**
@@ -52,7 +53,7 @@ public class ElderInfoServiceImpl extends ServiceImpl<ElderInfoMapper, ElderInfo
      */
     @Override
     public int insertElderInfo(ElderInfo elderInfo) {
-                        return save(elderInfo) == true? 1 : 0;
+        return save(elderInfo) == true ? 1 : 0;
     }
 
     /**
@@ -63,7 +64,7 @@ public class ElderInfoServiceImpl extends ServiceImpl<ElderInfoMapper, ElderInfo
      */
     @Override
     public int updateElderInfo(ElderInfo elderInfo) {
-                return updateById(elderInfo) == true ? 1 : 0;
+        return updateById(elderInfo) == true ? 1 : 0;
     }
 
     /**
@@ -74,7 +75,7 @@ public class ElderInfoServiceImpl extends ServiceImpl<ElderInfoMapper, ElderInfo
      */
     @Override
     public int deleteElderInfoByIds(Long[] ids) {
-                return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
+        return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
     }
 
     /**
@@ -85,6 +86,6 @@ public class ElderInfoServiceImpl extends ServiceImpl<ElderInfoMapper, ElderInfo
      */
     @Override
     public int deleteElderInfoById(Long id) {
-                return removeById(id) == true ? 1 : 0;
+        return removeById(id) == true ? 1 : 0;
     }
 }

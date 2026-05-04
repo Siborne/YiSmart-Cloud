@@ -38,6 +38,10 @@
         <mybatis-plus-spring-boot.version>3.5.2</mybatis-plus-spring-boot.version>
         <lombok.version>1.18.30</lombok.version>
         <aliyun.sdk.oss>3.10.2</aliyun.sdk.oss>
+        <!-- 百度千帆 OpenAI 兼容接口，见 https://cloud.baidu.com/doc/qianfan-docs/s/nm9l6oc8e -->
+        <openai-java.version>0.22.0</openai-java.version>
+        <!-- openai-java 需要 Jackson 2.13+（JsonMapper.Builder#withCoercionConfig），高于 Spring Boot 2.5 默认 -->
+        <jackson-bom.version>2.15.4</jackson-bom.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -69,6 +73,54 @@
                 <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson-bom.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-bom.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson-bom.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-kotlin</artifactId>
+                <version>${jackson-bom.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson-bom.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jdk8</artifactId>
+                <version>${jackson-bom.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-parameter-names</artifactId>
+                <version>${jackson-bom.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-yaml</artifactId>
+                <version>${jackson-bom.version}</version>
             </dependency>
 
             <!-- 覆盖logback的依赖配置-->
@@ -251,6 +303,12 @@
                 <artifactId>aliyun-sdk-oss</artifactId>
                 <version>${aliyun.sdk.oss}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.openai</groupId>
+                <artifactId>openai-java</artifactId>
+                <version>${openai-java.version}</version>
+            </dependency>
            <!-- &lt;!&ndash; 添加 Lombok 依赖管理 &ndash;&gt;
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -275,6 +333,19 @@
     <packaging>pom</packaging>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.2.5</version>
+                    <configuration>
+                        <!-- 多模块下 -Dtest=SingleTest 时，无该测试的模块不失败 -->
+                        <failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -5,6 +5,7 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.common.auth.CredentialsProviderFactory;
 import com.aliyun.oss.common.auth.EnvironmentVariableCredentialsProvider;
 import com.aliyun.oss.model.DeleteObjectsRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +15,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Component
+@AllArgsConstructor
 public class AliyunOSSOperator {
-    @Autowired
-    private AliyunOSSProperties ossProperties;
+
+    private final AliyunOSSProperties ossProperties;
 
     public String upload(byte[] content, String originalFilename) throws Exception {
         String endpoint = ossProperties.getEndpoint();

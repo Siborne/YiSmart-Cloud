@@ -3,8 +3,10 @@ package org.FlyingSparrow.YiSmartCloud.serve.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,23 +35,22 @@ import lombok.RequiredArgsConstructor;
  */
 @RestController
 @RequestMapping("/serve/visitRecord")
-@Api(tags =  "访客预约记录相关接口")
+@Api(tags = "访客预约记录相关接口")
 @RequiredArgsConstructor
-public class VisitRecordController extends BaseController
-{
+public class VisitRecordController extends BaseController {
     private final IVisitRecordService visitRecordService;
 
-/**
- * 查询访客预约记录列表
- */
-@PreAuthorize("@ss.hasPermi('serve:visitRecord:list')")
-@GetMapping("/list")
-@ApiOperation("查询访客预约记录列表")
-public TableDataInfo list(VisitRecord visitRecord) {
-    startPage();
-    List<VisitRecord> list = visitRecordService.selectVisitRecordList(visitRecord);
-    return getDataTable(list);
-}
+    /**
+     * 查询访客预约记录列表
+     */
+    @PreAuthorize("@ss.hasPermi('serve:visitRecord:list')")
+    @GetMapping("/list")
+    @ApiOperation("查询访客预约记录列表")
+    public TableDataInfo list(VisitRecord visitRecord) {
+        startPage();
+        List<VisitRecord> list = visitRecordService.selectVisitRecordList(visitRecord);
+        return getDataTable(list);
+    }
 
     /**
      * 导出访客预约记录列表
@@ -58,8 +59,7 @@ public TableDataInfo list(VisitRecord visitRecord) {
     @Log(title = "访客预约记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ApiOperation("导出访客预约记录列表")
-    public void export(HttpServletResponse response, VisitRecord visitRecord)
-    {
+    public void export(HttpServletResponse response, VisitRecord visitRecord) {
         List<VisitRecord> list = visitRecordService.selectVisitRecordList(visitRecord);
         ExcelUtil<VisitRecord> util = new ExcelUtil<VisitRecord>(VisitRecord.class);
         util.exportExcel(response, list, "访客预约记录数据");
@@ -72,8 +72,7 @@ public TableDataInfo list(VisitRecord visitRecord) {
     @GetMapping(value = "/{id}")
     @ApiOperation("获取访客预约记录详细信息")
     public AjaxResult getInfo(@ApiParam(value = "访客预约记录ID", required = true)
-                              @PathVariable("id") Long id)
-    {
+                              @PathVariable("id") Long id) {
         return success(visitRecordService.selectVisitRecordById(id));
     }
 
@@ -84,8 +83,7 @@ public TableDataInfo list(VisitRecord visitRecord) {
     @Log(title = "访客预约记录", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增访客预约记录")
-    public AjaxResult add(@ApiParam(value = "访客预约记录实体", required = true) @RequestBody VisitRecord visitRecord)
-    {
+    public AjaxResult add(@ApiParam(value = "访客预约记录实体", required = true) @RequestBody VisitRecord visitRecord) {
         return toAjax(visitRecordService.insertVisitRecord(visitRecord));
     }
 
@@ -96,8 +94,7 @@ public TableDataInfo list(VisitRecord visitRecord) {
     @Log(title = "访客预约记录", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("修改访客预约记录")
-    public AjaxResult edit(@ApiParam(value = "访客预约记录实体", required = true)  @RequestBody VisitRecord visitRecord)
-    {
+    public AjaxResult edit(@ApiParam(value = "访客预约记录实体", required = true) @RequestBody VisitRecord visitRecord) {
         return toAjax(visitRecordService.updateVisitRecord(visitRecord));
     }
 
@@ -108,8 +105,7 @@ public TableDataInfo list(VisitRecord visitRecord) {
     @Log(title = "访客预约记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     @ApiOperation("删除访客预约记录")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(visitRecordService.deleteVisitRecordByIds(ids));
     }
 }

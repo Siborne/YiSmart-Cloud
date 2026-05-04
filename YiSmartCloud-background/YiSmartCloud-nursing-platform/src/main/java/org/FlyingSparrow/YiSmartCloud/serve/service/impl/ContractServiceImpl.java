@@ -11,6 +11,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.domain.Contract;
 import org.FlyingSparrow.YiSmartCloud.serve.service.IContractService;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import java.util.Arrays;
 
 /**
@@ -32,7 +33,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      */
     @Override
     public Contract selectContractById(Long id) {
-                return getById(id);
+        return getById(id);
     }
 
     /**
@@ -54,7 +55,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      */
     @Override
     public int insertContract(Contract contract) {
-                        return save(contract) == true? 1 : 0;
+        return save(contract) == true ? 1 : 0;
     }
 
     /**
@@ -65,7 +66,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      */
     @Override
     public int updateContract(Contract contract) {
-                return updateById(contract) == true ? 1 : 0;
+        return updateById(contract) == true ? 1 : 0;
     }
 
     /**
@@ -76,7 +77,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      */
     @Override
     public int deleteContractByIds(Long[] ids) {
-                return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
+        return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
     }
 
     /**
@@ -87,7 +88,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
      */
     @Override
     public int deleteContractById(Long id) {
-                return removeById(id) == true ? 1 : 0;
+        return removeById(id) == true ? 1 : 0;
     }
 
     /**
@@ -101,7 +102,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
                 .le(Contract::getStartDate, LocalDateTime.now()));
 
         //2.修改状态为1
-        list.forEach(item->{
+        list.forEach(item -> {
             item.setStatus(1);
         });
 

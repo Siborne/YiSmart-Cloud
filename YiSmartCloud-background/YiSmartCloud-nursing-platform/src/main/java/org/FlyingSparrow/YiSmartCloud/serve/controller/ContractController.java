@@ -3,8 +3,10 @@ package org.FlyingSparrow.YiSmartCloud.serve.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,23 +35,22 @@ import lombok.RequiredArgsConstructor;
  */
 @RestController
 @RequestMapping("/serve/contract")
-@Api(tags =  "合同相关接口")
+@Api(tags = "合同相关接口")
 @RequiredArgsConstructor
-public class ContractController extends BaseController
-{
+public class ContractController extends BaseController {
     private final IContractService contractService;
 
-/**
- * 查询合同列表
- */
-@PreAuthorize("@ss.hasPermi('serve:contract:list')")
-@GetMapping("/list")
-@ApiOperation("查询合同列表")
-public TableDataInfo list(Contract contract) {
-    startPage();
-    List<Contract> list = contractService.selectContractList(contract);
-    return getDataTable(list);
-}
+    /**
+     * 查询合同列表
+     */
+    @PreAuthorize("@ss.hasPermi('serve:contract:list')")
+    @GetMapping("/list")
+    @ApiOperation("查询合同列表")
+    public TableDataInfo list(Contract contract) {
+        startPage();
+        List<Contract> list = contractService.selectContractList(contract);
+        return getDataTable(list);
+    }
 
     /**
      * 导出合同列表
@@ -58,8 +59,7 @@ public TableDataInfo list(Contract contract) {
     @Log(title = "合同", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ApiOperation("导出合同列表")
-    public void export(HttpServletResponse response, Contract contract)
-    {
+    public void export(HttpServletResponse response, Contract contract) {
         List<Contract> list = contractService.selectContractList(contract);
         ExcelUtil<Contract> util = new ExcelUtil<Contract>(Contract.class);
         util.exportExcel(response, list, "合同数据");
@@ -72,8 +72,7 @@ public TableDataInfo list(Contract contract) {
     @GetMapping(value = "/{id}")
     @ApiOperation("获取合同详细信息")
     public AjaxResult getInfo(@ApiParam(value = "合同ID", required = true)
-                              @PathVariable("id") Long id)
-    {
+                              @PathVariable("id") Long id) {
         return success(contractService.selectContractById(id));
     }
 
@@ -84,8 +83,7 @@ public TableDataInfo list(Contract contract) {
     @Log(title = "合同", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增合同")
-    public AjaxResult add(@ApiParam(value = "合同实体", required = true) @RequestBody Contract contract)
-    {
+    public AjaxResult add(@ApiParam(value = "合同实体", required = true) @RequestBody Contract contract) {
         return toAjax(contractService.insertContract(contract));
     }
 
@@ -96,8 +94,7 @@ public TableDataInfo list(Contract contract) {
     @Log(title = "合同", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("修改合同")
-    public AjaxResult edit(@ApiParam(value = "合同实体", required = true)  @RequestBody Contract contract)
-    {
+    public AjaxResult edit(@ApiParam(value = "合同实体", required = true) @RequestBody Contract contract) {
         return toAjax(contractService.updateContract(contract));
     }
 
@@ -108,8 +105,7 @@ public TableDataInfo list(Contract contract) {
     @Log(title = "合同", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     @ApiOperation("删除合同")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(contractService.deleteContractByIds(ids));
     }
 }

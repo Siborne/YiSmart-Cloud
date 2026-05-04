@@ -9,6 +9,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.domain.BillDetail;
 import org.FlyingSparrow.YiSmartCloud.serve.service.IBillDetailService;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import java.util.Arrays;
 
 /**
@@ -30,7 +31,7 @@ public class BillDetailServiceImpl extends ServiceImpl<BillDetailMapper, BillDet
      */
     @Override
     public BillDetail selectBillDetailById(Long id) {
-                return getById(id);
+        return getById(id);
     }
 
     /**
@@ -52,7 +53,7 @@ public class BillDetailServiceImpl extends ServiceImpl<BillDetailMapper, BillDet
      */
     @Override
     public int insertBillDetail(BillDetail billDetail) {
-                        return save(billDetail) == true? 1 : 0;
+        return save(billDetail) == true ? 1 : 0;
     }
 
     /**
@@ -63,7 +64,7 @@ public class BillDetailServiceImpl extends ServiceImpl<BillDetailMapper, BillDet
      */
     @Override
     public int updateBillDetail(BillDetail billDetail) {
-                return updateById(billDetail) == true ? 1 : 0;
+        return updateById(billDetail) == true ? 1 : 0;
     }
 
     /**
@@ -74,7 +75,7 @@ public class BillDetailServiceImpl extends ServiceImpl<BillDetailMapper, BillDet
      */
     @Override
     public int deleteBillDetailByIds(Long[] ids) {
-                return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
+        return removeByIds(Arrays.asList(ids)) == true ? 1 : 0;
     }
 
     /**
@@ -85,6 +86,6 @@ public class BillDetailServiceImpl extends ServiceImpl<BillDetailMapper, BillDet
      */
     @Override
     public int deleteBillDetailById(Long id) {
-                return removeById(id) == true ? 1 : 0;
+        return removeById(id) == true ? 1 : 0;
     }
 }

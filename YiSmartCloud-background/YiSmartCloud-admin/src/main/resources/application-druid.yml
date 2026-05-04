@@ -81,3 +81,9 @@ spring:
                 wall:
                     config:
                         multi-statement-allow: true
+
+# 百度千帆（留空；本地勿提交真实密钥，可在私有 profile 覆盖）
+yi:
+    qianfan:
+        api-key: "bce-v3/ALTAK-DR5F7LYf2HIOgWq4mspQ5/9596c3f532e711e081a7684cd7a26749593800f2"
+        model: "ernie-4.5-turbo-vl-32k"

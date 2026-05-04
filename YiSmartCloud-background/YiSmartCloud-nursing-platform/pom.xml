@@ -23,6 +23,11 @@
             <artifactId>YiSmartCloud-common</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.FlyingSparrow.YiSmartCloud</groupId>
+            <artifactId>YiSmartCloud-oss</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -115,8 +115,7 @@ public class NursingProjectController extends BaseController {
      */
     @GetMapping("/all")
     @ApiOperation(value = "查询所有护理项目")
-    public AjaxResult listAll()
-    {
+    public AjaxResult listAll() {
         List<NursingProjectVo> list = nursingProjectService.selectAll();
         return success(list);
     }

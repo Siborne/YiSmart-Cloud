@@ -1,7 +1,9 @@
 package org.FlyingSparrow.YiSmartCloud.serve.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+
 import java.util.List;
+
 import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingLevel;
 
 /**
@@ -61,6 +63,7 @@ public interface INursingLevelService extends IService<NursingLevel> {
 
     /**
      * 查询所有的护理等级
+     *
      * @return
      */
     public List<NursingLevel> listAll();

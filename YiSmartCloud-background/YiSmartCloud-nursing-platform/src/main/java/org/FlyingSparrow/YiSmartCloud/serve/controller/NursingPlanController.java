@@ -84,7 +84,7 @@ public class NursingPlanController extends BaseController {
     @GetMapping(value = "/{id}")
     @ApiOperation("获取护理计划详细信息")
     public R<NursingPlanVo> getInfo(@ApiParam(value = "护理计划ID", required = true)
-                              @PathVariable("id") Long id) {
+                                    @PathVariable("id") Long id) {
         return R.ok(nursingPlanService.selectNursingPlanById(id));
     }
 

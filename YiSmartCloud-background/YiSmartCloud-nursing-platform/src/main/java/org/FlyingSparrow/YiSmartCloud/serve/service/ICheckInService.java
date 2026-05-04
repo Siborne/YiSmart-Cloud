@@ -1,7 +1,9 @@
 package org.FlyingSparrow.YiSmartCloud.serve.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+
 import java.util.List;
+
 import org.FlyingSparrow.YiSmartCloud.serve.domain.CheckIn;
 import org.FlyingSparrow.YiSmartCloud.serve.dto.CheckInApplyDto;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.CheckInDetailVo;
@@ -63,12 +65,14 @@ public interface ICheckInService extends IService<CheckIn> {
 
     /**
      * 申请入住
+     *
      * @param checkInApplyDto
      */
     void apply(CheckInApplyDto checkInApplyDto);
 
     /**
      * 入住详情
+     *
      * @param id
      * @return
      */

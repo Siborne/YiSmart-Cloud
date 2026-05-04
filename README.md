@@ -1,4 +1,8 @@
-# 🌿 颐智云（YiSmartCloud）项目说明
+<p align="center">
+  <img src="assets/readme/logo.png" alt="颐智云 YiSmartCloud 标志：渐变云形与叶片图形及中英文名称" width="520" />
+</p>
+
+# 颐智云（YiSmartCloud）项目说明
 
 <p>
   <img alt="Java" src="https://img.shields.io/badge/Java-11-007396?logo=openjdk&logoColor=white" />
@@ -17,12 +21,19 @@
   <img alt="First Commit" src="https://img.shields.io/badge/首次提交-Initial%20commit-8A2BE2" />
 </p>
 
-`YiSmartCloud` 是一套面向养老机构的智慧养老管理系统，采用前后端分离架构，以“老人全生命周期服务管理”为主线，对养老机构常见的档案管理、护理服务、入住办理、床位房间、合同签约、健康记录等高频业务进行系统化支撑。项目基于 **RuoYi-Vue 3.8.9** 体系深度业务化扩展，不是单纯的管理后台模板叠加，而是围绕真实养老机构运营流程构建的一体化业务平台（后端与前端 `package.json` 版本号与若依基线一致，便于对照官方升级说明）。
+`YiSmartCloud`（颐智云）是一套面向养老机构的**智慧养老管理系统**，前后端分离，以「老人全生命周期服务管理」为主线，覆盖档案、护理、入住、床位与房间、合同与费用、健康记录等高频场景。项目在 **RuoYi-Vue 3.8.9** 之上做业务化扩展：不是简单套模板，而是贴近机构真实运营流程的一体化平台；后端与前端 `package.json` 版本与若依基线对齐，便于对照官方升级说明。
 
-从业务定位上看，本系统强调三件事：第一，📋 **流程在线化**，把线下纸质流程转为可追踪、可审批、可沉淀的数据流程；第二，📊 **过程可视化**，让管理者对老人状态、床位状态、服务记录、费用构成一目了然；第三，⚙️ **规则可配置化**，通过菜单权限、字典、配置项、代码生成等能力，降低后续需求迭代成本。当前仓库包含管理端前端（Vue3）、后端、SQL 初始化脚本，以及可选的微信小程序工程目录 `mp-weixin`，既可用于课程/毕设实战，也适用于中小型团队做二次开发与持续演进。
+业务上侧重三点：**流程在线化**（可追踪、可审批、可沉淀）、**过程可视化**（老人与床位状态、服务与费用一目了然）、**规则可配置化**（菜单权限、字典、参数与代码生成降低迭代成本）。仓库包含 Vue3 管理端、Spring Boot 多模块后端、SQL 脚本，以及可选的微信小程序目录 `mp-weixin`，适合学习演练与团队二次开发。
 
-> 🚧 **项目当前状态：持续开发中（Developing）**  
-> 🕒 **项目开始时间：2026-02-27 01:01:02 +0800（首次 Git 提交）**
+> 🕒 **首次 Git 提交时间：2026-02-27 01:01:02 +0800**（状态见上方徽章）
+
+### 架构示意图
+
+<p align="center">
+  <img src="assets/readme/tech_pic.png" alt="颐智云技术架构：用户触点、网关、多模块后端、数据与 AI 集成" width="920" />
+</p>
+
+<p align="center"><sub>上图用于总览产品与技术分层；网关、微服务拆分等以实际部署与代码为准。</sub></p>
 
 ---
 
@@ -36,6 +47,15 @@
 - 💬 `mp-weixin`：微信小程序端工程（微信开发者工具直接打开该目录；接口域名需在小程序后台配置合法 request 域名，生产环境需 HTTPS）
 - 📝 `docs/code_review`：代码改动记录（按时间命名，便于审计）
 - 🤖 `.cursor/rules`：项目内 AI 协作规则与编码约束
+- 🖼️ `assets/readme/`：README 用示意图（Logo、架构、业务域、流程、联调拓扑等）
+
+### 多端形态（示意）
+
+<p align="center">
+  <img src="assets/readme/multi_client.png" alt="颐智云多端形态：PC 管理端与微信小程序共用后端能力" width="880" />
+</p>
+
+<p align="center"><sub>管理端与小程序为不同工程，共用后端 API；小程序上线需配置合法域名与 HTTPS。</sub></p>
 
 后端 `YiSmartCloud-background` 是多模块聚合工程，根 `pom.xml` 管理版本与依赖，包含以下模块：
 
@@ -94,14 +114,23 @@
   - `OSHI 6.8.1`（系统信息监控）
 - 数据库：`MySQL 8.x`（驱动 `mysql-connector-java`）
 - 缓存：`Redis`（Lettuce 连接池）
+- AI 接入（可选）：百度千帆 OpenAI 兼容接口（依赖 `openai-java`，通用封装见 `YiSmartCloud-common` 中的 `QianfanChatSupport`）
 
-> 说明：以上版本来自 `package.json`、`pom.xml`、`application*.yml` 的实际配置扫描。
+> 说明：以上版本来自 `package.json`、`pom.xml`、`application*.yml` 及根 `pom.xml` 依赖管理的实际扫描。
 
 ---
 
 ## 3. 🏥 业务模块能力（当前已落地）
 
 养老业务 HTTP 接口多为 **`/serve/...`** 前缀，与前端 `src/api/serve/` 及开发代理 `/dev-api` 组合使用（例如请求路径形如 `/dev-api/serve/...`）。
+
+### 业务域关系（示意）
+
+<p align="center">
+  <img src="assets/readme/business_domains.png" alt="颐智云养老业务域关系：档案、护理、空间、入住、合同费用与健康等" width="920" />
+</p>
+
+<p align="center"><sub>示意图侧重概念归类；表结构、接口路径以代码与 SQL 为准。</sub></p>
 
 从前端 `src/views/serve` 与后端 `nursing-platform/controller` 对应关系来看，当前养老业务主要包括：
 
@@ -118,24 +147,43 @@
 - ⚙️ `check-in config` 入住配置
 - 📄 `contract` 合同管理
 - 💰 `bill detail` 费用明细（后端控制器已存在）
+- 🤖 `health assessment` 健康评估（含可扩展的 AI 辅助分析能力，详见 `HealthAssessmentController` 与相关 SQL）
 
 同时保留 RuoYi 标准系统能力：用户、角色、部门、菜单、字典、参数、日志、任务调度、代码生成、缓存监控等。
+
+### 健康评估与 AI（概念示意）
+
+<p align="center">
+  <img src="assets/readme/health_ai_concept.png" alt="健康评估与 AI：档案与表单到模型服务再到结构化结果的示意" width="800" />
+</p>
+
+<p align="center"><sub>AI 输出需结合业务校验与人工审核；上图仅为能力示意，非医疗诊断结论。</sub></p>
 
 ---
 
 ## 4. 🛏️ 入住办理近期改造说明（重点）
 
-最近对“入住办理”做了明显交互升级：
+最近对「入住办理」做了交互升级：列表发起申请改为**独立申请页**，分区更清晰、步骤更直观。
 
-1. 🔀 列表页“发起入住申请”不再走同页简化逻辑，改为跳转独立页面；
-2. 🧩 独立页面已按业务分区重构，包含：
+### 申请页流程（示意）
+
+<p align="center">
+  <img src="assets/readme/checkin_flow.png" alt="入住办理申请页流程：基本信息、家属、配置、签约、费用预览至提交" width="900" />
+</p>
+
+<p align="center"><sub>与真实页面字段、校验规则以代码为准；路由与接口见下列文件。</sub></p>
+
+变更要点：
+
+1. 🔀 列表页「发起入住申请」改为跳转独立页面，不再使用同页简化表单。
+2. 🧩 独立页面按业务分区，包含：
    - 👤 基本信息
    - 👨‍👩‍👧 家属信息
    - ⚙️ 入住配置
    - ✍️ 签约办理
    - 💳 费用预览
-3. ✅ 提交后仍调用入住新增接口，并返回入住列表页；
-4. 🔗 路由入口已对齐：`/serve/checkIn-apply/index`。
+3. ✅ 提交仍调用入住新增接口，成功后返回入住列表。
+4. 🔗 路由入口：`/serve/checkIn-apply/index`。
 
 相关关键文件：
 
@@ -157,7 +205,15 @@
 - 🔴 Redis `6.x / 7.x`
 - 🔧 Git `2.3+`
 
-Windows / macOS / Linux 均可运行；若在 Windows 下开发，请注意终端与编辑器统一 UTF-8 编码。
+Windows / macOS / Linux 均可运行；若在 Windows 下开发，请将终端与编辑器统一为 **UTF-8** 编码。
+
+### 本地联调拓扑（示意）
+
+<p align="center">
+  <img src="assets/readme/dev_topology.png" alt="本地开发联调：浏览器、Vite 代理、Spring Boot、MySQL 与 Redis" width="920" />
+</p>
+
+<p align="center"><sub>端口以本地配置为准（常见为前端 80、后端 8080）；生产环境需单独规划域名与 TLS。</sub></p>
 
 ---
 
@@ -302,10 +358,11 @@ npm run build:prod
 
 ## 12. 🗺️ 后续建议
 
-- 🧩 进一步拆分“入住申请”接口，采用 DTO 一次性提交老人/家属/合同/费用配置，减少前端拼装压力；
-- 🧪 为护理业务增加集成测试（至少覆盖入住、退住、床位占用冲突）；
-- 🐳 增加标准化部署文档（Docker Compose / K8s）；
-- 📚 将前后端 README 做到“同源同步”，避免一个详细一个模板化。
+- 🧩 评估将「入住申请」拆为聚合 DTO 或分步接口，减少前端拼装与重复提交风险。
+- 🧪 为护理核心链路补充集成测试（入住、退住、床位占用冲突等）。
+- 🐳 补充标准化部署说明（Docker Compose / K8s 等）。
+- 📚 前后端 README 保持关键信息同步（端口、代理、环境变量、业务变更）。
+- 🖼️ 仓库内另有宽屏背景素材 `assets/readme/background_readme_banner.png`，可按需用于活动页或登录页视觉。
 
 ---
 
