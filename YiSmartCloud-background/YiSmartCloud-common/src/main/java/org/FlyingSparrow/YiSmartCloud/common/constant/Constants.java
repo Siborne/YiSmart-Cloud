@@ -106,6 +106,16 @@ public class Constants
     public static final String TOKEN_PREFIX = "Bearer ";
 
     /**
+     * Authorization 请求头（标准大小写）
+     */
+    public static final String AUTHORIZATION = "Authorization";
+
+    /**
+     * Authorization 请求头（小写兼容）
+     */
+    public static final String AUTHORIZATION_LOWER = "authorization";
+
+    /**
      * 令牌前缀
      */
     public static final String LOGIN_USER_KEY = "login_user_key";
@@ -114,6 +124,11 @@ public class Constants
      * 用户ID
      */
     public static final String JWT_USERID = "userid";
+
+    /**
+     * 小程序会员 token claim 用户ID
+     */
+    public static final String JWT_MEMBER_USER_ID = "userId";
 
     /**
      * 用户名称

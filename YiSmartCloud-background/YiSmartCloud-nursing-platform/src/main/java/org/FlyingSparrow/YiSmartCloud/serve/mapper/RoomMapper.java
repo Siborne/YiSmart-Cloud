@@ -5,6 +5,7 @@ import org.FlyingSparrow.YiSmartCloud.serve.vo.RoomVo;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.Room;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 房间信息Mapper接口
@@ -63,4 +64,12 @@ public interface RoomMapper extends BaseMapper<Room> {
     public int deleteRoomByIds(Long[] ids);
 
     RoomVo getRoomById(Long id);
+
+    /**
+     * 按状态查询存在空闲床位的房间列表。
+     *
+     * @param status 状态: 0-停用, 1-启用；为空时不按状态过滤
+     * @return 房间集合
+     */
+    List<Room> selectRoomListWithAvailableBeds(@Param("status") Integer status);
 }

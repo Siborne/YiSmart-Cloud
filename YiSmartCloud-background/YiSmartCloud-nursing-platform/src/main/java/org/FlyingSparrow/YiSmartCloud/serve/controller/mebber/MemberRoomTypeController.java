@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/member/roomTypes")
+@RequestMapping({"/member/roomTypes", "/member/room"})
 @Api(tags = "客户房型管理")
 @RequiredArgsConstructor
 public class MemberRoomTypeController extends BaseController {
@@ -28,9 +28,11 @@ public class MemberRoomTypeController extends BaseController {
     @ApiOperation("根据状态查询房型")
     public AjaxResult findRoomTypeListByStatus(
             @ApiParam(value = "状态: 0-停用, 1-启用；不传则返回全部未删除房间", required = false)
-            @RequestParam(value = "status", required = false) Integer status) {
+            @RequestParam(value = "status", required = false) Integer status,
+            @ApiParam(value = "是否仅返回存在空闲床位的房间", required = false)
+            @RequestParam(value = "availableOnly", required = false) Boolean availableOnly) {
 
-        List<Room> roomTypeVoList = roomService.findRoomTypeListByStatus(status);
+        List<Room> roomTypeVoList = roomService.findRoomTypeListByStatus(status, availableOnly);
         return success(roomTypeVoList);
     }
 

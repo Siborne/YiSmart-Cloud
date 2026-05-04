@@ -101,7 +101,10 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
     }
 
     @Override
-    public List<Room> findRoomTypeListByStatus(Integer status) {
+    public List<Room> findRoomTypeListByStatus(Integer status, Boolean availableOnly) {
+        if (Boolean.TRUE.equals(availableOnly)) {
+            return roomMapper.selectRoomListWithAvailableBeds(status);
+        }
         LambdaQueryWrapper<Room> qw = new LambdaQueryWrapper<>();
         qw.eq(Room::getIsDeleted, 0);
         if (status != null) {

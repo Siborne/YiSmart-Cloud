@@ -41,6 +41,11 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="审批状态" prop="status">
+        <el-select v-model="queryParams.status" placeholder="请选择审批状态" clearable style="width: 180px">
+          <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" />
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
         <el-button icon="Refresh" @click="resetQuery">重置</el-button>
@@ -86,7 +91,7 @@
           v-hasPermi="['serve:visitRecord:export']"
         >导出</el-button>
       </el-col>
-      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar :showSearch="showSearch" @update:showSearch="showSearch = $event" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="recordList" @selection-change="handleSelectionChange">
@@ -101,7 +106,11 @@
         </template>
       </el-table-column>
       <el-table-column label="来访事由" align="center" prop="visitReason" />
-      <el-table-column label="审批状态: 0-待审批, 1-准许, 2-拒绝, 3-已结束" align="center" prop="status" />
+      <el-table-column label="审批状态" align="center" prop="status">
+        <template #default="scope">
+          <span>{{ getStatusLabel(scope.row.status) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template #default="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -123,8 +132,10 @@
     <pagination
       v-show="total>0"
       :total="total"
-      v-model:page="queryParams.pageNum"
-      v-model:limit="queryParams.pageSize"
+      :page="queryParams.pageNum"
+      :limit="queryParams.pageSize"
+      @update:page="queryParams.pageNum = $event"
+      @update:limit="queryParams.pageSize = $event"
       @pagination="getList"
     />
 
@@ -151,6 +162,11 @@
         <el-form-item label="来访事由" prop="visitReason">
           <el-input v-model="form.visitReason" placeholder="请输入来访事由" />
         </el-form-item>
+        <el-form-item label="审批状态" prop="status">
+          <el-select v-model="form.status" placeholder="请选择审批状态" style="width: 100%">
+            <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+        </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -176,6 +192,12 @@ const single = ref(true)
 const multiple = ref(true)
 const total = ref(0)
 const title = ref("")
+const statusOptions = [
+  { value: 0, label: "待审批" },
+  { value: 1, label: "准许" },
+  { value: 2, label: "拒绝" },
+  { value: 3, label: "已结束" }
+]
 
 const data = reactive({
   form: {},
@@ -235,12 +257,17 @@ function reset() {
     visitorPhone: null,
     visitTime: null,
     visitReason: null,
-    status: null,
+    status: 0,
     createTime: null,
     updateTime: null,
     isDeleted: null
   }
   proxy.resetForm("recordRef")
+}
+
+function getStatusLabel(status) {
+  const target = statusOptions.find(item => Number(item.value) === Number(status))
+  return target ? target.label : `未知(${status ?? '-'})`
 }
 
 /** 搜索按钮操作 */

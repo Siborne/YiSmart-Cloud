@@ -111,9 +111,23 @@ public class SecurityConfig
             .authorizeHttpRequests((requests) -> {
                 permitAllUrl.getUrls().forEach(url -> requests.antMatchers(url).permitAll());
                 // 对于登录login 注册register 验证码captchaImage 允许匿名访问
-                requests.antMatchers("/login", "/register", "/captchaImage", "/serve/member/user/login").permitAll()
+                requests.antMatchers(
+                        "/login", "/register", "/captchaImage",
+                        "/serve/member/user/login",
+                        "/serve/member/user/basic-login", "/serve/member/user/register",
+                        "/member/user/login",
+                        "/member/user/basic-login", "/member/user/register")
+                    .permitAll()
+                    .antMatchers(
+                        HttpMethod.POST,
+                        "/serve/member/user/login",
+                        "/serve/member/user/basic-login", "/serve/member/user/register",
+                        "/member/user/login",
+                        "/member/user/basic-login", "/member/user/register")
+                    .permitAll()
                     // 小程序首页房型展示：家属 JWT 无 serve:room:list 权限，允许匿名 GET
                     .antMatchers(HttpMethod.GET, "/member/roomTypes").permitAll()
+                    .antMatchers(HttpMethod.GET, "/member/room").permitAll()
                     // 静态资源，可匿名访问
                     .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
                     .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()

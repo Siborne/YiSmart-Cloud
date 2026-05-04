@@ -121,6 +121,7 @@ public class TokenService
         Map<String, Object> claims = new HashMap<>();
         claims.put(Constants.LOGIN_USER_KEY, token);
         claims.put(Constants.JWT_USERNAME, loginUser.getUsername());
+        claims.put(Constants.JWT_MEMBER_USER_ID, loginUser.getUserId());
         return createToken(claims);
     }
 
@@ -189,7 +190,7 @@ public class TokenService
      * @param token 令牌
      * @return 数据声明
      */
-    private Claims parseToken(String token)
+    public Claims parseToken(String token)
     {
         return Jwts.parser()
                 .setSigningKey(secret)

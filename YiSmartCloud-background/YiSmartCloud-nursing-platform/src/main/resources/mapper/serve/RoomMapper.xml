@@ -99,4 +99,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                      left join  room_type rt on rt.name = r.type_name
         where r.id = #{id}
     </select>
+
+    <select id="selectRoomListWithAvailableBeds" resultMap="RoomResult">
+        select distinct r.id, r.room_no, r.floor_id, r.room_image, r.bed_fee, r.room_type, r.room_desc, r.status, r.create_time, r.update_time, r.is_deleted
+        from room r
+                 inner join bed b on r.id = b.room_id
+        where r.is_deleted = 0
+          and b.is_deleted = 0
+          and b.bed_status = 0
+        <if test="status != null">
+            and r.status = #{status}
+        </if>
+        order by r.room_type asc, r.id asc
+    </select>
 </mapper>

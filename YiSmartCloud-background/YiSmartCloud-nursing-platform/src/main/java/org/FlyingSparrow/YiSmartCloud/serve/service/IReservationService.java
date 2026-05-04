@@ -9,41 +9,41 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Ô¤Ô¼ĞÅÏ¢ Service
+ * é¢„çº¦ä¿¡æ¯ Service
  *
  * @author agent
  */
 public interface IReservationService extends IService<Reservation> {
 
     /**
-     * µ±Ç°µÇÂ¼¼ÒÊôµ±ÈÕÒÑÈ¡ÏûÔ¤Ô¼´ÎÊı
+     * å½“å‰ç™»å½•å®¶å±å½“æ—¥å·²å–æ¶ˆé¢„çº¦æ¬¡æ•°
      */
     int countCancelledToday();
 
     /**
-     * ²éÑ¯Ö¸¶¨ÈÕÆÚ¸÷ÒÑÕ¼ÓÃÊ±¼ä¶ÎµÄÊ£Óà¿ÉÔ¼´ÎÊı£¨½ö·µ»ØÒÑÓĞÔ¤Ô¼µÄÊ±¼ä¶Î£©
+     * æŸ¥è¯¢æŒ‡å®šæ—¥æœŸå„å·²å ç”¨æ—¶é—´æ®µçš„å‰©ä½™å¯çº¦æ¬¡æ•°ï¼ˆæœªå‡ºç°çš„æ—¶æ®µè¡¨ç¤ºå‰©ä½™æ»¡é¢ï¼‰
      */
     List<TimeSlotCountVo> countByTime(LocalDate date);
 
     /**
-     * ĞÂÔöÔ¤Ô¼
+     * æ–°å¢é¢„çº¦
      */
     void create(ReservationCreateDto dto);
 
     /**
-     * ·ÖÒ³£ºµ±Ç°¼ÒÊôµÄÔ¤Ô¼ÁĞ±í£¨µ÷ÓÃÇ°Ğè {@code startPage()}£©
+     * åˆ†é¡µï¼šå½“å‰å®¶å±çš„é¢„çº¦åˆ—è¡¨ï¼ˆè°ƒç”¨å‰éœ€ {@code startPage()}ï¼‰
      */
     List<Reservation> selectMemberReservationList(Reservation query);
 
     /**
-     * È¡ÏûÔ¤Ô¼£¨½ö´ı±¨µÀÇÒ±¾ÈË´´½¨£©
+     * å–æ¶ˆé¢„çº¦ï¼ˆä»…å¾…æŠ¥é“ä¸”æœ¬äººåˆ›å»ºï¼‰
      */
     void cancel(Long id);
 
     /**
-     * ½«ÒÑ¹ıÆÚµÄ´ı±¨µÀÔ¤Ô¼ÅúÁ¿ÖÃÎª¹ıÆÚ
+     * å°†å·²è¿‡æœŸçš„å¾…æŠ¥é“é¢„çº¦æ‰¹é‡ç½®ä¸ºè¿‡æœŸ
      *
-     * @return ¸üĞÂĞĞÊı
+     * @return æ›´æ–°è¡Œæ•°
      */
     int expirePending();
 }

@@ -13,6 +13,7 @@ import org.FlyingSparrow.YiSmartCloud.common.utils.DateUtils;
 import org.FlyingSparrow.YiSmartCloud.common.utils.StringUtils;
 import org.FlyingSparrow.YiSmartCloud.framework.web.service.TokenService;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.FamilyMember;
+import org.FlyingSparrow.YiSmartCloud.serve.dto.MemberAuthRequestDto;
 import org.FlyingSparrow.YiSmartCloud.serve.dto.UserLoginRequestDto;
 import org.FlyingSparrow.YiSmartCloud.serve.mapper.FamilyMemberMapper;
 import org.FlyingSparrow.YiSmartCloud.serve.service.IFamilyMemberService;
@@ -25,6 +26,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 public class FamilyMemberServiceImpl extends ServiceImpl<FamilyMemberMapper, FamilyMember> implements IFamilyMemberService {
 
     private static final String DEFAULT_NICK = "WeChat user";
+    private static final String DEV_OPENID_PREFIX = "dev_openid_";
 
     @Autowired
     private WechatService wechatService;
@@ -55,9 +57,9 @@ public class FamilyMemberServiceImpl extends ServiceImpl<FamilyMemberMapper, Fam
 
         String openid = wechatService.getOpenid(dto.getCode().trim());
         String phone = wechatService.getPhone(dto.getPhoneCode().trim());
+        String nick = StringUtils.isNotEmpty(dto.getNickName()) ? dto.getNickName().trim() : DEFAULT_NICK;
 
         FamilyMember member = lambdaQuery().eq(FamilyMember::getOpenId, openid).one();
-        String nick = StringUtils.isNotEmpty(dto.getNickName()) ? dto.getNickName().trim() : DEFAULT_NICK;
 
         if (member == null) {
             member = new FamilyMember();
@@ -80,7 +82,43 @@ public class FamilyMemberServiceImpl extends ServiceImpl<FamilyMemberMapper, Fam
             }
         }
 
-        String displayNick = StringUtils.isNotEmpty(member.getName()) ? member.getName() : nick;
+        return buildLoginVo(member, nick);
+    }
+
+    @Override
+    public LoginVo basicLogin(MemberAuthRequestDto dto) {
+        String phone = normalizeAndValidatePhone(dto);
+        FamilyMember member = lambdaQuery().eq(FamilyMember::getPhone, phone).one();
+        if (member == null) {
+            throw new ServiceException("账号不存在，请先注册");
+        }
+        String fallbackNick = StringUtils.isNotEmpty(member.getName()) ? member.getName() : ("用户" + phone.substring(phone.length() - 4));
+        return buildLoginVo(member, fallbackNick);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public LoginVo register(MemberAuthRequestDto dto) {
+        String phone = normalizeAndValidatePhone(dto);
+        if (lambdaQuery().eq(FamilyMember::getPhone, phone).count() > 0) {
+            throw new ServiceException("手机号已注册，请直接登录");
+        }
+        String nick = resolveNickName(dto, phone);
+
+        FamilyMember member = new FamilyMember();
+        member.setOpenId(DEV_OPENID_PREFIX + phone);
+        member.setPhone(phone);
+        member.setName(nick);
+        member.setCreateTime(DateUtils.getNowDate());
+        member.setUpdateTime(DateUtils.getNowDate());
+        if (!save(member)) {
+            throw new ServiceException("注册失败，请稍后重试");
+        }
+        return buildLoginVo(member, nick);
+    }
+
+    private LoginVo buildLoginVo(FamilyMember member, String fallbackNick) {
+        String displayNick = StringUtils.isNotEmpty(member.getName()) ? member.getName() : fallbackNick;
 
         SysUser sysUser = new SysUser();
         sysUser.setUserId(member.getId());
@@ -97,5 +135,23 @@ public class FamilyMemberServiceImpl extends ServiceImpl<FamilyMemberMapper, Fam
         vo.setToken(jwt);
         vo.setNickName(displayNick);
         return vo;
+    }
+
+    private String normalizeAndValidatePhone(MemberAuthRequestDto dto) {
+        if (dto == null || StringUtils.isEmpty(dto.getPhone())) {
+            throw new ServiceException("phone is required");
+        }
+        String phone = dto.getPhone().trim();
+        if (!phone.matches("^1\\d{10}$")) {
+            throw new ServiceException("invalid phone format");
+        }
+        return phone;
+    }
+
+    private String resolveNickName(MemberAuthRequestDto dto, String phone) {
+        if (dto != null && StringUtils.isNotEmpty(dto.getNickName())) {
+            return dto.getNickName().trim();
+        }
+        return "用户" + phone.substring(phone.length() - 4);
     }
 }

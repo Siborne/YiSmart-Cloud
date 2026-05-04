@@ -8,36 +8,41 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 /**
- * Ğ¡³ÌĞòĞÂÔöÔ¤Ô¼ÇëÇóÌå
+ * å°ç¨‹åºæ–°å¢é¢„çº¦è¯·æ±‚ä½“
  *
  * @author agent
  */
 @Data
-@ApiModel(description = "ĞÂÔöÔ¤Ô¼²ÎÊı")
+@ApiModel(description = "æ–°å¢é¢„çº¦å‚æ•°")
 public class ReservationCreateDto {
 
-    @NotBlank(message = "ÊÖ»úºÅ²»ÄÜÎª¿Õ")
-    @Pattern(regexp = "^1[3-9]\\d{9}$", message = "ÊÖ»úºÅ¸ñÊ½²»ÕıÈ·")
-    @ApiModelProperty(value = "ÊÖ»úºÅ", required = true)
+    @NotBlank(message = "æ‰‹æœºå·ä¸èƒ½ä¸ºç©º")
+    @Pattern(regexp = "^1[3-9]\\d{9}$", message = "æ‰‹æœºå·æ ¼å¼ä¸æ­£ç¡®")
+    @ApiModelProperty(value = "æ‰‹æœºå·", required = true)
     private String mobile;
 
-    @NotBlank(message = "Ô¤Ô¼ÈËĞÕÃû²»ÄÜÎª¿Õ")
-    @ApiModelProperty(value = "Ô¤Ô¼ÈËĞÕÃû", required = true)
+    @NotBlank(message = "é¢„çº¦äººå§“åä¸èƒ½ä¸ºç©º")
+    @ApiModelProperty(value = "é¢„çº¦äººå§“å", required = true)
     private String name;
 
-    @NotNull(message = "Ô¤Ô¼Ê±¼ä²»ÄÜÎª¿Õ")
+    @NotNull(message = "é¢„çº¦æ—¶é—´ä¸èƒ½ä¸ºç©º")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "Ô¤Ô¼Ê±¼ä", required = true)
+    @ApiModelProperty(value = "é¢„çº¦æ—¶é—´", required = true)
     private LocalDateTime time;
 
-    @NotNull(message = "Ô¤Ô¼ÀàĞÍ²»ÄÜÎª¿Õ")
-    @ApiModelProperty(value = "0£º²Î¹ÛÔ¤Ô¼£¬1£ºÌ½·ÃÔ¤Ô¼", required = true)
+    @NotNull(message = "é¢„çº¦ç±»å‹ä¸èƒ½ä¸ºç©º")
+    @ApiModelProperty(value = "0ï¼šå‚è§‚é¢„çº¦ï¼Œ1ï¼šæ¢è®¿é¢„çº¦", required = true)
     private Integer type;
 
-    @NotBlank(message = "¼ÒÈËĞÕÃû²»ÄÜÎª¿Õ")
-    @ApiModelProperty(value = "¼ÒÈËĞÕÃû£¨ÀÏÈËĞÕÃû£©", required = true)
+    @NotBlank(message = "å®¶äººå§“åä¸èƒ½ä¸ºç©º")
+    @ApiModelProperty(value = "å®¶äººå§“åï¼ˆè€äººå§“åï¼‰", required = true)
     private String visitor;
+
+    @Size(max = 500, message = "å¤‡æ³¨é•¿åº¦ä¸èƒ½è¶…è¿‡500")
+    @ApiModelProperty(value = "å¤‡æ³¨", required = false)
+    private String remark;
 }

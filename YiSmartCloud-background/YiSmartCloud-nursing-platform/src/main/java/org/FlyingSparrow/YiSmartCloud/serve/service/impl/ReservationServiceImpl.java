@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Ô¤Ô¼ÒµÎñÊµÏÖ
+ * é¢„çº¦ä¸šåŠ¡å®ç°
  *
  * @author agent
  */
@@ -67,10 +67,10 @@ public class ReservationServiceImpl extends ServiceImpl<ReservationMapper, Reser
     public void create(ReservationCreateDto dto) {
         if (dto.getType() == null
                 || (dto.getType() != ReservationConstants.TYPE_VISIT && dto.getType() != ReservationConstants.TYPE_VISITATION)) {
-            throw new ServiceException("Ô¤Ô¼ÀàĞÍ²»ºÏ·¨");
+            throw new ServiceException("é¢„çº¦ç±»å‹ä¸åˆæ³•");
         }
         if (countCancelledToday() > ReservationConstants.MAX_DAILY_CANCEL) {
-            throw new ServiceException("µ±ÈÕÈ¡ÏûÔ¤Ô¼´ÎÊıÒÑ´ïÉÏÏŞ£¬ÔİÊ±ÎŞ·¨Ô¤Ô¼");
+            throw new ServiceException("å½“æ—¥å–æ¶ˆé¢„çº¦æ¬¡æ•°å·²è¾¾ä¸Šé™ï¼Œæš‚æ—¶æ— æ³•é¢„çº¦");
         }
 
         LocalDateTime slot = dto.getTime().withNano(0);
@@ -78,7 +78,7 @@ public class ReservationServiceImpl extends ServiceImpl<ReservationMapper, Reser
 
         int occupied = reservationMapper.countActiveAtSlot(slot);
         if (occupied >= ReservationConstants.SLOT_CAPACITY) {
-            throw new ServiceException("¸ÃÊ±¼ä¶ÎÒÑÔ¼Âú");
+            throw new ServiceException("è¯¥æ—¶é—´æ®µå·²çº¦æ»¡");
         }
 
         Reservation entity = new Reservation();
@@ -88,17 +88,18 @@ public class ReservationServiceImpl extends ServiceImpl<ReservationMapper, Reser
         entity.setType(dto.getType());
         entity.setStatus(ReservationConstants.STATUS_PENDING);
         entity.setTime(slot);
+        entity.setRemark(dto.getRemark());
 
         try {
             reservationMapper.insert(entity);
         } catch (DuplicateKeyException e) {
-            log.warn("Ô¤Ô¼Î¨Ò»Ô¼Êø³åÍ»: mobile={}, time={}", dto.getMobile(), slot, e);
-            throw new ServiceException("¸ÃÊÖ»úºÅÔÚ´ËÊ±¼ä¶ÎÒÑÓĞÔ¤Ô¼");
+            log.warn("é¢„çº¦å”¯ä¸€çº¦æŸå†²çª: mobile={}, time={}", dto.getMobile(), slot, e);
+            throw new ServiceException("è¯¥æ‰‹æœºå·åœ¨æ­¤æ—¶é—´æ®µå·²æœ‰é¢„çº¦");
         } catch (DataIntegrityViolationException e) {
             if (e.getCause() instanceof java.sql.SQLIntegrityConstraintViolationException
                     || (e.getMessage() != null && e.getMessage().contains("Duplicate"))) {
-                log.warn("Ô¤Ô¼Î¨Ò»Ô¼Êø³åÍ»: mobile={}, time={}", dto.getMobile(), slot, e);
-                throw new ServiceException("¸ÃÊÖ»úºÅÔÚ´ËÊ±¼ä¶ÎÒÑÓĞÔ¤Ô¼");
+                log.warn("é¢„çº¦å”¯ä¸€çº¦æŸå†²çª: mobile={}, time={}", dto.getMobile(), slot, e);
+                throw new ServiceException("è¯¥æ‰‹æœºå·åœ¨æ­¤æ—¶é—´æ®µå·²æœ‰é¢„çº¦");
             }
             throw e;
         }
@@ -117,18 +118,18 @@ public class ReservationServiceImpl extends ServiceImpl<ReservationMapper, Reser
     @Transactional(rollbackFor = Exception.class)
     public void cancel(Long id) {
         if (id == null) {
-            throw new ServiceException("Ô¤Ô¼Ö÷¼ü²»ÄÜÎª¿Õ");
+            throw new ServiceException("é¢„çº¦ä¸»é”®ä¸èƒ½ä¸ºç©º");
         }
         Reservation row = reservationMapper.selectById(id);
         if (row == null) {
-            throw new ServiceException("Ô¤Ô¼²»´æÔÚ");
+            throw new ServiceException("é¢„çº¦ä¸å­˜åœ¨");
         }
         Long memberId = SecurityUtils.getUserId();
         if (!String.valueOf(memberId).equals(row.getCreateBy())) {
-            throw new ServiceException("ÎŞÈ¨²Ù×÷¸ÃÔ¤Ô¼");
+            throw new ServiceException("æ— æƒæ“ä½œè¯¥é¢„çº¦");
         }
         if (!Integer.valueOf(ReservationConstants.STATUS_PENDING).equals(row.getStatus())) {
-            throw new ServiceException("µ±Ç°×´Ì¬²»¿ÉÈ¡Ïû");
+            throw new ServiceException("å½“å‰çŠ¶æ€ä¸å¯å–æ¶ˆ");
         }
         row.setStatus(ReservationConstants.STATUS_CANCELLED);
         reservationMapper.updateById(row);
@@ -139,28 +140,28 @@ public class ReservationServiceImpl extends ServiceImpl<ReservationMapper, Reser
     public int expirePending() {
         int n = reservationMapper.expirePending(LocalDateTime.now());
         if (n > 0) {
-            log.info("[Reservation] ×Ô¶¯¹ıÆÚ´ı±¨µÀÔ¤Ô¼ {} Ìõ", n);
+            log.info("[Reservation] è‡ªåŠ¨è¿‡æœŸå¾…æŠ¥é“é¢„çº¦ {} æ¡", n);
         }
         return n;
     }
 
     /**
-     * Ğ£ÑéÔ¤Ô¼Ê±¼äÂäÔÚ¿ÉÑ¡µµÄÚ£¬ÇÒÎ´ÔçÓÚµ±Ç°Ê±¿Ì£¨µ±ÈÕ£©
+     * æ ¡éªŒé¢„çº¦æ—¶é—´è½åœ¨å¯é€‰æ¡£å†…ï¼Œä¸”æœªæ—©äºå½“å‰æ—¶åˆ»ï¼ˆå½“æ—¥ï¼‰
      */
     private void validateSlot(LocalDateTime slot) {
         LocalDate date = slot.toLocalDate();
         LocalDate today = LocalDate.now();
         if (date.isBefore(today)) {
-            throw new ServiceException("²»ÄÜÔ¤Ô¼¹ıÈ¥µÄÈÕÆÚ");
+            throw new ServiceException("ä¸èƒ½é¢„çº¦è¿‡å»çš„æ—¥æœŸ");
         }
         List<LocalDateTime> legalSlots = buildSlotsForDate(date);
         boolean match = legalSlots.stream().anyMatch(s -> s.equals(slot));
         if (!match) {
-            throw new ServiceException("Ô¤Ô¼Ê±¼ä²»ÔÚ¿ÉÑ¡Ê±¼ä¶ÎÄÚ");
+            throw new ServiceException("é¢„çº¦æ—¶é—´ä¸åœ¨å¯é€‰æ—¶é—´æ®µå†…");
         }
         LocalDateTime now = LocalDateTime.now();
         if (!date.isAfter(today) && !slot.isAfter(now)) {
-            throw new ServiceException("Ô¤Ô¼Ê±¼ä±ØĞëÍíÓÚµ±Ç°Ê±¼ä");
+            throw new ServiceException("é¢„çº¦æ—¶é—´å¿…é¡»æ™šäºå½“å‰æ—¶é—´");
         }
     }
 

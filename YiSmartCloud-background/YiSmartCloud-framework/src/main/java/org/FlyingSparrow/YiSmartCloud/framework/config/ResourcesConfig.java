@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.FlyingSparrow.YiSmartCloud.common.config.RuoYiConfig;
 import org.FlyingSparrow.YiSmartCloud.common.constant.Constants;
+import org.FlyingSparrow.YiSmartCloud.framework.interceptor.MemberInterceptor;
 import org.FlyingSparrow.YiSmartCloud.framework.interceptor.RepeatSubmitInterceptor;
 
 /**
@@ -25,6 +26,20 @@ public class ResourcesConfig implements WebMvcConfigurer
 {
     @Autowired
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
+
+    @Autowired
+    private MemberInterceptor memberInterceptor;
+
+    private static final String[] MEMBER_EXCLUDE_PATH_PATTERNS = new String[] {
+            "/member/user/login",
+            "/member/user/basic-login",
+            "/member/user/register",
+            "/serve/member/user/login",
+            "/serve/member/user/basic-login",
+            "/serve/member/user/register",
+            "/member/roomTypes",
+            "/member/room"
+    };
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry)
@@ -46,6 +61,9 @@ public class ResourcesConfig implements WebMvcConfigurer
     public void addInterceptors(InterceptorRegistry registry)
     {
         registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
+        registry.addInterceptor(memberInterceptor)
+                .addPathPatterns("/member/**", "/serve/member/**")
+                .excludePathPatterns(MEMBER_EXCLUDE_PATH_PATTERNS);
     }
 
     /**

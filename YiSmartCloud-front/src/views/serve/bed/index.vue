@@ -31,6 +31,10 @@
         <span class="legend-item"><el-icon class="legend-icon occupied"><UserFilled /></el-icon>{{ getBedStatusLabel(1) }}</span>
         <span class="legend-item"><el-icon class="legend-icon leave"><WarningFilled /></el-icon>{{ getBedStatusLabel(2) }}</span>
       </div>
+      <el-radio-group v-model="viewMode" size="small" @change="onViewModeChange">
+        <el-radio-button label="available">仅可预约</el-radio-button>
+        <el-radio-button label="all">全部床位</el-radio-button>
+      </el-radio-group>
       <right-toolbar :showSearch="showSearch" @update:showSearch="showSearch = $event" @queryTable="getList" />
     </div>
 
@@ -117,6 +121,7 @@ const open = ref(false)
 const loading = ref(true)
 const showSearch = ref(false)
 const title = ref("")
+const viewMode = ref("available")
 const { bed_status } = proxy.useDict("bed_status")
 
 const data = reactive({
@@ -143,15 +148,11 @@ const floorOptions = computed(() => {
 })
 
 const bedStatusOptions = computed(() => {
-  return (bed_status.value || []).map(item => {
-    if (Number(item.value) === 2) {
-      return { ...item, label: "请假中" }
-    }
-    return item
-  })
+  return bed_status.value || []
 })
 
 function getList() {
+  applyViewModeFilter()
   loading.value = true
   Promise.all([
     listRoom({ pageNum: 1, pageSize: 500 }),
@@ -187,6 +188,14 @@ watch(currentFloor, () => {
 
 function selectFloor(floor) {
   currentFloor.value = floor
+}
+
+function onViewModeChange() {
+  getList()
+}
+
+function applyViewModeFilter() {
+  queryParams.value.bedStatus = viewMode.value === "available" ? 0 : null
 }
 
 function goRoomPage() {

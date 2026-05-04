@@ -1,17 +1,175 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "uni-app"
-			}
-		}
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
-	},
-	"uniIdRouter": {}
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "颐智云",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/family/index",
+      "style": {
+        "navigationBarTitleText": "颐智云",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/family/binding",
+      "style": {
+        "navigationBarTitleText": "颐智云",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/service/index",
+      "style": {
+        "navigationBarTitleText": "颐智云",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/service/details",
+      "style": {
+        "navigationBarTitleText": "颐智云",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/service/orderVerify",
+      "style": {
+        "navigationBarTitleText": "颐智云",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "颐智云",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/my/index",
+      "style": {
+        "navigationBarTitleText": "颐智云",
+        "enablePullDownRefresh": false
+      }
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "pages/subPages",
+      "pages": [
+        {
+          "path": "healthy/index",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        },
+        {
+          "path": "wuDataDetail/index",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        },
+        {
+          "path": "appointment/index",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        },
+        {
+          "path": "appointment/components/PickerView",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        },
+        {
+          "path": "appointment/list/index",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        },
+        {
+          "path": "appointment/components/des",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        },
+        {
+          "path": "introduce/index",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        },
+        {
+          "path": "bill/index",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        },
+        {
+          "path": "contract/index",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        },
+        {
+          "path": "order/index",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        },
+        {
+          "path": "order/cancel",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        },
+        {
+          "path": "order/details",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        },
+        {
+          "path": "success/index",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        },
+        {
+          "path": "search/index",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        },
+        {
+          "path": "pay/index",
+          "style": {
+            "navigationBarTitleText": "颐智云"
+          }
+        }
+      ]
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "颐智云",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8",
+    "navigationStyle": "custom"
+  },
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^nav-bar$": "@/components/Navbar/index.vue",
+      "^uni-footer$": "@/components/Foot/index.vue",
+      "^net-fail$": "@/components/NetFail/index.vue",
+      "^empty-page$": "@/components/EmptyPage/index.vue",
+      "^uni-phone$": "@/components/uni-phone/index.vue"
+    }
+  },
+  "uniIdRouter": {}
 }
