@@ -31,7 +31,7 @@ public class ElderInfoServiceImpl extends ServiceImpl<ElderInfoMapper, ElderInfo
      */
     @Override
     public ElderInfo selectElderInfoById(Long id) {
-        return getById(id);
+        return elderInfoMapper.selectElderInfoById(id);
     }
 
     /**
@@ -53,7 +53,7 @@ public class ElderInfoServiceImpl extends ServiceImpl<ElderInfoMapper, ElderInfo
      */
     @Override
     public int insertElderInfo(ElderInfo elderInfo) {
-        return save(elderInfo) == true ? 1 : 0;
+        return elderInfoMapper.insertElderInfo(elderInfo);
     }
 
     /**
@@ -64,7 +64,7 @@ public class ElderInfoServiceImpl extends ServiceImpl<ElderInfoMapper, ElderInfo
      */
     @Override
     public int updateElderInfo(ElderInfo elderInfo) {
-        return updateById(elderInfo) == true ? 1 : 0;
+        return elderInfoMapper.updateElderInfo(elderInfo);
     }
 
     /**

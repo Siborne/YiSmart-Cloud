@@ -30,7 +30,8 @@ import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
 import lombok.RequiredArgsConstructor;
 
 /**
- * 入住登记Controller
+ * 入住登记：老人模块的入口流程，完成床位与护理等级等配置后写入在院主数据（{@code /serve/info}）。
+ * 护工 / 照护人员具体派工与排班由运营侧后续能力扩展，可与护理计划、员工主数据对接。
  *
  * @author Siborne
  * @date 2026-04-29

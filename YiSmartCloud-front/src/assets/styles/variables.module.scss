@@ -8,31 +8,31 @@ $tiffany: #4AB7BD;
 $yellow: #FEC171;
 $panGreen: #30B08F;
 
-// 默认主题变量
-$menuText: #bfcbd9;
-$menuActiveText: #409eff;
-$menuBg: #304156;
-$menuHover: #263445;
+// 默认主题变量（侧边栏深色：偏 slate 的现代后台色）
+$menuText: #94a3b8;
+$menuActiveText: #f8fafc;
+$menuBg: #0f172a;
+$menuHover: #1e293b;
 
 // 浅色主题theme-light
 $menuLightBg: #ffffff;
 $menuLightHover: #f0f1f5;
 $menuLightText: #303133;
-$menuLightActiveText: #409EFF;
+$menuLightActiveText: #00b8a0;
 
 // 基础变量
 $base-sidebar-width: 200px;
 $sideBarWidth: 200px;
 
 // 菜单暗色变量
-$base-menu-color: #bfcbd9;
-$base-menu-color-active: #f4f4f5;
-$base-menu-background: #304156;
-$base-sub-menu-background: #1f2d3d;
-$base-sub-menu-hover: #001528;
+$base-menu-color: #94a3b8;
+$base-menu-color-active: #f8fafc;
+$base-menu-background: #0f172a;
+$base-sub-menu-background: #020617;
+$base-sub-menu-hover: #1e293b;
 
 // 组件变量
-$--color-primary: #409EFF;
+$--color-primary: #00b8a0;
 $--color-success: #67C23A;
 $--color-warning: #E6A23C;
 $--color-danger: #F56C6C;
@@ -67,14 +67,29 @@ $--color-info: #909399;
 
 // CSS变量定义
 :root {
+  /* 与布局设置中的默认主题色一致，便于 Element Plus 组件与顶栏主题对齐 */
+  --el-color-primary: #00b8a0;
+
   /* 亮色模式变量 */
   --sidebar-bg: #{$menuBg};
   --sidebar-text: #{$menuText};
   --menu-hover: #{$menuHover};
-  
+  --menu-active-text: #00b8a0;
+
   --navbar-bg: #ffffff;
-  --navbar-text: #303133;
-  
+  --navbar-text: #334155;
+  --navbar-shadow: 0 1px 0 rgba(15, 23, 42, 0.06), 0 8px 24px rgba(15, 23, 42, 0.06);
+
+  --app-page-bg: #f1f5f9;
+  --app-radius-lg: 12px;
+
+  --tags-bg: #f8fafc;
+  --tags-item-bg: #ffffff;
+  --tags-item-border: #e2e8f0;
+  --tags-item-text: #475569;
+  --tags-item-hover: #f1f5f9;
+  --tags-close-hover: #94a3b8;
+
   /* splitpanes default-theme 变量 */
   --splitpanes-default-bg: #ffffff;
 
@@ -100,6 +115,8 @@ html.dark {
   --navbar-bg: #141414;
   --navbar-text: #ffffff;
   --navbar-hover: #141414;
+  --navbar-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+  --app-page-bg: #0a0a0a;
 
   /* 标签栏 */
   --tags-bg: #141414;
@@ -231,17 +248,17 @@ $panGreen: #30B08F;
 $--color-link: #008d71;
 $--color-main: #00b8a0;
 // 默认菜单主题风格
-$base-menu-color: #bfcbd9;
-$base-menu-color-active: #f4f4f5;
-$base-menu-background: #304156;
+$base-menu-color: #94a3b8;
+$base-menu-color-active: #f8fafc;
+$base-menu-background: #0f172a;
 $base-logo-title-color: #ffffff;
 
 $base-menu-light-color: rgba(0, 0, 0, 0.7);
 $base-menu-light-background: #ffffff;
 $base-logo-light-title-color: #001529;
 
-$base-sub-menu-background: #1f2d3d;
-$base-sub-menu-hover: #001528;
+$base-sub-menu-background: #020617;
+$base-sub-menu-hover: #1e293b;
 $base-color-bk4: #999999;
 $base--color-bk2: #262626;
 $--color-bk3: #595959;
@@ -268,7 +285,7 @@ $base-sub-menu-background:#000c17;
 $base-sub-menu-hover:#001528;
 */
 
-$--color-primary: #409EFF;
+$--color-primary: #00b8a0;
 $--color-success: #67C23A;
 $--color-warning: #E6A23C;
 $--color-danger: #F56C6C;

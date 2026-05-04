@@ -1,68 +1,95 @@
 <template>
   <div class="app-container assessment-detail" v-loading="loading">
-    <el-page-header @back="goBack" content="å¥åº·ç®¡ç†" class="mb16" />
+    <el-page-header @back="goBack" content="½¡¿µ¹ÜÀí" class="mb16" />
+
+    <el-alert
+      v-if="isFailed"
+      type="error"
+      :closable="false"
+      show-icon
+      class="mb16"
+      :title="'AI ·ÖÎöÊ§°Ü£º' + (row.analysisError || 'Î´ÖªÔ­Òò')"
+    />
+
+    <el-alert
+      v-if="isPending"
+      type="info"
+      :closable="false"
+      show-icon
+      class="mb16"
+      title="AI ÕıÔÚ·ÖÎö±¨¸æ£¬Íê³Éºó±¾Ò³»á×Ô¶¯Ë¢ĞÂ£»Äú¿ÉÏÈ´¦ÀíÆäËüÊÂÎñ¡£"
+    >
+      <el-progress :percentage="100" :indeterminate="true" :duration="2.5" :show-text="false" style="max-width: 280px; margin-top: 10px" />
+    </el-alert>
 
     <el-card shadow="never" class="mb16">
-      <template #header><span class="card-title">åŸºæœ¬ä¿¡æ¯</span></template>
+      <template #header><span class="card-title">»ù±¾ĞÅÏ¢</span></template>
       <el-descriptions :column="2" border>
-        <el-descriptions-item label="å§“å">{{ row.elderName || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="èº«ä»½è¯å·">{{ row.idCard || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="å‡ºç”Ÿæ—¥æœŸ">{{ birthDisplay }}</el-descriptions-item>
-        <el-descriptions-item label="å¹´é¾„">{{ row.age != null ? row.age : '-' }}</el-descriptions-item>
-        <el-descriptions-item label="æ€§åˆ«">{{ genderLabel }}</el-descriptions-item>
-        <el-descriptions-item label="ä½“æ£€æœºæ„">{{ row.physicalExamInstitution || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="æ€»æ£€æ—¥æœŸ">{{ row.totalCheckDate || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="ä½“æ£€æŠ¥å‘Š">
-          <el-link v-if="row.physicalReportUrl" type="primary" :href="row.physicalReportUrl" target="_blank">æŸ¥çœ‹ PDF</el-link>
+        <el-descriptions-item label="ĞÕÃû">{{ row.elderName || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="Éí·İÖ¤ºÅ">{{ row.idCard || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="³öÉúÈÕÆÚ">{{ birthDisplay }}</el-descriptions-item>
+        <el-descriptions-item label="ÄêÁä">{{ row.age != null ? row.age : '-' }}</el-descriptions-item>
+        <el-descriptions-item label="ĞÔ±ğ">{{ genderLabel }}</el-descriptions-item>
+        <el-descriptions-item label="Ìå¼ì»ú¹¹">{{ row.physicalExamInstitution || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="×Ü¼ìÈÕÆÚ">{{ row.totalCheckDate || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="Ìå¼ì±¨¸æ">
+          <el-link v-if="row.physicalReportUrl" type="primary" :href="row.physicalReportUrl" target="_blank">²é¿´ PDF</el-link>
           <span v-else>-</span>
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
 
-    <el-card shadow="never" class="mb16">
-      <template #header><span class="card-title">ä½“æ£€æ€»ç»“</span></template>
-      <el-descriptions :column="2" border>
-        <el-descriptions-item label="å¥åº·è¯„åˆ†">{{ row.healthScore || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="é£é™©ç­‰çº§">{{ riskLabel }}</el-descriptions-item>
-        <el-descriptions-item label="æ˜¯å¦å»ºè®®å…¥ä½">{{ admissionLabel }}</el-descriptions-item>
-        <el-descriptions-item label="æ¨èæŠ¤ç†ç­‰çº§">{{ row.nursingLevelName || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="è¯„ä¼°æ—¶é—´" :span="2">{{ assessmentTimeStr }}</el-descriptions-item>
-        <el-descriptions-item label="æŠ¥å‘Šæ€»ç»“" :span="2">{{ row.reportSummary || '-' }}</el-descriptions-item>
-      </el-descriptions>
-    </el-card>
+    <template v-if="!isPending">
+      <el-card shadow="never" class="mb16">
+        <template #header><span class="card-title">Ìå¼ì×Ü½á</span></template>
+        <el-descriptions :column="2" border>
+          <el-descriptions-item label="½¡¿µÆÀ·Ö">{{ row.healthScore || '-' }}</el-descriptions-item>
+          <el-descriptions-item label="·çÏÕµÈ¼¶">{{ riskLabel }}</el-descriptions-item>
+          <el-descriptions-item label="ÊÇ·ñ½¨ÒéÈë×¡">{{ admissionLabel }}</el-descriptions-item>
+          <el-descriptions-item label="ÍÆ¼ö»¤ÀíµÈ¼¶">{{ row.nursingLevelName || '-' }}</el-descriptions-item>
+          <el-descriptions-item label="ÆÀ¹ÀÊ±¼ä" :span="2">{{ assessmentTimeStr }}</el-descriptions-item>
+          <el-descriptions-item label="±¨¸æ×Ü½á" :span="2">{{ row.reportSummary || '-' }}</el-descriptions-item>
+        </el-descriptions>
+      </el-card>
 
-    <el-card shadow="never" class="mb16">
-      <template #header><span class="card-title">ç–¾ç—…é£é™©</span></template>
-      <el-row :gutter="16">
-        <el-col :xs="24" :lg="12">
-          <div ref="ageChartRef" class="chart-box" />
-          <div class="chart-caption">ä¸åŒå¹´é¾„ç»„å¥åº·æŒ‡æ•°åˆ†å¸ƒï¼ˆç¤ºæ„ï¼‰</div>
-        </el-col>
-        <el-col :xs="24" :lg="12">
-          <div ref="radarChartRef" class="chart-box" />
-          <div class="chart-caption">äººä½“å„ç³»ç»Ÿå¥åº·æŒ‡æ•°ï¼ˆAIï¼‰</div>
-        </el-col>
-      </el-row>
-    </el-card>
+      <el-card shadow="never" class="mb16 chart-card">
+        <template #header><span class="card-title">¼²²¡·çÏÕ</span></template>
+        <el-row :gutter="20">
+          <el-col :xs="24" :lg="12">
+            <div ref="ageChartRef" class="chart-box chart-box--pad" />
+            <div class="chart-caption">²»Í¬ÄêÁä×é½¡¿µÖ¸Êı·Ö²¼£¨Ê¾Òâ£©£¬<span class="accent">¸ßÁÁÖù</span>Îªµ±Ç°ÀÏÈËËùÊôÄêÁä¶Î£»ÊúÏßÎªµ±Ç°Çø¼ä±ê¼Ç¡£</div>
+          </el-col>
+          <el-col :xs="24" :lg="12">
+            <div ref="radarChartRef" class="chart-box chart-box--pad" />
+            <div class="chart-caption">ÈËÌå¸÷ÏµÍ³½¡¿µÖ¸Êı£¨AI£©</div>
+          </el-col>
+        </el-row>
+      </el-card>
 
-    <el-card shadow="never">
-      <template #header><span class="card-title">å¼‚å¸¸åˆ†æ</span></template>
-      <el-table :data="abnormalRows" border stripe empty-text="æš‚æ— å¼‚å¸¸é¡¹">
-        <el-table-column type="expand">
-          <template #default="props">
-            <div class="expand-block">
-              <p><strong>å¼‚å¸¸è§£è¯»ï¼š</strong>{{ props.row.interpret || '-' }}</p>
-              <p><strong>AI å»ºè®®ï¼š</strong>{{ props.row.advice || '-' }}</p>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="ç»“è®º" prop="conclusion" min-width="120" show-overflow-tooltip />
-        <el-table-column label="ä½“æ£€é¡¹ç›®" prop="examinationItem" min-width="140" show-overflow-tooltip />
-        <el-table-column label="æ£€æŸ¥ç»“æœ" prop="result" min-width="120" show-overflow-tooltip />
-        <el-table-column label="å‚è€ƒå€¼" prop="referenceValue" min-width="100" show-overflow-tooltip />
-        <el-table-column label="å•ä½" prop="unit" width="80" />
-      </el-table>
-    </el-card>
+      <el-card shadow="never" class="mb16">
+        <template #header><span class="card-title">Òì³£·ÖÎö</span></template>
+        <el-table :data="abnormalRows" border stripe empty-text="ÔİÎŞÒì³£Ïî">
+          <el-table-column type="expand">
+            <template #default="props">
+              <div class="expand-block">
+                <p><strong>Òì³£½â¶Á£º</strong>{{ props.row.interpret || '-' }}</p>
+                <p><strong>AI ½¨Òé£º</strong>{{ props.row.advice || '-' }}</p>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="½áÂÛ" prop="conclusion" min-width="120" show-overflow-tooltip />
+          <el-table-column label="Ìå¼ìÏîÄ¿" prop="examinationItem" min-width="140" show-overflow-tooltip />
+          <el-table-column label="¼ì²é½á¹û" prop="result" min-width="120" show-overflow-tooltip />
+          <el-table-column label="²Î¿¼Öµ" prop="referenceValue" min-width="100" show-overflow-tooltip />
+          <el-table-column label="µ¥Î»" prop="unit" width="80" />
+        </el-table>
+      </el-card>
+    </template>
+
+    <div v-if="!isPending" class="detail-footer-actions">
+      <el-button type="primary" size="large" @click="goCheckIn" v-hasPermi="['serve:checkIn:add']">°ìÀíÈë×¡</el-button>
+      <span class="footer-hint">½«Ğ¯´øµ±Ç°ÀÏÈËĞÕÃûÓëÉí·İÖ¤ºÅÌø×ªÖÁÈë×¡ÉêÇë</span>
+    </div>
   </div>
 </template>
 
@@ -80,10 +107,14 @@ const ageChartRef = ref(null)
 const radarChartRef = ref(null)
 let ageChart
 let radarChart
+let pollTimer = null
+
+const isPending = computed(() => row.value && row.value.analysisStatus === 0)
+const isFailed = computed(() => row.value && row.value.analysisStatus === 2)
 
 const abnormalRows = computed(() => {
   const r = row.value
-  if (!r) {
+  if (!r || isPending.value) {
     return []
   }
   let ai = null
@@ -111,11 +142,11 @@ const abnormalRows = computed(() => {
 const riskLabel = computed(() => {
   const code = row.value.riskLevel
   const map = {
-    healthy: 'å¥åº·',
-    caution: 'æç¤º',
-    risk: 'é£é™©',
-    danger: 'å±é™©',
-    severeDanger: 'ä¸¥é‡å±é™©'
+    healthy: '½¡¿µ',
+    caution: 'ÌáÊ¾',
+    risk: '·çÏÕ',
+    danger: 'Î£ÏÕ',
+    severeDanger: 'ÑÏÖØÎ£ÏÕ'
   }
   return map[code] || code || '-'
 })
@@ -123,10 +154,10 @@ const riskLabel = computed(() => {
 const admissionLabel = computed(() => {
   const v = row.value.suggestionForAdmission
   if (v === 0 || v === '0') {
-    return 'å»ºè®®'
+    return '½¨Òé'
   }
   if (v === 1 || v === '1') {
-    return 'ä¸å»ºè®®'
+    return '²»½¨Òé'
   }
   return '-'
 })
@@ -134,10 +165,10 @@ const admissionLabel = computed(() => {
 const genderLabel = computed(() => {
   const g = row.value.gender
   if (g === 0 || g === '0') {
-    return 'ç”·'
+    return 'ÄĞ'
   }
   if (g === 1 || g === '1') {
-    return 'å¥³'
+    return 'Å®'
   }
   return '-'
 })
@@ -194,9 +225,8 @@ function ageBandIndex(age) {
   return 0
 }
 
-const AGE_CATEGORIES = ['50-59å²', '60-69å²', '70-79å²', '80-89å²', '90å²åŠä»¥ä¸Š']
+const AGE_CATEGORIES = ['50-59Ëê', '60-69Ëê', '70-79Ëê', '80-89Ëê', '90Ëê¼°ÒÔÉÏ']
 
-/** å„å¹´é¾„æ®µç¤ºæ„å †å æ•°æ®ï¼ˆéçœŸå®ç»Ÿè®¡ï¼‰ */
 const MOCK_AGE_STACK = [
   { healthy: 8, caution: 22, risk: 28, danger: 25, severeDanger: 17 },
   { healthy: 6, caution: 18, risk: 32, danger: 28, severeDanger: 16 },
@@ -205,29 +235,107 @@ const MOCK_AGE_STACK = [
   { healthy: 3, caution: 10, risk: 22, danger: 33, severeDanger: 32 }
 ]
 
+function barGradient(topColor, bottomColor) {
+  return new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+    { offset: 0, color: topColor },
+    { offset: 1, color: bottomColor }
+  ])
+}
+
 function buildAgeChartOption(highlightIndex) {
+  const radius = [4, 4, 0, 0]
+  const mkSeries = (name, key, top, bottom) => ({
+    name,
+    type: 'bar',
+    stack: 'total',
+    barMaxWidth: 36,
+    itemStyle: {
+      borderRadius: radius,
+      color: barGradient(top, bottom)
+    },
+    emphasis: {
+      focus: 'series',
+      itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0,0,0,0.18)' }
+    },
+    data: MOCK_AGE_STACK.map((r, i) => ({
+      value: r[key],
+      itemStyle: i === highlightIndex
+        ? {
+            borderColor: '#f56c6c',
+            borderWidth: 2,
+            shadowBlur: 12,
+            shadowColor: 'rgba(245,108,108,0.45)'
+          }
+        : {}
+    }))
+  })
+
   const series = [
-    { name: 'å¥åº·', type: 'bar', stack: 'total', emphasis: { focus: 'series' }, data: MOCK_AGE_STACK.map(r => r.healthy), itemStyle: { color: '#67c23a' } },
-    { name: 'æç¤º', type: 'bar', stack: 'total', data: MOCK_AGE_STACK.map(r => r.caution), itemStyle: { color: '#e6a23c' } },
-    { name: 'é£é™©', type: 'bar', stack: 'total', data: MOCK_AGE_STACK.map(r => r.risk), itemStyle: { color: '#f56c6c' } },
-    { name: 'å±é™©', type: 'bar', stack: 'total', data: MOCK_AGE_STACK.map(r => r.danger), itemStyle: { color: '#c0392b' } },
-    { name: 'ä¸¥é‡å±é™©', type: 'bar', stack: 'total', data: MOCK_AGE_STACK.map(r => r.severeDanger), itemStyle: { color: '#7b1fa2' } }
+    mkSeries('½¡¿µ', 'healthy', '#7fd67a', '#52a352'),
+    mkSeries('ÌáÊ¾', 'caution', '#ffd88a', '#e6a23c'),
+    mkSeries('·çÏÕ', 'risk', '#ff9a8b', '#f56c6c'),
+    mkSeries('Î£ÏÕ', 'danger', '#ff7b7b', '#c0392b'),
+    mkSeries('ÑÏÖØÎ£ÏÕ', 'severeDanger', '#c77dff', '#7b1fa2')
   ]
+
+  const cat = AGE_CATEGORIES[highlightIndex]
+  series.push({
+    name: 'ageMark',
+    type: 'line',
+    xAxisIndex: 0,
+    yAxisIndex: 0,
+    data: [],
+    silent: true,
+    showInLegend: false,
+    symbol: 'none',
+    lineStyle: { width: 0 },
+    markLine: {
+      symbol: ['none', 'arrow'],
+      animation: true,
+      lineStyle: { color: '#f56c6c', width: 2, type: 'solid' },
+      label: {
+        show: true,
+        formatter: 'µ±Ç°£º' + cat,
+        color: '#f56c6c',
+        fontWeight: 'bold',
+        distance: 8
+      },
+      data: [{ xAxis: cat }]
+    }
+  })
+
   return {
-    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-    legend: { top: 0 },
-    grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
-    xAxis: { type: 'category', data: AGE_CATEGORIES },
-    yAxis: { type: 'value', max: 100, axisLabel: { formatter: '{value}%' } },
-    series,
-    graphic: highlightIndex >= 0 && highlightIndex < AGE_CATEGORIES.length
-      ? [{
-          type: 'text',
-          right: 20,
-          top: 40,
-          style: { text: 'å½“å‰å¹´é¾„æ®µï¼š' + AGE_CATEGORIES[highlightIndex], fill: '#f56c6c', fontSize: 12 }
-        }]
-      : []
+    textStyle: { fontFamily: 'system-ui, sans-serif' },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'shadow' },
+      backgroundColor: 'rgba(255,255,255,0.96)',
+      borderColor: '#e4e7ed',
+      textStyle: { color: '#303133' }
+    },
+    legend: { top: 4, textStyle: { color: '#606266' } },
+    grid: { left: '3%', right: '3%', bottom: '6%', top: 48, containLabel: true },
+    xAxis: {
+      type: 'category',
+      data: AGE_CATEGORIES,
+      axisLine: { lineStyle: { color: '#dcdfe6' } },
+      axisLabel: {
+        color: '#606266',
+        formatter(value) {
+          return value === cat ? '{hl|' + value + '}' : value
+        },
+        rich: {
+          hl: { color: '#f56c6c', fontWeight: 'bold' }
+        }
+      }
+    },
+    yAxis: {
+      type: 'value',
+      max: 100,
+      splitLine: { lineStyle: { type: 'dashed', color: '#ebeef5' } },
+      axisLabel: { formatter: '{value}%', color: '#909399' }
+    },
+    series
   }
 }
 
@@ -253,58 +361,89 @@ function systemScoresFromRow() {
     return null
   }
   return [
-    { name: 'å‘¼å¸ç³»ç»Ÿ', value: sys.breathingSystem ?? 0 },
-    { name: 'æ¶ˆåŒ–ç³»ç»Ÿ', value: sys.digestiveSystem ?? 0 },
-    { name: 'å†…åˆ†æ³Œç³»ç»Ÿ', value: sys.endocrineSystem ?? 0 },
-    { name: 'å…ç–«ç³»ç»Ÿ', value: sys.immuneSystem ?? 0 },
-    { name: 'å¾ªç¯ç³»ç»Ÿ', value: sys.circulatorySystem ?? 0 },
-    { name: 'æ³Œå°¿ç³»ç»Ÿ', value: sys.urinarySystem ?? 0 },
-    { name: 'è¿åŠ¨ç³»ç»Ÿ', value: sys.motionSystem ?? 0 },
-    { name: 'æ„Ÿå®˜ç³»ç»Ÿ', value: sys.senseSystem ?? 0 }
+    { name: 'ºôÎüÏµÍ³', value: sys.breathingSystem ?? 0 },
+    { name: 'Ïû»¯ÏµÍ³', value: sys.digestiveSystem ?? 0 },
+    { name: 'ÄÚ·ÖÃÚÏµÍ³', value: sys.endocrineSystem ?? 0 },
+    { name: 'ÃâÒßÏµÍ³', value: sys.immuneSystem ?? 0 },
+    { name: 'Ñ­»·ÏµÍ³', value: sys.circulatorySystem ?? 0 },
+    { name: 'ÃÚÄòÏµÍ³', value: sys.urinarySystem ?? 0 },
+    { name: 'ÔË¶¯ÏµÍ³', value: sys.motionSystem ?? 0 },
+    { name: '¸Ğ¹ÙÏµÍ³', value: sys.senseSystem ?? 0 }
   ]
 }
 
 function buildRadarOption() {
   const scores = systemScoresFromRow()
   if (!scores) {
-    return { title: { text: 'æš‚æ— ç³»ç»Ÿåˆ†å€¼', left: 'center', top: 'middle' } }
+    return {
+      title: { text: 'ÔİÎŞÏµÍ³·ÖÖµ', left: 'center', top: 'middle', textStyle: { color: '#909399' } }
+    }
   }
   const indicator = scores.map(s => ({ name: s.name, max: 100 }))
   const dataVals = scores.map(s => s.value)
   const avg = dataVals.length ? (dataVals.reduce((a, b) => a + b, 0) / dataVals.length).toFixed(2) : '0'
+  const area = new echarts.graphic.RadialGradient(0.5, 0.5, 0.75, [
+    { offset: 0, color: 'rgba(64, 158, 255, 0.45)' },
+    { offset: 1, color: 'rgba(103, 194, 58, 0.12)' }
+  ])
   return {
-    tooltip: {},
+    textStyle: { fontFamily: 'system-ui, sans-serif' },
+    tooltip: {
+      backgroundColor: 'rgba(255,255,255,0.96)',
+      borderColor: '#e4e7ed'
+    },
     radar: {
       indicator,
       center: ['50%', '52%'],
-      radius: '58%'
+      radius: '62%',
+      splitNumber: 4,
+      axisName: { color: '#606266', fontSize: 11 },
+      splitLine: { lineStyle: { color: ['#ebeef5', '#ebeef5', '#e4e7ed', '#dcdfe6'] } },
+      splitArea: {
+        show: true,
+        areaStyle: {
+          color: ['rgba(250,250,250,0.9)', 'rgba(245,247,250,0.95)', 'rgba(255,255,255,0.85)', 'rgba(245,247,250,0.9)']
+        }
+      },
+      axisLine: { lineStyle: { color: '#dcdfe6' } }
     },
     series: [{
       type: 'radar',
-      data: [{ value: dataVals, name: 'ç³»ç»Ÿå¾—åˆ†', areaStyle: { opacity: 0.15 } }]
+      data: [{
+        value: dataVals,
+        name: 'ÏµÍ³µÃ·Ö',
+        areaStyle: { color: area },
+        lineStyle: { width: 2.5, color: '#409eff' },
+        itemStyle: { color: '#409eff', borderColor: '#fff', borderWidth: 1 },
+        symbolSize: 6
+      }]
     }],
     title: {
-      text: 'ä¸­å¿ƒç»¼åˆçº¦ ' + avg + ' åˆ†',
+      text: 'ÖĞĞÄ×ÛºÏÔ¼ ' + avg + ' ·Ö',
       left: 'center',
-      bottom: 0,
-      textStyle: { fontSize: 12, color: '#606266' }
+      bottom: 4,
+      textStyle: { fontSize: 13, color: '#409eff', fontWeight: 600 }
     }
   }
 }
 
 function initCharts() {
   nextTick(() => {
+    if (isPending.value) {
+      disposeCharts()
+      return
+    }
     const age = parseAgeFromId(row.value.idCard)
     const idx = ageBandIndex(age)
     if (ageChartRef.value) {
       if (!ageChart) {
-        ageChart = echarts.init(ageChartRef.value)
+        ageChart = echarts.init(ageChartRef.value, undefined, { renderer: 'canvas' })
       }
       ageChart.setOption(buildAgeChartOption(idx), true)
     }
     if (radarChartRef.value) {
       if (!radarChart) {
-        radarChart = echarts.init(radarChartRef.value)
+        radarChart = echarts.init(radarChartRef.value, undefined, { renderer: 'canvas' })
       }
       radarChart.setOption(buildRadarOption(), true)
     }
@@ -322,20 +461,60 @@ function disposeCharts() {
   }
 }
 
+function stopPolling() {
+  if (pollTimer) {
+    clearInterval(pollTimer)
+    pollTimer = null
+  }
+}
+
+function startPolling() {
+  stopPolling()
+  const id = route.params.id
+  if (!id) {
+    return
+  }
+  pollTimer = setInterval(() => {
+    getAssessment(id).then(res => {
+      row.value = res.data || {}
+      if (row.value.analysisStatus !== 0) {
+        stopPolling()
+        initCharts()
+      }
+    }).catch(() => {})
+  }, 3000)
+}
+
 function goBack() {
   router.back()
+}
+
+function goCheckIn() {
+  const q = {
+    fromHealth: '1',
+    elderName: row.value.elderName || '',
+    idCard: row.value.idCard || ''
+  }
+  router.push({ path: '/serve/checkIn-apply/index', query: q })
 }
 
 function load() {
   const id = route.params.id
   loading.value = true
-  getAssessment(id).then(res => {
-    row.value = res.data || {}
-    loading.value = false
-    initCharts()
-  }).catch(() => {
-    loading.value = false
-  })
+  getAssessment(id)
+    .then(res => {
+      row.value = res.data || {}
+      loading.value = false
+      if (row.value.analysisStatus === 0) {
+        startPolling()
+      } else {
+        stopPolling()
+      }
+      initCharts()
+    })
+    .catch(() => {
+      loading.value = false
+    })
 }
 
 function onResize() {
@@ -349,12 +528,14 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  stopPolling()
   window.removeEventListener('resize', onResize)
   disposeCharts()
 })
 
 watch(() => route.params.id, () => {
   disposeCharts()
+  stopPolling()
   load()
 })
 </script>
@@ -366,15 +547,26 @@ watch(() => route.params.id, () => {
 .card-title {
   font-weight: 600;
 }
+.chart-card {
+  background: linear-gradient(180deg, #fafcff 0%, #ffffff 40%);
+  border: 1px solid #ebeef5;
+}
 .chart-box {
   width: 100%;
-  height: 320px;
+  height: 340px;
+}
+.chart-box--pad {
+  padding: 4px 0 0;
 }
 .chart-caption {
   text-align: center;
   font-size: 12px;
   color: #909399;
-  margin-top: 8px;
+  margin-top: 10px;
+}
+.chart-caption .accent {
+  color: #f56c6c;
+  font-weight: 600;
 }
 .expand-block {
   padding: 8px 48px 12px 48px;
@@ -383,5 +575,17 @@ watch(() => route.params.id, () => {
 }
 .assessment-detail :deep(.el-page-header__content) {
   font-size: 16px;
+}
+.detail-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0 8px;
+  margin-top: 8px;
+  border-top: 1px solid #ebeef5;
+}
+.footer-hint {
+  font-size: 13px;
+  color: #909399;
 }
 </style>

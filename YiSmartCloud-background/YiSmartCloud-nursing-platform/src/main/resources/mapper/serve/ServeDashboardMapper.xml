@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.FlyingSparrow.YiSmartCloud.serve.mapper.ServeDashboardMapper">
+
+    <select id="countElderByStatus" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardLabelCount">
+        SELECT CASE status
+                   WHEN 0 THEN 'elder_pending'
+                   WHEN 1 THEN 'elder_in'
+                   WHEN 2 THEN 'elder_out'
+                   ELSE 'elder_other' END AS label,
+               COUNT(*) AS cnt
+        FROM elder_info
+        WHERE (is_deleted IS NULL OR is_deleted = 0)
+        GROUP BY status
+    </select>
+
+    <select id="countBedByStatus" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardLabelCount">
+        SELECT CASE bed_status
+                   WHEN 0 THEN 'bed_free'
+                   WHEN 1 THEN 'bed_used'
+                   WHEN 2 THEN 'bed_maint'
+                   ELSE 'bed_other' END AS label,
+               COUNT(*) AS cnt
+        FROM bed
+        WHERE (is_deleted IS NULL OR is_deleted = 0)
+        GROUP BY bed_status
+    </select>
+
+    <select id="countVisitByApprovalGroup" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardLabelCount">
+        SELECT CASE WHEN status = 0 THEN 'visit_pending' ELSE 'visit_done' END AS label,
+               COUNT(*) AS cnt
+        FROM visit_record
+        WHERE (is_deleted IS NULL OR is_deleted = 0)
+        GROUP BY CASE WHEN status = 0 THEN 0 ELSE 1 END
+    </select>
+
+    <select id="countSysUserByStatus" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardLabelCount">
+        SELECT CASE WHEN status = '0' THEN 'user_ok' ELSE 'user_disabled' END AS label,
+               COUNT(*) AS cnt
+        FROM sys_user
+        WHERE del_flag = '0'
+        GROUP BY status
+    </select>
+
+    <select id="sumBillAmountByTypeGroup" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardLabelCount">
+        SELECT CASE
+                   WHEN bill_type IN (1, 2, 3) THEN 'bill_main'
+                   ELSE 'bill_other' END AS label,
+               COALESCE(SUM(amount), 0) AS amount
+        FROM bill_detail
+        WHERE (is_deleted IS NULL OR is_deleted = 0)
+        GROUP BY CASE WHEN bill_type IN (1, 2, 3) THEN 0 ELSE 1 END
+    </select>
+
+    <select id="countCheckInByNursingLevel" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardLabelCount">
+        SELECT IFNULL(NULLIF(TRIM(nursing_level_name), ''), 'nursing_uncat') AS label,
+               COUNT(*) AS cnt
+        FROM check_in
+        WHERE status = 0
+        GROUP BY IFNULL(NULLIF(TRIM(nursing_level_name), ''), 'nursing_uncat')
+    </select>
+
+    <select id="selectElderAgeGenderBuckets" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardElderAgeBucketsRow">
+        SELECT SUM(CASE WHEN gender = 1 AND IFNULL(age, 0) &lt; 60 THEN 1 ELSE 0 END) AS m0,
+               SUM(CASE WHEN gender = 1 AND IFNULL(age, 0) BETWEEN 60 AND 70 THEN 1 ELSE 0 END) AS m1,
+               SUM(CASE WHEN gender = 1 AND IFNULL(age, 0) BETWEEN 71 AND 80 THEN 1 ELSE 0 END) AS m2,
+               SUM(CASE WHEN gender = 1 AND IFNULL(age, 0) BETWEEN 81 AND 90 THEN 1 ELSE 0 END) AS m3,
+               SUM(CASE WHEN gender = 1 AND IFNULL(age, 0) &gt; 90 THEN 1 ELSE 0 END) AS m4,
+               SUM(CASE WHEN gender = 2 AND IFNULL(age, 0) &lt; 60 THEN 1 ELSE 0 END) AS w0,
+               SUM(CASE WHEN gender = 2 AND IFNULL(age, 0) BETWEEN 60 AND 70 THEN 1 ELSE 0 END) AS w1,
+               SUM(CASE WHEN gender = 2 AND IFNULL(age, 0) BETWEEN 71 AND 80 THEN 1 ELSE 0 END) AS w2,
+               SUM(CASE WHEN gender = 2 AND IFNULL(age, 0) BETWEEN 81 AND 90 THEN 1 ELSE 0 END) AS w3,
+               SUM(CASE WHEN gender = 2 AND IFNULL(age, 0) &gt; 90 THEN 1 ELSE 0 END) AS w4
+        FROM elder_info
+        WHERE (is_deleted IS NULL OR is_deleted = 0)
+    </select>
+
+    <select id="selectVisitItemsByDate" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardVisitItemVo">
+        SELECT CASE WHEN status = 0 THEN 2 ELSE 1 END AS type,
+               DATE_FORMAT(visit_time, '%H:%i') AS time,
+               visitor_name AS name,
+               visitor_phone AS phone
+        FROM visit_record
+        WHERE (is_deleted IS NULL OR is_deleted = 0)
+          AND DATE(visit_time) = #{day}
+        ORDER BY visit_time ASC
+    </select>
+
+    <select id="selectVisitItemsBetween" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardVisitRowVo">
+        SELECT DATE_FORMAT(visit_time, '%Y-%m-%d') AS visitDate,
+               CASE WHEN status = 0 THEN 2 ELSE 1 END AS type,
+               DATE_FORMAT(visit_time, '%H:%i') AS time,
+               visitor_name AS name,
+               visitor_phone AS phone
+        FROM visit_record
+        WHERE (is_deleted IS NULL OR is_deleted = 0)
+          AND visit_time IS NOT NULL
+          AND DATE(visit_time) BETWEEN #{start} AND #{end}
+        ORDER BY visit_time ASC
+    </select>
+
+    <select id="sumBillPaidHourlyForDay" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardHourAmount">
+        SELECT HOUR(pay_time) AS hr,
+               COALESCE(SUM(amount), 0) AS amt
+        FROM bill_detail
+        WHERE (is_deleted IS NULL OR is_deleted = 0)
+          AND pay_status = 1
+          AND pay_time IS NOT NULL
+          AND DATE(pay_time) = #{day}
+        GROUP BY HOUR(pay_time)
+    </select>
+
+    <select id="sumBillUnpaidHourlyForDay" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardHourAmount">
+        SELECT HOUR(create_time) AS hr,
+               COALESCE(SUM(amount), 0) AS amt
+        FROM bill_detail
+        WHERE (is_deleted IS NULL OR is_deleted = 0)
+          AND pay_status = 0
+          AND create_time IS NOT NULL
+          AND DATE(create_time) = #{day}
+        GROUP BY HOUR(create_time)
+    </select>
+
+    <select id="sumBillPaidDailyBetween" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardDayAmount">
+        SELECT DATE_FORMAT(pay_time, '%Y-%m-%d') AS statDate,
+               COALESCE(SUM(amount), 0) AS amt
+        FROM bill_detail
+        WHERE (is_deleted IS NULL OR is_deleted = 0)
+          AND pay_status = 1
+          AND pay_time IS NOT NULL
+          AND DATE(pay_time) BETWEEN #{start} AND #{end}
+        GROUP BY DATE(pay_time)
+    </select>
+
+    <select id="sumBillUnpaidDailyBetween" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardDayAmount">
+        SELECT DATE_FORMAT(create_time, '%Y-%m-%d') AS statDate,
+               COALESCE(SUM(amount), 0) AS amt
+        FROM bill_detail
+        WHERE (is_deleted IS NULL OR is_deleted = 0)
+          AND pay_status = 0
+          AND create_time IS NOT NULL
+          AND DATE(create_time) BETWEEN #{start} AND #{end}
+        GROUP BY DATE(create_time)
+    </select>
+
+    <select id="countCheckInStartsDailyBetween" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardDayCount">
+        SELECT DATE_FORMAT(start_date, '%Y-%m-%d') AS statDate,
+               COUNT(*) AS cnt
+        FROM check_in
+        WHERE start_date IS NOT NULL
+          AND DATE(start_date) BETWEEN #{start} AND #{end}
+        GROUP BY DATE(start_date)
+    </select>
+
+    <select id="countCheckOutsDailyBetween" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardDayCount">
+        SELECT DATE_FORMAT(end_date, '%Y-%m-%d') AS statDate,
+               COUNT(*) AS cnt
+        FROM check_in
+        WHERE status = 1
+          AND end_date IS NOT NULL
+          AND DATE(end_date) BETWEEN #{start} AND #{end}
+        GROUP BY DATE(end_date)
+    </select>
+
+    <select id="countVisitsDailyBetween" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardDayCount">
+        SELECT DATE_FORMAT(visit_time, '%Y-%m-%d') AS statDate,
+               COUNT(*) AS cnt
+        FROM visit_record
+        WHERE (is_deleted IS NULL OR is_deleted = 0)
+          AND visit_time IS NOT NULL
+          AND DATE(visit_time) BETWEEN #{start} AND #{end}
+        GROUP BY DATE(visit_time)
+    </select>
+
+    <select id="countCheckInStartsHourlyForDay" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardCheckInHourCount">
+        SELECT HOUR(start_date) AS hr,
+               COUNT(*) AS cnt
+        FROM check_in
+        WHERE start_date IS NOT NULL
+          AND DATE(start_date) = #{day}
+        GROUP BY HOUR(start_date)
+    </select>
+
+    <select id="countCheckOutsHourlyForDay" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.dashboard.DashboardCheckInHourCount">
+        SELECT HOUR(end_date) AS hr,
+               COUNT(*) AS cnt
+        FROM check_in
+        WHERE status = 1
+          AND end_date IS NOT NULL
+          AND DATE(end_date) = #{day}
+        GROUP BY HOUR(end_date)
+    </select>
+</mapper>

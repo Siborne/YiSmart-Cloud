@@ -116,7 +116,8 @@ function toggleTheme() {
   overflow: hidden;
   position: relative;
   background: var(--navbar-bg);
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  box-shadow: var(--navbar-shadow, 0 1px 4px rgba(0, 21, 41, 0.08));
+  color: var(--navbar-text, #303133);
 
   .hamburger-container {
     line-height: 46px;
@@ -160,7 +161,7 @@ function toggleTheme() {
       padding: 0 8px;
       height: 100%;
       font-size: 18px;
-      color: #5a5e66;
+      color: var(--navbar-text, #5a5e66);
       vertical-align: text-bottom;
 
       &.hover-effect {

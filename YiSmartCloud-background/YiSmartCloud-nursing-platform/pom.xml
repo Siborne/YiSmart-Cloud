@@ -23,6 +23,12 @@
             <artifactId>YiSmartCloud-common</artifactId>
         </dependency>
 
+        <!-- TokenService 等安全组件，用于小程序登录签发与后台一致的 JWT -->
+        <dependency>
+            <groupId>org.FlyingSparrow.YiSmartCloud</groupId>
+            <artifactId>YiSmartCloud-framework</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.FlyingSparrow.YiSmartCloud</groupId>
             <artifactId>YiSmartCloud-oss</artifactId>

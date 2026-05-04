@@ -66,4 +66,14 @@ public interface IHealthAssessmentService extends IService<HealthAssessment> {
      * 从 Redis 取体检正文，调用千帆解析并写入健康评估表。
      */
     HealthAssessment analyzeAndSave(HealthAssessmentAnalyzeRequest request);
+
+    /**
+     * 创建待分析记录，事务提交后异步调用千帆（HTTP 立即返回）。
+     */
+    HealthAssessment submitAnalysisAsync(HealthAssessmentAnalyzeRequest request);
+
+    /**
+     * 按主键执行千帆分析（仅 analysis_status=0），由异步监听器调用。
+     */
+    void executeAnalysisById(Long assessmentId);
 }

@@ -663,10 +663,40 @@ function submitForm() {
   })
 }
 
+function applyHealthAssessmentQueryPrefill() {
+  const q = route.query
+  if (q.fromHealth !== '1') {
+    return
+  }
+  if (q.elderName) {
+    form.elder.name = String(q.elderName)
+  }
+  if (q.idCard) {
+    form.elder.idCardNo = String(q.idCard)
+  }
+  const idNo = form.elder.idCardNo
+  if (idNo && idNo.length === 18) {
+    const y = idNo.substr(6, 4)
+    const m = idNo.substr(10, 2)
+    const d = idNo.substr(12, 2)
+    form.elder.birthday = `${y}-${m}-${d}`
+    const birth = new Date(Number(y), Number(m) - 1, Number(d))
+    const now = new Date()
+    let age = now.getFullYear() - birth.getFullYear()
+    if (now.getMonth() * 100 + now.getDate() < birth.getMonth() * 100 + birth.getDate()) {
+      age--
+    }
+    form.elder.age = age > 0 ? age : null
+    const g = parseInt(idNo.charAt(16), 10)
+    form.elder.gender = g % 2 === 1 ? '男' : '女'
+  }
+}
+
 onMounted(() => {
   loadNursingLevelOptions()
   if (!isViewMode.value) {
     loadBedOptions()
+    applyHealthAssessmentQueryPrefill()
   }
 })
 </script>

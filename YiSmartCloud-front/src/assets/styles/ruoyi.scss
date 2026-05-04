@@ -61,7 +61,8 @@
 }
 
 .el-form .el-form-item__label {
-  font-weight: 700;
+  font-weight: 600;
+  color: var(--el-text-color-regular, #606266);
 }
 .el-dialog:not(.is-fullscreen) {
   margin-top: 6vh !important;
@@ -75,13 +76,16 @@
 }
 
 .el-table {
+  --el-table-header-bg-color: #f8fafc;
+
   .el-table__header-wrapper, .el-table__fixed-header-wrapper {
     th {
       word-break: break-word;
-      background-color: #f8f8f9 !important;
-      color: #515a6e;
-      height: 40px !important;
+      background-color: var(--el-table-header-bg-color, #f8fafc) !important;
+      color: var(--el-text-color-secondary, #64748b);
+      height: 42px !important;
       font-size: 13px;
+      font-weight: 600;
     }
   }
   .el-table__body-wrapper {

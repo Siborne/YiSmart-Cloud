@@ -91,8 +91,9 @@ const activeMenu = computed(() => {
       color: v-bind(getMenuTextColor);
       
       &.is-active {
-        color: var(--menu-active-text, #409eff);
-        background-color: var(--menu-hover, rgba(0, 0, 0, 0.06)) !important;
+        color: var(--menu-active-text, var(--el-color-primary, #00b8a0));
+        /* 背景由全局 sidebar.scss 的现代化激活态样式控制 */
+        background-color: transparent !important;
       }
     }
 

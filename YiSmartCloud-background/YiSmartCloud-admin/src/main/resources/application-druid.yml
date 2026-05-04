@@ -82,6 +82,11 @@ spring:
                     config:
                         multi-statement-allow: true
 
+# 微信小程序（家属端登录，随 druid profile 加载）。appSecret 建议用环境变量 WECHAT_APP_SECRET，勿提交生产密钥
+wechat:
+    appId: wx07f6eaa0d75670f2
+    appSecret: ${WECHAT_APP_SECRET:}
+
 # 百度千帆（留空；本地勿提交真实密钥，可在私有 profile 覆盖）
 yi:
     qianfan:

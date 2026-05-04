@@ -8,7 +8,6 @@
         :class="isActive(tag) ? 'active' : ''"
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
         class="tags-view-item"
-        :style="activeStyle(tag)"
         @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''"
         @contextmenu.prevent="openMenu(tag, $event)"
       >
@@ -45,7 +44,6 @@
 import ScrollPane from './ScrollPane'
 import { getNormalPath } from '@/utils/ruoyi'
 import useTagsViewStore from '@/store/modules/tagsView'
-import useSettingsStore from '@/store/modules/settings'
 import usePermissionStore from '@/store/modules/permission'
 
 const visible = ref(false)
@@ -61,7 +59,6 @@ const router = useRouter()
 
 const visitedViews = computed(() => useTagsViewStore().visitedViews)
 const routes = computed(() => usePermissionStore().routes)
-const theme = computed(() => useSettingsStore().theme)
 
 watch(route, () => {
   addTags()
@@ -83,14 +80,6 @@ onMounted(() => {
 
 function isActive(r) {
   return r.path === route.path
-}
-
-function activeStyle(tag) {
-  if (!isActive(tag)) return {}
-  return {
-    "background-color": theme.value,
-    "border-color": theme.value
-  }
 }
 
 function isAffix(tag) {
@@ -259,11 +248,11 @@ function handleScroll() {
 
 <style lang="scss" scoped>
 .tags-view-container {
-  height: 34px;
+  height: 36px;
   width: 100%;
   background: var(--tags-bg, #fff);
   border-bottom: 1px solid var(--tags-item-border, #d8dce5);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
 
   .tags-view-wrapper {
     .tags-view-item {
@@ -271,14 +260,16 @@ function handleScroll() {
       position: relative;
       cursor: pointer;
       height: 26px;
-      line-height: 26px;
+      line-height: 24px;
       border: 1px solid var(--tags-item-border, #d8dce5);
       color: var(--tags-item-text, #495060);
       background: var(--tags-item-bg, #fff);
-      padding: 0 8px;
+      padding: 0 10px;
       font-size: 12px;
-      margin-left: 5px;
-      margin-top: 4px;
+      margin-left: 6px;
+      margin-top: 5px;
+      border-radius: 6px;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 
       &:first-of-type {
         margin-left: 15px;
@@ -288,20 +279,26 @@ function handleScroll() {
         margin-right: 15px;
       }
 
+      &:hover:not(.active) {
+        color: var(--el-color-primary);
+        border-color: rgba(0, 184, 160, 0.35);
+      }
+
       &.active {
-        background-color: #42b983;
-        color: #fff;
-        border-color: #42b983;
+        background-color: var(--current-color, var(--el-color-primary)) !important;
+        color: #fff !important;
+        border-color: var(--current-color, var(--el-color-primary)) !important;
 
         &::before {
           content: '';
-          background: #fff;
+          background: rgba(255, 255, 255, 0.95);
           display: inline-block;
-          width: 8px;
-          height: 8px;
+          width: 6px;
+          height: 6px;
           border-radius: 50%;
           position: relative;
-          margin-right: 5px;
+          margin-right: 6px;
+          vertical-align: middle;
         }
       }
     }

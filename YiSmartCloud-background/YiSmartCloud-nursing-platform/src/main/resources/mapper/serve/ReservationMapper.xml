@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.FlyingSparrow.YiSmartCloud.serve.mapper.ReservationMapper">
+
+    <resultMap type="org.FlyingSparrow.YiSmartCloud.serve.domain.Reservation" id="ReservationResult">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="mobile" column="mobile"/>
+        <result property="time" column="time"/>
+        <result property="visitor" column="visitor"/>
+        <result property="type" column="type"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <select id="selectOccupiedCountsByDate" resultType="org.FlyingSparrow.YiSmartCloud.serve.vo.ReservationSlotOccupancyRow">
+        SELECT `time` AS slotTime, COUNT(*) AS bookedCount
+        FROM reservation
+        WHERE `status` IN (0, 1)
+          AND DATE(`time`) = #{date}
+        GROUP BY `time`
+    </select>
+
+    <select id="countCancelledTodayByMember" resultType="int">
+        SELECT COUNT(*)
+        FROM reservation
+        WHERE `status` = 2
+          AND `create_by` = #{memberId}
+          AND DATE(`update_time`) = #{date}
+    </select>
+
+    <select id="countActiveAtSlot" resultType="int">
+        SELECT COUNT(*)
+        FROM reservation
+        WHERE `time` = #{slot}
+          AND `status` IN (0, 1)
+    </select>
+
+    <select id="selectMemberReservationList" resultMap="ReservationResult">
+        SELECT id, name, mobile, `time`, visitor, type, status, create_by, create_time, update_by, update_time, remark
+        FROM reservation
+        <where>
+            `create_by` = #{memberId}
+            <if test="query.type != null">
+                AND type = #{query.type}
+            </if>
+            <if test="query.status != null">
+                AND `status` = #{query.status}
+            </if>
+        </where>
+        ORDER BY `time` DESC
+    </select>
+
+    <update id="expirePending">
+        UPDATE reservation
+        SET `status` = 3,
+            `update_time` = NOW()
+        WHERE `status` = 0
+          AND `time` &lt; #{now}
+    </update>
+</mapper>

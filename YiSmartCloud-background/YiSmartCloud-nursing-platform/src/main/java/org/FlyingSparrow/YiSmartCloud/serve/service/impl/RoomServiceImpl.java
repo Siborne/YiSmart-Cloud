@@ -2,6 +2,7 @@ package org.FlyingSparrow.YiSmartCloud.serve.service.impl;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.FlyingSparrow.YiSmartCloud.serve.vo.RoomVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -97,5 +98,16 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
     @Override
     public RoomVo getRoomById(Long id) {
         return roomMapper.getRoomById(id);
+    }
+
+    @Override
+    public List<Room> findRoomTypeListByStatus(Integer status) {
+        LambdaQueryWrapper<Room> qw = new LambdaQueryWrapper<>();
+        qw.eq(Room::getIsDeleted, 0);
+        if (status != null) {
+            qw.eq(Room::getStatus, status);
+        }
+        qw.orderByAsc(Room::getRoomType).orderByAsc(Room::getId);
+        return list(qw);
     }
 }

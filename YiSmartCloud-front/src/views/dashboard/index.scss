@@ -1,8 +1,13 @@
 @import "@/assets/styles/variables.module.scss";
 .home-wrapper {
-  padding: 24px 15px 52px 24px;
+  /* 与主布局 app-container 边距协调，避免底部内容被裁切 */
+  margin: -4px -6px 0;
+  padding: 8px 4px 48px;
+  min-height: calc(100vh - 140px);
+  box-sizing: border-box;
+
   .el-card {
-    box-shadow: 0 2px 4px 0 #00000008;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
   }
 
   .el-card__header {
@@ -36,12 +41,18 @@
   }
 
   .dataCon {
-    display: flex;
-    padding-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+    gap: 12px 10px;
+    justify-items: center;
+    align-items: start;
+    padding: 8px 4px 20px;
+    box-sizing: border-box;
   }
 
   .dashboard-chart-container {
-    width: 158px;
+    width: 100%;
+    max-width: 158px;
     height: 158px;
     margin: 0 auto;
   }
@@ -302,13 +313,13 @@
         background-size: 80%;
       }
       .backlogIcon {
-        background: url(../../assets/images/icon-daiban.png) 50% 50% no-repeat
+        background: url(../../assets/images/icon_ddgl2.png) 50% 50% no-repeat
           #e0fcf3;
         background-size: 80%;
       }
 
       .financeIcon {
-        background: url(../../assets/images/icon_zdgl.png) 50% 50% no-repeat
+        background: url(../../assets/images/icon_cwbb.png) 50% 50% no-repeat
           #e8fedf;
         background-size: 80%;
       }
@@ -338,12 +349,12 @@
       }
 
       .leaveIcon {
-        background: url(../../assets/icon-qj.png) 50% 50% no-repeat #feebd3;
+        background: url(../../assets/images/icon-kxz.png) 50% 50% no-repeat #feebd3;
         background-size: 80%;
       }
 
       .subscribeIcon {
-        background: url(../../assets/icon_cwbb.png) 50% 50% no-repeat #e0fcf3;
+        background: url(../../assets/images/icon_cwbb.png) 50% 50% no-repeat #e0fcf3;
         background-size: 80%;
       }
     }
@@ -579,8 +590,10 @@
     border: 0 none;
   }
 
-  .dashboard-rank-card,.dashboard-chart-card {
-    height: 278px;
+  .dashboard-rank-card,
+  .dashboard-chart-card {
+    min-height: 278px;
+    height: auto;
     .el-card__header {
       font-size: $base-font-size-16;
       font-weight: 700;
@@ -615,10 +628,6 @@
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
-  }
-
-  .row-container[data-v-0d2b0973]:not(:last-child) {
-    margin: 0;
   }
 
   // .el-col {

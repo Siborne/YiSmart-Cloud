@@ -98,4 +98,13 @@ public class HealthAssessment extends BaseEntity {
     @TableField("ai_result_json")
     private String aiResultJson;
 
+    /** AI 分析状态：0分析中 1已完成 2失败 */
+    @Excel(name = "分析状态")
+    @TableField("analysis_status")
+    private Integer analysisStatus;
+
+    /** 分析失败原因 */
+    @TableField("analysis_error")
+    private String analysisError;
+
 }

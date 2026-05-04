@@ -25,6 +25,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="abnormalAnalysis"    column="abnormal_analysis"    />
         <result property="systemScore"    column="system_score"    />
         <result property="aiResultJson"    column="ai_result_json"    />
+        <result property="analysisStatus"    column="analysis_status"    />
+        <result property="analysisError"    column="analysis_error"    />
         <result property="createBy"    column="create_by"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateBy"    column="update_by"    />
@@ -33,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectHealthAssessmentVo">
-        select id, elder_name, id_card, birth_date, age, gender, health_score, risk_level, suggestion_for_admission, nursing_level_name, admission_status, total_check_date, physical_exam_institution, physical_report_url, assessment_time, report_summary, disease_risk, abnormal_analysis, system_score, create_by, create_time, update_by, update_time, remark from health_assessment
+        select id, elder_name, id_card, birth_date, age, gender, health_score, risk_level, suggestion_for_admission, nursing_level_name, admission_status, total_check_date, physical_exam_institution, physical_report_url, assessment_time, report_summary, disease_risk, abnormal_analysis, system_score, analysis_status, analysis_error, create_by, create_time, update_by, update_time, remark from health_assessment
     </sql>
 
     <select id="selectHealthAssessmentList" parameterType="HealthAssessment" resultMap="HealthAssessmentResult">
@@ -57,6 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="diseaseRisk != null  and diseaseRisk != ''"> and disease_risk = #{diseaseRisk}</if>
             <if test="abnormalAnalysis != null  and abnormalAnalysis != ''"> and abnormal_analysis = #{abnormalAnalysis}</if>
             <if test="systemScore != null  and systemScore != ''"> and system_score = #{systemScore}</if>
+            <if test="analysisStatus != null"> and analysis_status = #{analysisStatus}</if>
         </where>
     </select>
     
@@ -87,6 +90,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="abnormalAnalysis != null">abnormal_analysis,</if>
             <if test="systemScore != null">system_score,</if>
             <if test="aiResultJson != null">ai_result_json,</if>
+            <if test="analysisStatus != null">analysis_status,</if>
+            <if test="analysisError != null">analysis_error,</if>
             <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateBy != null">update_by,</if>
@@ -113,6 +118,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="abnormalAnalysis != null">#{abnormalAnalysis},</if>
             <if test="systemScore != null">#{systemScore},</if>
             <if test="aiResultJson != null">#{aiResultJson},</if>
+            <if test="analysisStatus != null">#{analysisStatus},</if>
+            <if test="analysisError != null">#{analysisError},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
@@ -143,6 +150,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="abnormalAnalysis != null">abnormal_analysis = #{abnormalAnalysis},</if>
             <if test="systemScore != null">system_score = #{systemScore},</if>
             <if test="aiResultJson != null">ai_result_json = #{aiResultJson},</if>
+            <if test="analysisStatus != null">analysis_status = #{analysisStatus},</if>
+            <if test="analysisError != null">analysis_error = #{analysisError},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateBy != null">update_by = #{updateBy},</if>

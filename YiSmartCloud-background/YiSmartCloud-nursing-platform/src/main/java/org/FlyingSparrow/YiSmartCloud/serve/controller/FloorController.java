@@ -39,7 +39,7 @@ public class FloorController extends BaseController {
     /**
      * 查询楼层信息列表
      */
-    @PreAuthorize("@ss.hasPermi('serve:room:list')")
+    @PreAuthorize("@ss.hasPermi('serve:floor:list')")
     @GetMapping("/list")
     @ApiOperation("查询楼层信息列表")
     public TableDataInfo list(Floor floor) {
@@ -51,7 +51,7 @@ public class FloorController extends BaseController {
     /**
      * 导出楼层信息列表
      */
-    @PreAuthorize("@ss.hasPermi('serve:room:export')")
+    @PreAuthorize("@ss.hasPermi('serve:floor:export')")
     @Log(title = "楼层信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ApiOperation("导出楼层信息列表")
@@ -64,7 +64,7 @@ public class FloorController extends BaseController {
     /**
      * 查询楼层下拉数据
      */
-    @PreAuthorize("@ss.hasPermi('serve:room:list')")
+    @PreAuthorize("@ss.hasAnyPermi('serve:floor:list,serve:room:list')")
     @GetMapping("/options")
     @ApiOperation("查询楼层下拉数据")
     public AjaxResult options() {
@@ -75,7 +75,7 @@ public class FloorController extends BaseController {
     /**
      * 获取楼层信息详细信息
      */
-    @PreAuthorize("@ss.hasPermi('serve:room:query')")
+    @PreAuthorize("@ss.hasPermi('serve:floor:query')")
     @GetMapping("/{id}")
     @ApiOperation("获取楼层信息详细信息")
     public AjaxResult getInfo(@ApiParam(value = "楼层ID", required = true) @PathVariable("id") Long id) {
@@ -85,7 +85,7 @@ public class FloorController extends BaseController {
     /**
      * 新增楼层信息
      */
-    @PreAuthorize("@ss.hasPermi('serve:room:add')")
+    @PreAuthorize("@ss.hasPermi('serve:floor:add')")
     @Log(title = "楼层信息", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增楼层信息")
@@ -96,7 +96,7 @@ public class FloorController extends BaseController {
     /**
      * 修改楼层信息
      */
-    @PreAuthorize("@ss.hasPermi('serve:room:edit')")
+    @PreAuthorize("@ss.hasPermi('serve:floor:edit')")
     @Log(title = "楼层信息", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("修改楼层信息")
@@ -107,7 +107,7 @@ public class FloorController extends BaseController {
     /**
      * 删除楼层信息
      */
-    @PreAuthorize("@ss.hasPermi('serve:room:remove')")
+    @PreAuthorize("@ss.hasPermi('serve:floor:remove')")
     @Log(title = "楼层信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     @ApiOperation("删除楼层信息")

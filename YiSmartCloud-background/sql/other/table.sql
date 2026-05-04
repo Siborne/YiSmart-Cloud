@@ -1,6 +1,6 @@
 -- =========================================================
 -- 养老核心业务表设计（护理配置后续四大核心模块）
--- 模块顺序：床位管理 -> 入住管理 -> 账单管理 -> 健康监测
+-- 模块顺序：床位管理 -> 老人入住与在院（含后续护工派工扩展）-> 账单管理 -> 健康监测
 -- 说明：统一采用审计字段 create_time / update_time / is_deleted
 -- =========================================================
 
@@ -62,10 +62,10 @@ CREATE TABLE `bed` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='床位信息表';
 
 -- =========================
--- 模块二：老人档案与入住记录
+-- 模块二：老人入住与在院主数据（档案表 + 入住记录；护工分配可关联 elder_id 扩展）
 -- =========================
 
--- 老人档案表：保存老人基础档案和在院状态
+-- 老人档案表：入住流程与在院运营的主数据，含在院状态（待入住 / 在院 / 已退住）
 CREATE TABLE `elder_info` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `name` varchar(64) NOT NULL COMMENT '老人姓名',
@@ -77,6 +77,9 @@ CREATE TABLE `elder_info` (
   `status` tinyint DEFAULT '0' COMMENT '当前状态: 0-待入住, 1-在院, 2-已退住',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `is_deleted` tinyint DEFAULT '0' COMMENT '逻辑删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='老人档案表';

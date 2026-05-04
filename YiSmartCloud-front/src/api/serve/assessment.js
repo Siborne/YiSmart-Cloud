@@ -52,12 +52,22 @@ export function uploadAssessmentReport(formData) {
   })
 }
 
-/** 提交千帆分析并入库 */
+/** 提交千帆分析并入库（同步，耗时长） */
 export function analyzeAssessment(data) {
   return request({
     url: '/serve/assessment/analyze',
     method: 'post',
     data: data,
     timeout: 180000
+  })
+}
+
+/** 异步排队分析（立即返回，完成后在详情查看） */
+export function analyzeAssessmentAsync(data) {
+  return request({
+    url: '/serve/assessment/analyze-async',
+    method: 'post',
+    data: data,
+    timeout: 60000
   })
 }

@@ -5,8 +5,8 @@ import org.FlyingSparrow.YiSmartCloud.common.core.domain.BaseEntity;
 import lombok.Data;
 
 /**
- * 老人档案对象 elder_info
- * 
+ * 在院老人主数据 elder_info（入住流程写入或维护，供床位与后续护工派工关联）
+ *
  * @author Siborne
  * @date 2026-04-27
  */

@@ -1,5 +1,13 @@
 <template>
   <div class="app-container">
+    <el-alert
+      type="info"
+      :closable="false"
+      show-icon
+      style="margin-bottom: 16px"
+      title="入住与资源分配"
+      description="本页办理入住登记（床位、护理等级、合同等）。老人身份与在院状态的主数据在「在院老人信息」中维护；后续可在此链路扩展护工 / 照护员绑定与排班。"
+    />
     <el-form :model="queryParams" ref="queryRef" :inline="true" label-width="100px">
       <el-form-item label="老人姓名" prop="elderName">
         <el-input

@@ -59,3 +59,8 @@ spring:
                 wall:
                     config:
                         multi-statement-allow: true
+
+# WeChat mini-program (family login). Copy to application-druid.yml; set WECHAT_APP_SECRET in env.
+wechat:
+    appId: wx07f6eaa0d75670f2
+    appSecret: ${WECHAT_APP_SECRET:your-mini-program-secret}

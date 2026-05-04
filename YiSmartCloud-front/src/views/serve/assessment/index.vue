@@ -22,7 +22,7 @@
           icon="Plus"
           @click="openUploadDialog"
           v-hasPermi="['serve:assessment:add']"
-        >+ 上传体检报告</el-button>
+        >上传体检报告</el-button>
       </el-col>
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -30,6 +30,13 @@
     <el-table v-loading="loading" :data="assessmentList">
       <el-table-column type="index" label="序号" width="60" align="center" :index="indexMethod" />
       <el-table-column label="老人姓名" align="center" prop="elderName" min-width="100" />
+      <el-table-column label="分析状态" align="center" width="110">
+        <template #default="scope">
+          <el-tag v-if="scope.row.analysisStatus === 0" type="warning">分析中</el-tag>
+          <el-tag v-else-if="scope.row.analysisStatus === 2" type="danger">失败</el-tag>
+          <el-tag v-else type="success">已完成</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="总检日期" align="center" prop="totalCheckDate" min-width="120" />
       <el-table-column label="评估时间" align="center" prop="assessmentTime" width="180">
         <template #default="scope">
@@ -89,7 +96,7 @@
 </template>
 
 <script setup name="Assessment">
-import { listAssessment, uploadAssessmentReport, analyzeAssessment } from '@/api/serve/assessment'
+import { listAssessment, uploadAssessmentReport, analyzeAssessmentAsync } from '@/api/serve/assessment'
 
 const { proxy } = getCurrentInstance()
 const router = useRouter()
@@ -214,19 +221,15 @@ function submitAnalyze() {
       return
     }
     analyzeLoading.value = true
-    analyzeAssessment({
+    analyzeAssessmentAsync({
       elderName: uploadForm.value.elderName.trim(),
       idCard: uploadForm.value.idCard.trim(),
       physicalExamInstitution: uploadForm.value.physicalExamInstitution.trim(),
       physicalReportUrl: uploadForm.value.physicalReportUrl
-    }).then(res => {
-      const id = res.data && res.data.id
-      proxy.$modal.msgSuccess('分析完成')
+    }).then(() => {
+      proxy.$modal.msgSuccess('已提交后台分析，您可继续其它操作；分析完成后在列表点击「查看」打开报告')
       uploadOpen.value = false
       getList()
-      if (id) {
-        router.push('/serve/assessment-view/index/' + id)
-      }
     }).finally(() => {
       analyzeLoading.value = false
     })

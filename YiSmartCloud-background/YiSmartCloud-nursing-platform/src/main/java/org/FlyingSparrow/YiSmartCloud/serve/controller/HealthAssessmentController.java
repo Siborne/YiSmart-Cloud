@@ -139,6 +139,19 @@ public class HealthAssessmentController extends BaseController {
     }
 
     /**
+     * 异步智能分析：立即返回记录 ID，千帆在后台完成后更新同一条记录。
+     */
+    @PreAuthorize("@ss.hasPermi('serve:assessment:add')")
+    @Log(title = "健康评估", businessType = BusinessType.INSERT)
+    @PostMapping("/analyze-async")
+    @ApiOperation("体检报告异步智能分析（排队）")
+    @RepeatSubmit(interval = 3000, message = "请勿重复提交")
+    public AjaxResult analyzeAsync(@ApiParam(value = "分析请求", required = true) @RequestBody HealthAssessmentAnalyzeRequest body) {
+        HealthAssessment saved = healthAssessmentService.submitAnalysisAsync(body);
+        return AjaxResult.success(saved);
+    }
+
+    /**
      * 健康文档上传（OSS），PDF 时解析正文并写入 Redis（hash：healthReport，field：身份证号）
      */
     @PreAuthorize("@ss.hasPermi('serve:assessment:add')")

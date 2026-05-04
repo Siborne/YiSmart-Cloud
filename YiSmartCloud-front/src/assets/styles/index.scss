@@ -12,11 +12,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
 }
 
 label {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 html {
@@ -121,9 +122,29 @@ aside {
   }
 }
 
-//main-container全局样式
+// main-container：工作区背景（与侧栏形成层次）
+#app .main-container {
+  background-color: var(--app-page-bg, #f1f5f9);
+}
+
+// main-container 内列表页容器：浅色下卡片化
+html:not(.dark) #app .main-container .app-container {
+  background-color: var(--el-bg-color, #ffffff);
+  border-radius: var(--app-radius-lg, 12px);
+  border: 1px solid var(--el-border-color-lighter, #ebeef5);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  margin: 10px 14px 18px;
+}
+
+html.dark #app .main-container .app-container {
+  border-radius: var(--app-radius-lg, 12px);
+  border: 1px solid var(--el-border-color, #434343);
+  margin: 10px 14px 18px;
+}
+
+// 列表页根容器统一留白（布局内卡片规则再叠加圆角与边距）
 .app-container {
-  padding: 20px;
+  padding: 20px 24px;
 }
 
 .components-container {

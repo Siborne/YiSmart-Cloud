@@ -1,9 +1,9 @@
-package org.FlyingSparrow.YiSmartCloud.serve.service;
+package org.FlyingSparrow.YiSmartCloud.serve.assessment.ai;
 
 import org.FlyingSparrow.YiSmartCloud.common.utils.StringUtils;
 
 /**
- * 从大模型返回文本中提取 JSON 对象字符串。
+ * Extract a JSON object substring from LLM raw text.
  */
 public final class HealthAssessmentAiJsonExtractor {
 

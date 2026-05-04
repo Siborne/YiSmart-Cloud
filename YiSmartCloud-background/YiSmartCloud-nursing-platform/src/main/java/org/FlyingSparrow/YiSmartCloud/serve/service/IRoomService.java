@@ -69,4 +69,12 @@ public interface IRoomService extends IService<Room> {
      * @return
      */
     RoomVo getRoomById(Long id);
+
+    /**
+     * 根据启用状态查询房间列表（不含逻辑删除）
+     *
+     * @param status 状态: 0-停用, 1-启用；为 null 时不按状态过滤
+     * @return 房间集合
+     */
+    List<Room> findRoomTypeListByStatus(Integer status);
 }
