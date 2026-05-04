@@ -42,10 +42,10 @@
         <div class="roleCon">
           <div class="head"> 
             <div class="img">
-              <img :src="baseData.avatar ? baseData.avatar : avatar" />
+              <img :src="baseData.user?.avatar || baseData.avatar || avatar" />
             </div>
             <div class="rText">
-              <p>Hello！{{ baseData.nickName }}</p>
+              <p>Hello！{{ baseData.user?.nickName || baseData.nickName }}</p>
               <p>今天也是元气满满的一天！</p>
             </div>
           </div>
@@ -97,7 +97,7 @@
 </template>
 
 <script setup>
-import { onMounted, computed, ref } from 'vue'
+import { onMounted, computed, ref, watch, nextTick } from 'vue'
 
 import * as echarts from 'echarts/core'
 import {
@@ -108,23 +108,13 @@ import {
 import { PieChart, LineChart } from 'echarts/charts'
 import { CanvasRenderer } from 'echarts/renderers'
 import useSettingStore from '@/store/modules/setColor'
-import { getDateInfo, getMonthInfo } from '@/utils/date'
+import { getDateInfo } from '@/utils/date'
 import {
   OLDMAN_NUM_A,
-  OLDMAN_NUM_B,
-  OLDMAN_NUM_C,
   BED_NUM_A,
-  BED_NUM_B,
-  BED_NUM_C,
   SERVE_NUM_A,
-  SERVE_NUM_B,
-  SERVE_NUM_C,
   STAFF_NUM_A,
-  STAFF_NUM_B,
-  STAFF_NUM_C,
-  MONEY_NUM_A,
-  MONEY_NUM_B,
-  MONEY_NUM_C
+  MONEY_NUM_A
 } from '../constants'
 import {
   getOldPieChartDataSet,
@@ -150,8 +140,7 @@ const store = useSettingStore()
 const newDate = getDateInfo(new Date())
 const chartColors = computed(() => store.chartColors)
 // 获取父组件值、方法
-defineProps({
-  // 搜索对象
+const props = defineProps({
   baseData: {
     type: Object,
     default: () => ({})
@@ -159,16 +148,36 @@ defineProps({
   roleListData: {
     type: String,
     default: ''
+  },
+  /** 后端 /serve/dashboard/summary */
+  dashboard: {
+    type: Object,
+    default: null
   }
 })
+
+function normalizePie(bundle, fallback) {
+  if (!bundle || !Array.isArray(bundle.data)) {
+    return fallback
+  }
+  const data = bundle.data.map((d) => ({
+    name: d.name,
+    value: Number(d.value)
+  }))
+  const total =
+    bundle.total !== undefined && bundle.total !== null
+      ? Number(bundle.total)
+      : data.reduce((s, x) => s + x.value, 0)
+  return { total, data }
+}
 // monitorChart
-let oldContainer= null // 老人
-let bedContainer= null // 床位
-let serveContainer= null // 服务
-let staffContainer= null // 员工
-let moneyContainer= null // 收入
-let countChart =null
-// 老人数量
+let oldContainer = null // 老人
+let bedContainer = null // 床位
+let serveContainer = null // 服务
+let staffContainer = null // 员工
+let moneyContainer = null // 收入
+let countChart = null
+// 老人数量（默认占位，接口返回后覆盖）
 const oldNumData = ref(OLDMAN_NUM_A)
 const bedNumData = ref(BED_NUM_A)
 const serveNumData = ref(SERVE_NUM_A)
@@ -231,29 +240,28 @@ const renderCharts = () => {
   moneyCountChart()
 }
 
-onMounted(() => {
-  // 3套数据3天出现一次
-  const date = getMonthInfo(new Date())
-  const num = (date.surplusDay + 1) % 3
-  if (num === 1) {
-    oldNumData.value = OLDMAN_NUM_A
-    bedNumData.value = BED_NUM_A
-    serveNumData.value = SERVE_NUM_A
-    staffNumData.value = STAFF_NUM_A
-    moneyNumData.value = MONEY_NUM_A
-  } else if (num === 2) {
-    oldNumData.value = OLDMAN_NUM_B
-    bedNumData.value = BED_NUM_B
-    serveNumData.value = SERVE_NUM_B
-    staffNumData.value = STAFF_NUM_B
-    moneyNumData.value = MONEY_NUM_B
-  } else {
-    oldNumData.value = OLDMAN_NUM_C
-    bedNumData.value = BED_NUM_C
-    serveNumData.value = SERVE_NUM_C
-    staffNumData.value = STAFF_NUM_C
-    moneyNumData.value = MONEY_NUM_C
+function applyDashboard(d) {
+  if (!d) {
+    return
   }
+  oldNumData.value = normalizePie(d.elder, OLDMAN_NUM_A)
+  bedNumData.value = normalizePie(d.bed, BED_NUM_A)
+  serveNumData.value = normalizePie(d.service, SERVE_NUM_A)
+  staffNumData.value = normalizePie(d.staff, STAFF_NUM_A)
+  moneyNumData.value = normalizePie(d.money, MONEY_NUM_A)
+}
+
+watch(
+  () => props.dashboard,
+  (d) => {
+    applyDashboard(d)
+    nextTick(() => renderCharts())
+  },
+  { deep: true }
+)
+
+onMounted(() => {
+  applyDashboard(props.dashboard)
   renderCharts()
 })
 </script>

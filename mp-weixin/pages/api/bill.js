@@ -1,7 +1,7 @@
 "use strict";
 const utils_request = require("../../utils/request.js");
 const getBillList = (params) => utils_request.request({
-  url: "/bill/page/",
+  url: "/member/bill/page/",
   method: "get",
   params
 });
@@ -10,7 +10,7 @@ const getBillDetail = (id) => utils_request.request({
   method: "get"
 });
 const billPay = (params) => utils_request.request({
-  url: `/bill`,
+  url: "/member/bill",
   method: "put",
   params
 });

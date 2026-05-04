@@ -5,11 +5,15 @@
     <top-panel
       class="row-container"
       :baseData="baseData"
+      :dashboard="dashboard"
     />
     <!-- 中部图表  -->
-    <MiddleChart class="row-container"></MiddleChart>
+    <MiddleChart class="row-container" :dashboard="dashboard" />
     <!-- 列表排名 -->
-    <rank-list class="row-container" />
+    <rank-list
+      class="row-container"
+      :dashboard="dashboard"
+    />
   </div>
 </template>
 
@@ -19,21 +23,34 @@ import TopPanel from './components/TopPanel.vue';
 import MiddleChart from './components/MiddleChart.vue';
 import RankList from './components/RankList.vue';
 import { getUserProfile } from '@/api/system/user';
+import { getDashboardSummary } from '@/api/serve/dashboard';
 
 const baseData = reactive({
   user: {},
   roleGroup: {},
   postGroup: {},
 }); // 用户信息
-const roleListData = ref(''); // 角色
+const dashboard = ref(null);
+
 const getpersonalData = async () => {
   const res = await getUserProfile();
   baseData.user = res.data;
   baseData.roleGroup = res.roleGroup;
   baseData.postGroup = res.postGroup;
 };
+
+const loadDashboard = async () => {
+  try {
+    const res = await getDashboardSummary();
+    dashboard.value = res.data;
+  } catch (e) {
+    console.warn('首页统计数据加载失败', e);
+  }
+};
+
 onMounted(() => {
   getpersonalData();
+  loadDashboard();
 });
 </script>
 <style lang="scss" src="./index.scss"></style>

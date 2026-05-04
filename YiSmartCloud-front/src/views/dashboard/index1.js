@@ -495,7 +495,7 @@ export function getservePieChartDataSet({ textColor, containerColor }, data) {
     color: ['#d7f1ed', '#ADA5EE'],
     tooltip: {
       trigger: 'item',
-      formatter: '{b}: {c} w笔'
+      formatter: '{b}: {c} 笔'
     },
     grid: {
       top: '0',
@@ -515,7 +515,7 @@ export function getservePieChartDataSet({ textColor, containerColor }, data) {
         label: {
           show: true,
           position: 'center',
-          formatter: [`{value|${data.total}w笔}`, '{name|服务单数量}'].join(
+          formatter: [`{value|${data.total}笔}`, '{name|服务单数量}'].join(
             '\n'
           ),
           rich: {
@@ -595,7 +595,7 @@ export function getMoneyPieChartDataSet({ textColor, containerColor }, data) {
     color: ['#d7f1ed', '#FE8585'],
     tooltip: {
       trigger: 'item',
-      formatter: '{b}: {c} w元'
+      formatter: '{b}: {c} 元'
     },
     grid: {
       top: '0',
@@ -615,7 +615,7 @@ export function getMoneyPieChartDataSet({ textColor, containerColor }, data) {
         label: {
           show: true,
           position: 'center',
-          formatter: [`{value|${data.total}w元}`, '{name|收入金额}'].join('\n'),
+          formatter: [`{value|${data.total}元}`, '{name|收入金额}'].join('\n'),
           rich: {
             value: {
               color: textColor,

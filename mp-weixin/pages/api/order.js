@@ -1,24 +1,24 @@
 "use strict";
 const utils_request = require("../../utils/request.js");
 const getOrderList = (params) => utils_request.request({
-  url: "/orders/order/page",
+  url: "/member/orders/order/page",
   method: "get",
   params
 });
 const getOrderDetail = (id) => utils_request.request({
-  url: `/orders/${id}`,
+  url: `/member/orders/${id}`,
   method: "get"
 });
 const cancelOrder = (params) => utils_request.request({
-  url: `/orders/${params.orderId}/cancel?reason=` + params.reason,
+  url: `/member/orders/${params.orderId}/cancel?reason=` + params.reason,
   method: "post"
 });
 const orderDelete = (id) => utils_request.request({
-  url: `/orders/${id}`,
+  url: `/member/orders/${id}`,
   method: "delete"
 });
 const orderRefund = (params) => utils_request.request({
-  url: `/orders/refund`,
+  url: "/member/orders/refund",
   method: "post",
   params
 });

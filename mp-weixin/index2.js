@@ -19,6 +19,8 @@ const _sfc_main = {
     const call = () => {
       utils_index.tostTip("该功能对接第三方，暂未实现");
     };
+    const onPopupChange = () => {
+    };
     expose({
       popup
     });
@@ -29,7 +31,7 @@ const _sfc_main = {
         c: common_vendor.sr(popup, "0d50fd94-0", {
           "k": "popup"
         }),
-        d: common_vendor.o(_ctx.change)
+        d: common_vendor.o(onPopupChange)
       };
     };
   }

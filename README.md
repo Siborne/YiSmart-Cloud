@@ -23,7 +23,7 @@
 
 `YiSmartCloud`（颐智云）是一套面向养老机构的**智慧养老管理系统**，前后端分离，以「老人全生命周期服务管理」为主线；其中**老人侧运营**优先围绕**入住办理、床位与护理等级配置、在院主数据**，并预留**护工 / 照护员派工与排班**与护理计划、员工主数据的衔接。同时覆盖房间床位、合同与费用、健康记录等场景。项目在 **RuoYi-Vue 3.8.9** 之上做业务化扩展：不是简单套模板，而是贴近机构真实运营流程的一体化平台；后端与前端 `package.json` 版本与若依基线对齐，便于对照官方升级说明。
 
-业务上侧重三点：**流程在线化**（可追踪、可审批、可沉淀）、**过程可视化**（老人与床位状态、服务与费用一目了然）、**规则可配置化**（菜单权限、字典、参数与代码生成降低迭代成本）。仓库包含 Vue3 管理端、Spring Boot 多模块后端、SQL 脚本，以及可选的微信小程序目录 `mp-weixin`，适合学习演练与团队二次开发。
+业务上侧重三点：**流程在线化**（可追踪、可审批、可沉淀）、**过程可视化**（老人与床位状态、服务与费用一目了然）、**规则可配置化**（菜单权限、字典、参数与代码生成降低迭代成本）。仓库包含 Vue3 管理端、Spring Boot 多模块后端、SQL 脚本，以及家属端 UniApp 源码目录 `YiSmartCloud-member-uniapp`（与可选的历史编译目录 `mp-weixin`），适合学习演练与团队二次开发。
 
 > 🕒 **首次 Git 提交时间：2026-02-27 01:01:02 +0800**（状态见上方徽章）
 
@@ -42,9 +42,10 @@
 仓库根目录核心结构如下：
 
 - 📁 `YiSmartCloud-front`：前端管理端（Vue3 + Vite + Element Plus）
+- 📱 `YiSmartCloud-member-uniapp`：家属端 **UniApp 源码**（Vue3 + Vite；编译微信小程序见该目录 README）
 - ☕ `YiSmartCloud-background`：后端服务（Spring Boot 多模块 Maven 工程）
 - 🗄️ `YiSmartCloud-background/sql`：数据库初始化与业务菜单脚本
-- 💬 `mp-weixin`：微信小程序端工程（微信开发者工具直接打开该目录；接口域名需在小程序后台配置合法 request 域名，生产环境需 HTTPS）
+- 💬 `mp-weixin`：历史微信小程序**编译产物目录**（无 `.vue` 源码；日常开发请使用 `YiSmartCloud-member-uniapp` 构建后导入 `dist/build/mp-weixin`，或按需同步覆盖本目录）
 - 📝 `docs/code_review`：代码改动记录（按时间命名，便于审计）
 - 🤖 `.cursor/rules`：项目内 AI 协作规则与编码约束
 - 🖼️ `assets/readme/`：README 用示意图（Logo、架构、业务域、流程、联调拓扑等）
@@ -284,9 +285,11 @@ npm run build:prod
 - `.env.staging`
 - `.env.production`
 
-### 7.1 💬 微信小程序（`mp-weixin`，可选）
+### 7.1 💬 微信小程序（家属端）
 
-与 PC 管理端独立：在微信开发者工具中选择「导入项目」，项目目录指向仓库根下的 `mp-weixin`。请求后端 API 时，需将小程序 **request 合法域名**、**uploadFile 合法域名** 等配置为实际部署的后端域名（生产须 HTTPS），并与后端跨域、鉴权方式保持一致。
+- **推荐（源码）**：目录 [`YiSmartCloud-member-uniapp`](YiSmartCloud-member-uniapp) 为 UniApp（Vue3 + Vite）工程。安装依赖后执行 `npm run build:mp-weixin`，用微信开发者工具导入 **`YiSmartCloud-member-uniapp/dist/build/mp-weixin`**。环境变量 `VITE_API_BASE` 指向后端根地址（示例见 `.env.example` / `.env.development`），与 RuoYi 的 `Authorization: Bearer <jwt>` 一致。
+- **历史目录 `mp-weixin`**：多为旧版 uni-app **编译输出**，便于对照页面路径与联调；新功能请在 `YiSmartCloud-member-uniapp` 修改后再编译。
+- 上线前在小程序后台配置 **request 合法域名**（生产须 HTTPS），并保证后端已配置 `wechat.appId` / `wechat.appSecret` 以支持登录与手机号能力。
 
 ---
 

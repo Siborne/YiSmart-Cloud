@@ -52,14 +52,11 @@ const _sfc_main = {
       loading.value = false;
       await pages_api_appointment.getList(params).then((res) => {
         if (res.code === 200) {
-          const {
-            data
-          } = res;
-          const items = data.rows == null ? [] : data.rows;
+          const items = res.rows == null ? [] : res.rows;
           moreStatus.value = items.length < 10 ? "no-more" : "more";
           params.pageNum == 1 ? itemData.value = void 0 : null;
           itemData.value = itemData.value ? [...itemData.value, ...items] : items;
-          let totalPages = Math.ceil(data.total / params.pageSize);
+          let totalPages = Math.ceil((res.total || 0) / params.pageSize);
           if (totalPages === pageNum.value) {
             isSendRequest.value = true;
             moreStatus.value = "noMore";

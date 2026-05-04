@@ -57,8 +57,9 @@ const _sfc_main = {
           moreStatus.value = items.length < 10 ? "no-more" : "more";
           params.pageNum == 1 ? itemData.value = void 0 : null;
           itemData.value = itemData.value ? [...itemData.value, ...items] : items;
-          pages.value = res.pages;
-          if (res.pages === pageNum.value) {
+          const totalPages = Math.max(1, Math.ceil((res.total || 0) / params.pageSize));
+          pages.value = totalPages;
+          if (totalPages === pageNum.value || items.length < params.pageSize) {
             isSendRequest.value = true;
             moreStatus.value = "noMore";
           }

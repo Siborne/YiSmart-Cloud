@@ -21,7 +21,7 @@
     </el-col>
     <el-col :lg="7" :xl="8">
       <el-card class="dashboard-rank-card">
-        <template  #header>
+        <template #header>
           <div class="timeTie">
             <div>老人年龄分布</div>
             <div>
@@ -89,89 +89,112 @@
 </template>
 
 <script setup>
-// 导入样式
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch, nextTick, onBeforeUnmount } from 'vue'
 import * as echarts from 'echarts/core'
-import { getWeekDate, getDateInfo, getMonthInfo } from '@/utils/date'
-import {
-  BACKLOG_DATA_A,
-  BACKLOG_DATA_B,
-  BACKLOG_DATA_C,
-  SUBSCRIBE_DATA,
-  ELDER_RANK_DATA_A,
-  ELDER_RANK_DATA_B,
-  ELDER_RANK_DATA_C,
-  ELDER_AGE_DATA_A,
-  ELDER_AGE_DATA_B,
-  ELDER_AGE_DATA_C
-} from '../constants'
+import { getWeekDate, getDateInfo } from '@/utils/date'
+import { SUBSCRIBE_DATA, ELDER_RANK_DATA_A, ELDER_AGE_DATA_A } from '../constants'
 import { getElderAgeDistribution, getElderRankDistribution } from '../index1'
+
+const props = defineProps({
+  dashboard: {
+    type: Object,
+    default: null
+  }
+})
 
 const dataObj = ref([])
 const isToday = ref(false)
 const selectTime = ref('')
 const dayActive = ref(0)
-const subscribeData = ref([]) // 触发每天的数据
-const subDataArr = ref([]) // 一月的数据
-const backlogData = ref(BACKLOG_DATA_A) // 待办事项
-let myChart=null
-const elderRankContainer = ref() // 老人等级
-const elderAgeContainer = ref() // 老人年龄
+const subscribeData = ref([])
+let rankChart = null
+let ageChart = null
+const elderRankContainer = ref()
+const elderAgeContainer = ref()
 
-const elderRankData = ref(ELDER_RANK_DATA_A)
-const elderAgeData = ref(ELDER_AGE_DATA_A)
-const dades = ref([])
-onMounted(() => {
-  // 设置一周的日期
-  dataObj.value = getWeekDate({ baselineDate: new Date() })
+const elderRankData = ref([...ELDER_RANK_DATA_A])
+const elderAgeData = ref({ ...ELDER_AGE_DATA_A })
 
-  selectTime.value = time()
-  subDataArr.value = [...SUBSCRIBE_DATA, ...SUBSCRIBE_DATA]
-  subscribeData.value = subDataArr.value[0]
-  isChick(dataObj.value)
-  // 3套数据3天出现一次
-  const date = getMonthInfo(new Date())
-  const num = (date.surplusDay + 1) % 3
-  if (num === 1) {
-    backlogData.value = BACKLOG_DATA_A
-
-    elderRankData.value = ELDER_RANK_DATA_A
-    elderAgeData.value = ELDER_AGE_DATA_A
-  } else if (num === 2) {
-    backlogData.value = BACKLOG_DATA_B
-
-    elderRankData.value = ELDER_RANK_DATA_B
-    elderAgeData.value = ELDER_AGE_DATA_B
-  } else {
-    backlogData.value = BACKLOG_DATA_C
-
-    elderRankData.value = ELDER_RANK_DATA_C
-    elderAgeData.value = ELDER_AGE_DATA_C
+function applyDashboardCharts() {
+  const d = props.dashboard
+  if (d?.elderRank?.length) {
+    elderRankData.value = d.elderRank.map((x) => ({
+      name: x.name,
+      value: Number(x.value)
+    }))
   }
+  if (d?.elderAge?.man?.length === 5 && d?.elderAge?.woman?.length === 5) {
+    elderAgeData.value = {
+      man: d.elderAge.man.map((n) => Number(n)),
+      woman: d.elderAge.woman.map((n) => Number(n))
+    }
+  }
+}
 
+function visitsForDate(dateStr) {
+  const m = props.dashboard?.visitsByDate
+  if (m && m[dateStr]?.length) {
+    return m[dateStr]
+  }
+  const day = Number(dateStr.split('-')[2] || 0)
+  const mock = SUBSCRIBE_DATA[day]
+  return mock || []
+}
+
+const renderRankCharts = () => {
+  if (elderRankContainer.value) {
+    if (rankChart) {
+      rankChart.dispose()
+    }
+    rankChart = echarts.init(elderRankContainer.value)
+    rankChart.setOption(getElderRankDistribution(elderRankData.value))
+  }
+  if (elderAgeContainer.value) {
+    if (ageChart) {
+      ageChart.dispose()
+    }
+    ageChart = echarts.init(elderAgeContainer.value)
+    ageChart.setOption(getElderAgeDistribution(elderAgeData.value))
+  }
+}
+
+watch(
+  () => props.dashboard,
+  () => {
+    applyDashboardCharts()
+    nextTick(() => {
+      renderRankCharts()
+      syncSubscribeFromSelection()
+    })
+  },
+  { deep: true }
+)
+
+onMounted(() => {
+  dataObj.value = getWeekDate({ baselineDate: new Date() })
+  selectTime.value = time()
+  subscribeData.value = visitsForDate(selectTime.value)
+  isChick(dataObj.value)
+  applyDashboardCharts()
   window.addEventListener('resize', handleResize)
-  dades.value = JSON.parse(JSON.stringify(subscribeData.value))
-  elderRankChart()
-  elderAgeChart()
+  nextTick(() => renderRankCharts())
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
+  rankChart?.dispose()
+  ageChart?.dispose()
 })
 
 const handleResize = () => {
-  myChart.resize()
+  rankChart?.resize()
+  ageChart?.resize()
 }
 
-// 老人等级分布
-const elderRankChart = () => {
-  myChart = echarts.init(elderRankContainer.value)
-  myChart.setOption(getElderRankDistribution(elderRankData.value))
+function syncSubscribeFromSelection() {
+  subscribeData.value = visitsForDate(selectTime.value)
 }
 
-// 老人年龄分布
-const elderAgeChart = () => {
-  myChart = echarts.init(elderAgeContainer.value)
-  myChart.setOption(getElderAgeDistribution(elderAgeData.value))
-}
-
-// 是否可以触发上一周
 const isChick = (date) => {
   const today = time()
   const selectDate = date[0].dateStr
@@ -182,22 +205,19 @@ const isChick = (date) => {
   } else {
     isToday.value = false
   }
-  // 是否与当前时间相等，设置天的当前状态与要显示的数据
   dataObj.value.forEach((obj, i) => {
     if (obj.dateStr === selectTime.value) {
       dayActive.value = i
-      subscribeData.value = subDataArr.value[obj.day]
+      subscribeData.value = visitsForDate(obj.dateStr)
     }
-    // 如果上一页不能触发了，显示当前的时间
     if (isToday.value) {
       selectTime.value = time()
-      subscribeData.value = subDataArr.value[obj.day]
+      subscribeData.value = visitsForDate(selectTime.value)
     }
   })
 }
-// 上一周
+
 const getPreWeek = () => {
-  // 获取以当天为基准日期的下星期数据
   if (!isToday.value) {
     dayActive.value = 0
     dataObj.value = getWeekDate({
@@ -208,37 +228,30 @@ const getPreWeek = () => {
     isChick(dataObj.value)
   }
 }
-// 下一周
+
 const getNextWeek = () => {
   dayActive.value = 0
-  // 获取以当天为基准日期的下星期数据
   dataObj.value = getWeekDate({
     baselineDate: new Date(dataObj.value[0].dateStr),
     range: 7
   })
-
   isChick(dataObj.value)
-  selectTime.value = dataObj.value[0].dateStr // 把一周的第一天设置为当前日期
-  subscribeData.value = subDataArr.value[dataObj.value[0].day]
+  selectTime.value = dataObj.value[0].dateStr
+  subscribeData.value = visitsForDate(dataObj.value[0].dateStr)
 }
-// 触发当天显示的数据
+
 const handleDay = (item, i) => {
-  const newDate = getDateInfo(new Date())
   dayActive.value = i
   selectTime.value = item.dateStr
-  const newDateArr = dataObj.value.filter((n) => n.dateStr === newDate)
-  if (newDateArr.length > 0 && newDateArr[0].dateStr === item.dateStr) {
-    subscribeData.value = dades.value
-  } else {
-    subscribeData.value = subDataArr.value[item.day]
-  }
+  subscribeData.value = visitsForDate(item.dateStr)
 }
-// 回到今天
+
 const goToday = () => {
   dataObj.value = getWeekDate({ baselineDate: new Date() })
+  selectTime.value = time()
   isChick(dataObj.value)
 }
-// 当前时间
+
 const time = () => {
   return getDateInfo(new Date())
 }

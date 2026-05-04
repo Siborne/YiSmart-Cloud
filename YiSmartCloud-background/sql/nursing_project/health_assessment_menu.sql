@@ -1,20 +1,22 @@
--- Health assessment menu (same parent pattern as levelMenu.sql; adjust parent_id if your tree differs)
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('½¡¿µÆÀ¹À', '2018', '1', 'assessment', 'serve/assessment/index', 1, 0, 'C', '0', '0', 'serve:assessment:list', '#', 'admin', sysdate(), '', null, '½¡¿µÆÀ¹À');
+-- ???????? levelMenu.sql ?? parent ?????????? parent_id?
+-- ???????????????????????????
+
+INSERT INTO sys_menu (menu_name, parent_id, order_num, path, component, query, route_name, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('????', '2018', '1', 'assessment', 'serve/assessment/index', NULL, '', 1, 0, 'C', '0', '0', 'serve:assessment:list', '#', 'admin', sysdate(), '', NULL, '????');
 
 SELECT @parentId := LAST_INSERT_ID();
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('½¡¿µÆÀ¹À²éÑ¯', @parentId, '1',  '#', '', 1, 0, 'F', '0', '0', 'serve:assessment:query',        '#', 'admin', sysdate(), '', null, '');
+INSERT INTO sys_menu (menu_name, parent_id, order_num, path, component, query, route_name, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('??????', @parentId, '1', '#', '', NULL, '', 1, 0, 'F', '0', '0', 'serve:assessment:query', '#', 'admin', sysdate(), '', NULL, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('½¡¿µÆÀ¹ÀÐÂÔö', @parentId, '2',  '#', '', 1, 0, 'F', '0', '0', 'serve:assessment:add',          '#', 'admin', sysdate(), '', null, '');
+INSERT INTO sys_menu (menu_name, parent_id, order_num, path, component, query, route_name, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('??????', @parentId, '2', '#', '', NULL, '', 1, 0, 'F', '0', '0', 'serve:assessment:add', '#', 'admin', sysdate(), '', NULL, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('½¡¿µÆÀ¹ÀÐÞ¸Ä', @parentId, '3',  '#', '', 1, 0, 'F', '0', '0', 'serve:assessment:edit',         '#', 'admin', sysdate(), '', null, '');
+INSERT INTO sys_menu (menu_name, parent_id, order_num, path, component, query, route_name, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('??????', @parentId, '3', '#', '', NULL, '', 1, 0, 'F', '0', '0', 'serve:assessment:edit', '#', 'admin', sysdate(), '', NULL, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('½¡¿µÆÀ¹ÀÉ¾³ý', @parentId, '4',  '#', '', 1, 0, 'F', '0', '0', 'serve:assessment:remove',       '#', 'admin', sysdate(), '', null, '');
+INSERT INTO sys_menu (menu_name, parent_id, order_num, path, component, query, route_name, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('??????', @parentId, '4', '#', '', NULL, '', 1, 0, 'F', '0', '0', 'serve:assessment:remove', '#', 'admin', sysdate(), '', NULL, '');
 
-insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
-values('½¡¿µÆÀ¹Àµ¼³ö', @parentId, '5',  '#', '', 1, 0, 'F', '0', '0', 'serve:assessment:export',       '#', 'admin', sysdate(), '', null, '');
+INSERT INTO sys_menu (menu_name, parent_id, order_num, path, component, query, route_name, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+VALUES ('??????', @parentId, '5', '#', '', NULL, '', 1, 0, 'F', '0', '0', 'serve:assessment:export', '#', 'admin', sysdate(), '', NULL, '');

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container assessment-detail" v-loading="loading">
-    <el-page-header @back="goBack" content="½¡¿µ¹ÜÀí" class="mb16" />
+    <el-page-header @back="goBack" content="å¥åº·ç®¡ç†" class="mb16" />
 
     <el-alert
       v-if="isFailed"
@@ -8,7 +8,7 @@
       :closable="false"
       show-icon
       class="mb16"
-      :title="'AI ·ÖÎöÊ§°Ü£º' + (row.analysisError || 'Î´ÖªÔ­Òò')"
+      :title="'AI åˆ†æå¤±è´¥ï¼š' + (row.analysisError || 'æœªçŸ¥åŸå› ')"
     />
 
     <el-alert
@@ -17,23 +17,23 @@
       :closable="false"
       show-icon
       class="mb16"
-      title="AI ÕıÔÚ·ÖÎö±¨¸æ£¬Íê³Éºó±¾Ò³»á×Ô¶¯Ë¢ĞÂ£»Äú¿ÉÏÈ´¦ÀíÆäËüÊÂÎñ¡£"
+      title="AI æ­£åœ¨åˆ†ææŠ¥å‘Šï¼Œå®Œæˆåæœ¬é¡µä¼šè‡ªåŠ¨åˆ·æ–°ï¼›æ‚¨å¯å…ˆå¤„ç†å…¶å®ƒäº‹åŠ¡ã€‚"
     >
       <el-progress :percentage="100" :indeterminate="true" :duration="2.5" :show-text="false" style="max-width: 280px; margin-top: 10px" />
     </el-alert>
 
     <el-card shadow="never" class="mb16">
-      <template #header><span class="card-title">»ù±¾ĞÅÏ¢</span></template>
+      <template #header><span class="card-title">åŸºæœ¬ä¿¡æ¯</span></template>
       <el-descriptions :column="2" border>
-        <el-descriptions-item label="ĞÕÃû">{{ row.elderName || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="Éí·İÖ¤ºÅ">{{ row.idCard || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="³öÉúÈÕÆÚ">{{ birthDisplay }}</el-descriptions-item>
-        <el-descriptions-item label="ÄêÁä">{{ row.age != null ? row.age : '-' }}</el-descriptions-item>
-        <el-descriptions-item label="ĞÔ±ğ">{{ genderLabel }}</el-descriptions-item>
-        <el-descriptions-item label="Ìå¼ì»ú¹¹">{{ row.physicalExamInstitution || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="×Ü¼ìÈÕÆÚ">{{ row.totalCheckDate || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="Ìå¼ì±¨¸æ">
-          <el-link v-if="row.physicalReportUrl" type="primary" :href="row.physicalReportUrl" target="_blank">²é¿´ PDF</el-link>
+        <el-descriptions-item label="å§“å">{{ row.elderName || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="èº«ä»½è¯å·">{{ row.idCard || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="å‡ºç”Ÿæ—¥æœŸ">{{ birthDisplay }}</el-descriptions-item>
+        <el-descriptions-item label="å¹´é¾„">{{ row.age != null ? row.age : '-' }}</el-descriptions-item>
+        <el-descriptions-item label="æ€§åˆ«">{{ genderLabel }}</el-descriptions-item>
+        <el-descriptions-item label="ä½“æ£€æœºæ„">{{ row.physicalExamInstitution || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="æ€»æ£€æ—¥æœŸ">{{ row.totalCheckDate || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="ä½“æ£€æŠ¥å‘Š">
+          <el-link v-if="row.physicalReportUrl" type="primary" :href="row.physicalReportUrl" target="_blank">æŸ¥çœ‹ PDF</el-link>
           <span v-else>-</span>
         </el-descriptions-item>
       </el-descriptions>
@@ -41,54 +41,54 @@
 
     <template v-if="!isPending">
       <el-card shadow="never" class="mb16">
-        <template #header><span class="card-title">Ìå¼ì×Ü½á</span></template>
+        <template #header><span class="card-title">ä½“æ£€æ€»ç»“</span></template>
         <el-descriptions :column="2" border>
-          <el-descriptions-item label="½¡¿µÆÀ·Ö">{{ row.healthScore || '-' }}</el-descriptions-item>
-          <el-descriptions-item label="·çÏÕµÈ¼¶">{{ riskLabel }}</el-descriptions-item>
-          <el-descriptions-item label="ÊÇ·ñ½¨ÒéÈë×¡">{{ admissionLabel }}</el-descriptions-item>
-          <el-descriptions-item label="ÍÆ¼ö»¤ÀíµÈ¼¶">{{ row.nursingLevelName || '-' }}</el-descriptions-item>
-          <el-descriptions-item label="ÆÀ¹ÀÊ±¼ä" :span="2">{{ assessmentTimeStr }}</el-descriptions-item>
-          <el-descriptions-item label="±¨¸æ×Ü½á" :span="2">{{ row.reportSummary || '-' }}</el-descriptions-item>
+          <el-descriptions-item label="å¥åº·è¯„åˆ†">{{ row.healthScore || '-' }}</el-descriptions-item>
+          <el-descriptions-item label="é£é™©ç­‰çº§">{{ riskLabel }}</el-descriptions-item>
+          <el-descriptions-item label="æ˜¯å¦å»ºè®®å…¥ä½">{{ admissionLabel }}</el-descriptions-item>
+          <el-descriptions-item label="æ¨èæŠ¤ç†ç­‰çº§">{{ row.nursingLevelName || '-' }}</el-descriptions-item>
+          <el-descriptions-item label="è¯„ä¼°æ—¶é—´" :span="2">{{ assessmentTimeStr }}</el-descriptions-item>
+          <el-descriptions-item label="æŠ¥å‘Šæ€»ç»“" :span="2">{{ row.reportSummary || '-' }}</el-descriptions-item>
         </el-descriptions>
       </el-card>
 
       <el-card shadow="never" class="mb16 chart-card">
-        <template #header><span class="card-title">¼²²¡·çÏÕ</span></template>
+        <template #header><span class="card-title">ç–¾ç—…é£é™©</span></template>
         <el-row :gutter="20">
           <el-col :xs="24" :lg="12">
             <div ref="ageChartRef" class="chart-box chart-box--pad" />
-            <div class="chart-caption">²»Í¬ÄêÁä×é½¡¿µÖ¸Êı·Ö²¼£¨Ê¾Òâ£©£¬<span class="accent">¸ßÁÁÖù</span>Îªµ±Ç°ÀÏÈËËùÊôÄêÁä¶Î£»ÊúÏßÎªµ±Ç°Çø¼ä±ê¼Ç¡£</div>
+            <div class="chart-caption">ä¸åŒå¹´é¾„ç»„å¥åº·æŒ‡æ•°åˆ†å¸ƒï¼ˆç¤ºæ„ï¼‰ï¼Œ<span class="accent">é«˜äº®æŸ±</span>ä¸ºå½“å‰è€äººæ‰€å±å¹´é¾„æ®µï¼›ç«–çº¿ä¸ºå½“å‰åŒºé—´æ ‡è®°ã€‚</div>
           </el-col>
           <el-col :xs="24" :lg="12">
             <div ref="radarChartRef" class="chart-box chart-box--pad" />
-            <div class="chart-caption">ÈËÌå¸÷ÏµÍ³½¡¿µÖ¸Êı£¨AI£©</div>
+            <div class="chart-caption">äººä½“å„ç³»ç»Ÿå¥åº·æŒ‡æ•°ï¼ˆAIï¼‰</div>
           </el-col>
         </el-row>
       </el-card>
 
       <el-card shadow="never" class="mb16">
-        <template #header><span class="card-title">Òì³£·ÖÎö</span></template>
-        <el-table :data="abnormalRows" border stripe empty-text="ÔİÎŞÒì³£Ïî">
+        <template #header><span class="card-title">å¼‚å¸¸åˆ†æ</span></template>
+        <el-table :data="abnormalRows" border stripe empty-text="æš‚æ— å¼‚å¸¸é¡¹">
           <el-table-column type="expand">
             <template #default="props">
               <div class="expand-block">
-                <p><strong>Òì³£½â¶Á£º</strong>{{ props.row.interpret || '-' }}</p>
-                <p><strong>AI ½¨Òé£º</strong>{{ props.row.advice || '-' }}</p>
+                <p><strong>å¼‚å¸¸è§£è¯»ï¼š</strong>{{ props.row.interpret || '-' }}</p>
+                <p><strong>AI å»ºè®®ï¼š</strong>{{ props.row.advice || '-' }}</p>
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="½áÂÛ" prop="conclusion" min-width="120" show-overflow-tooltip />
-          <el-table-column label="Ìå¼ìÏîÄ¿" prop="examinationItem" min-width="140" show-overflow-tooltip />
-          <el-table-column label="¼ì²é½á¹û" prop="result" min-width="120" show-overflow-tooltip />
-          <el-table-column label="²Î¿¼Öµ" prop="referenceValue" min-width="100" show-overflow-tooltip />
-          <el-table-column label="µ¥Î»" prop="unit" width="80" />
+          <el-table-column label="ç»“è®º" prop="conclusion" min-width="120" show-overflow-tooltip />
+          <el-table-column label="ä½“æ£€é¡¹ç›®" prop="examinationItem" min-width="140" show-overflow-tooltip />
+          <el-table-column label="æ£€æŸ¥ç»“æœ" prop="result" min-width="120" show-overflow-tooltip />
+          <el-table-column label="å‚è€ƒå€¼" prop="referenceValue" min-width="100" show-overflow-tooltip />
+          <el-table-column label="å•ä½" prop="unit" width="80" />
         </el-table>
       </el-card>
     </template>
 
     <div v-if="!isPending" class="detail-footer-actions">
-      <el-button type="primary" size="large" @click="goCheckIn" v-hasPermi="['serve:checkIn:add']">°ìÀíÈë×¡</el-button>
-      <span class="footer-hint">½«Ğ¯´øµ±Ç°ÀÏÈËĞÕÃûÓëÉí·İÖ¤ºÅÌø×ªÖÁÈë×¡ÉêÇë</span>
+      <el-button type="primary" size="large" @click="goCheckIn" v-hasPermi="['serve:checkIn:add']">åŠç†å…¥ä½</el-button>
+      <span class="footer-hint">å°†æºå¸¦å½“å‰è€äººå§“åä¸èº«ä»½è¯å·è·³è½¬è‡³å…¥ä½ç”³è¯·</span>
     </div>
   </div>
 </template>
@@ -142,11 +142,11 @@ const abnormalRows = computed(() => {
 const riskLabel = computed(() => {
   const code = row.value.riskLevel
   const map = {
-    healthy: '½¡¿µ',
-    caution: 'ÌáÊ¾',
-    risk: '·çÏÕ',
-    danger: 'Î£ÏÕ',
-    severeDanger: 'ÑÏÖØÎ£ÏÕ'
+    healthy: 'å¥åº·',
+    caution: 'æç¤º',
+    risk: 'é£é™©',
+    danger: 'å±é™©',
+    severeDanger: 'ä¸¥é‡å±é™©'
   }
   return map[code] || code || '-'
 })
@@ -154,10 +154,10 @@ const riskLabel = computed(() => {
 const admissionLabel = computed(() => {
   const v = row.value.suggestionForAdmission
   if (v === 0 || v === '0') {
-    return '½¨Òé'
+    return 'å»ºè®®'
   }
   if (v === 1 || v === '1') {
-    return '²»½¨Òé'
+    return 'ä¸å»ºè®®'
   }
   return '-'
 })
@@ -165,10 +165,10 @@ const admissionLabel = computed(() => {
 const genderLabel = computed(() => {
   const g = row.value.gender
   if (g === 0 || g === '0') {
-    return 'ÄĞ'
+    return 'ç”·'
   }
   if (g === 1 || g === '1') {
-    return 'Å®'
+    return 'å¥³'
   }
   return '-'
 })
@@ -225,7 +225,7 @@ function ageBandIndex(age) {
   return 0
 }
 
-const AGE_CATEGORIES = ['50-59Ëê', '60-69Ëê', '70-79Ëê', '80-89Ëê', '90Ëê¼°ÒÔÉÏ']
+const AGE_CATEGORIES = ['50-59å²', '60-69å²', '70-79å²', '80-89å²', '90å²åŠä»¥ä¸Š']
 
 const MOCK_AGE_STACK = [
   { healthy: 8, caution: 22, risk: 28, danger: 25, severeDanger: 17 },
@@ -271,11 +271,11 @@ function buildAgeChartOption(highlightIndex) {
   })
 
   const series = [
-    mkSeries('½¡¿µ', 'healthy', '#7fd67a', '#52a352'),
-    mkSeries('ÌáÊ¾', 'caution', '#ffd88a', '#e6a23c'),
-    mkSeries('·çÏÕ', 'risk', '#ff9a8b', '#f56c6c'),
-    mkSeries('Î£ÏÕ', 'danger', '#ff7b7b', '#c0392b'),
-    mkSeries('ÑÏÖØÎ£ÏÕ', 'severeDanger', '#c77dff', '#7b1fa2')
+    mkSeries('å¥åº·', 'healthy', '#7fd67a', '#52a352'),
+    mkSeries('æç¤º', 'caution', '#ffd88a', '#e6a23c'),
+    mkSeries('é£é™©', 'risk', '#ff9a8b', '#f56c6c'),
+    mkSeries('å±é™©', 'danger', '#ff7b7b', '#c0392b'),
+    mkSeries('ä¸¥é‡å±é™©', 'severeDanger', '#c77dff', '#7b1fa2')
   ]
 
   const cat = AGE_CATEGORIES[highlightIndex]
@@ -295,7 +295,7 @@ function buildAgeChartOption(highlightIndex) {
       lineStyle: { color: '#f56c6c', width: 2, type: 'solid' },
       label: {
         show: true,
-        formatter: 'µ±Ç°£º' + cat,
+        formatter: 'å½“å‰ï¼š' + cat,
         color: '#f56c6c',
         fontWeight: 'bold',
         distance: 8
@@ -361,14 +361,14 @@ function systemScoresFromRow() {
     return null
   }
   return [
-    { name: 'ºôÎüÏµÍ³', value: sys.breathingSystem ?? 0 },
-    { name: 'Ïû»¯ÏµÍ³', value: sys.digestiveSystem ?? 0 },
-    { name: 'ÄÚ·ÖÃÚÏµÍ³', value: sys.endocrineSystem ?? 0 },
-    { name: 'ÃâÒßÏµÍ³', value: sys.immuneSystem ?? 0 },
-    { name: 'Ñ­»·ÏµÍ³', value: sys.circulatorySystem ?? 0 },
-    { name: 'ÃÚÄòÏµÍ³', value: sys.urinarySystem ?? 0 },
-    { name: 'ÔË¶¯ÏµÍ³', value: sys.motionSystem ?? 0 },
-    { name: '¸Ğ¹ÙÏµÍ³', value: sys.senseSystem ?? 0 }
+    { name: 'å‘¼å¸ç³»ç»Ÿ', value: sys.breathingSystem ?? 0 },
+    { name: 'æ¶ˆåŒ–ç³»ç»Ÿ', value: sys.digestiveSystem ?? 0 },
+    { name: 'å†…åˆ†æ³Œç³»ç»Ÿ', value: sys.endocrineSystem ?? 0 },
+    { name: 'å…ç–«ç³»ç»Ÿ', value: sys.immuneSystem ?? 0 },
+    { name: 'å¾ªç¯ç³»ç»Ÿ', value: sys.circulatorySystem ?? 0 },
+    { name: 'æ³Œå°¿ç³»ç»Ÿ', value: sys.urinarySystem ?? 0 },
+    { name: 'è¿åŠ¨ç³»ç»Ÿ', value: sys.motionSystem ?? 0 },
+    { name: 'æ„Ÿå®˜ç³»ç»Ÿ', value: sys.senseSystem ?? 0 }
   ]
 }
 
@@ -376,7 +376,7 @@ function buildRadarOption() {
   const scores = systemScoresFromRow()
   if (!scores) {
     return {
-      title: { text: 'ÔİÎŞÏµÍ³·ÖÖµ', left: 'center', top: 'middle', textStyle: { color: '#909399' } }
+      title: { text: 'æš‚æ— ç³»ç»Ÿåˆ†å€¼', left: 'center', top: 'middle', textStyle: { color: '#909399' } }
     }
   }
   const indicator = scores.map(s => ({ name: s.name, max: 100 }))
@@ -411,7 +411,7 @@ function buildRadarOption() {
       type: 'radar',
       data: [{
         value: dataVals,
-        name: 'ÏµÍ³µÃ·Ö',
+        name: 'ç³»ç»Ÿå¾—åˆ†',
         areaStyle: { color: area },
         lineStyle: { width: 2.5, color: '#409eff' },
         itemStyle: { color: '#409eff', borderColor: '#fff', borderWidth: 1 },
@@ -419,7 +419,7 @@ function buildRadarOption() {
       }]
     }],
     title: {
-      text: 'ÖĞĞÄ×ÛºÏÔ¼ ' + avg + ' ·Ö',
+      text: 'ä¸­å¿ƒç»¼åˆçº¦ ' + avg + ' åˆ†',
       left: 'center',
       bottom: 4,
       textStyle: { fontSize: 13, color: '#409eff', fontWeight: 600 }
@@ -468,10 +468,23 @@ function stopPolling() {
   }
 }
 
+function isAssessmentDetailRoute() {
+  return route.name === "HealthAssessmentDetail"
+}
+
+function resolveAssessmentId() {
+  const raw = route.params.id
+  if (raw == null || raw === "" || String(raw) === "undefined") {
+    return null
+  }
+  const n = Number(raw)
+  return Number.isFinite(n) && n > 0 ? String(n) : null
+}
+
 function startPolling() {
   stopPolling()
-  const id = route.params.id
-  if (!id) {
+  const id = resolveAssessmentId()
+  if (!id || !isAssessmentDetailRoute()) {
     return
   }
   pollTimer = setInterval(() => {
@@ -499,7 +512,15 @@ function goCheckIn() {
 }
 
 function load() {
-  const id = route.params.id
+  if (!isAssessmentDetailRoute()) {
+    loading.value = false
+    return
+  }
+  const id = resolveAssessmentId()
+  if (!id) {
+    loading.value = false
+    return
+  }
   loading.value = true
   getAssessment(id)
     .then(res => {
@@ -523,7 +544,6 @@ function onResize() {
 }
 
 onMounted(() => {
-  load()
   window.addEventListener('resize', onResize)
 })
 
@@ -533,11 +553,25 @@ onBeforeUnmount(() => {
   disposeCharts()
 })
 
-watch(() => route.params.id, () => {
-  disposeCharts()
-  stopPolling()
-  load()
-})
+watch(
+  () => [route.name, route.params.id],
+  () => {
+    if (!isAssessmentDetailRoute()) {
+      stopPolling()
+      disposeCharts()
+      return
+    }
+    if (!resolveAssessmentId()) {
+      stopPolling()
+      disposeCharts()
+      return
+    }
+    disposeCharts()
+    stopPolling()
+    load()
+  },
+  { immediate: true }
+)
 </script>
 
 <style scoped>

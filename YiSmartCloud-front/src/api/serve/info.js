@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询老人档案列表
+// 查询在院老人信息列表（与入住办理联动）
 export function listInfo(query) {
   return request({
     url: '/serve/info/list',
@@ -9,7 +9,7 @@ export function listInfo(query) {
   })
 }
 
-// 查询老人档案详细
+// 查询在院老人信息详细
 export function getInfo(id) {
   return request({
     url: '/serve/info/' + id,
@@ -17,7 +17,7 @@ export function getInfo(id) {
   })
 }
 
-// 新增老人档案
+// 新增在院老人信息
 export function addInfo(data) {
   return request({
     url: '/serve/info',
@@ -26,7 +26,7 @@ export function addInfo(data) {
   })
 }
 
-// 修改老人档案
+// 修改在院老人信息
 export function updateInfo(data) {
   return request({
     url: '/serve/info',
@@ -35,7 +35,7 @@ export function updateInfo(data) {
   })
 }
 
-// 删除老人档案
+// 删除在院老人信息
 export function delInfo(id) {
   return request({
     url: '/serve/info/' + id,

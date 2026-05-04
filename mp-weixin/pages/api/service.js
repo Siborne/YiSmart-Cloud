@@ -1,21 +1,21 @@
 "use strict";
 const utils_request = require("../../utils/request.js");
 const getServiceList = (params) => utils_request.request({
-  url: "/orders/project/page",
+  url: "/member/orders/project/page",
   method: "get",
   params
 });
 const goodsDetail = (id) => utils_request.request({
-  url: `/orders/project/${id}`,
+  url: `/member/orders/project/${id}`,
   method: "get"
 });
 const goodsPay = (params) => utils_request.request({
-  url: `/orders`,
+  url: "/member/orders",
   method: "post",
   params
 });
 const goodsViseiOrder = (params) => utils_request.request({
-  url: `/orders/check`,
+  url: "/member/orders/check",
   method: "post",
   params
 });

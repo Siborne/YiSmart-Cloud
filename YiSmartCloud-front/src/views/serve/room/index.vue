@@ -10,9 +10,6 @@
           v-hasPermi="['serve:room:add']"
         >新增</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button plain icon="OfficeBuilding" @click="openFloorManage">楼层管理</el-button>
-      </el-col>
       <right-toolbar :showSearch="showSearch" @update:showSearch="showSearch = $event" @queryTable="getList" />
     </el-row>
 
@@ -124,65 +121,12 @@
         </div>
       </template>
     </el-dialog>
-
-    <el-dialog title="楼层管理" v-model="floorManageOpen" width="720px" append-to-body>
-      <div class="mb12">
-        <el-button type="primary" plain icon="Plus" @click="handleFloorAdd" v-hasPermi="['serve:room:add']">新增楼层</el-button>
-      </div>
-      <el-table v-loading="floorLoading" :data="floorList" row-key="id" border>
-        <el-table-column label="楼层编号" align="center" prop="floorNo" min-width="100" />
-        <el-table-column label="楼层名称" align="center" prop="floorName" min-width="140" />
-        <el-table-column label="排序" align="center" prop="sortNo" min-width="80" />
-        <el-table-column label="状态" align="center" min-width="80">
-          <template #default="scope">
-            <el-tag size="small" effect="light" :type="Number(scope.row.status) === 1 ? 'success' : 'info'">
-              {{ getStatusLabel(scope.row.status) }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" align="center" width="180">
-          <template #default="scope">
-            <el-button link type="primary" icon="Edit" @click="handleFloorUpdate(scope.row)" v-hasPermi="['serve:room:edit']">修改</el-button>
-            <el-button link type="primary" icon="Delete" @click="handleFloorDelete(scope.row)" v-hasPermi="['serve:room:remove']">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-dialog>
-
-    <el-dialog :title="floorTitle" v-model="floorOpen" width="420px" append-to-body>
-      <el-form ref="floorRef" :model="floorForm" :rules="floorRules" label-width="90px">
-        <el-form-item label="楼层编号" prop="floorNo">
-          <el-input-number v-model="floorForm.floorNo" :min="1" :step="1" controls-position="right" style="width: 100%" />
-        </el-form-item>
-        <el-form-item label="楼层名称" prop="floorName">
-          <el-input v-model="floorForm.floorName" placeholder="请输入楼层名称（例：1楼）" />
-        </el-form-item>
-        <el-form-item label="排序号" prop="sortNo">
-          <el-input-number v-model="floorForm.sortNo" :min="1" :step="1" controls-position="right" style="width: 100%" />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-radio-group v-model="floorForm.status">
-            <el-radio
-              v-for="dict in room_status"
-              :key="dict.value"
-              :value="Number(dict.value)"
-              :label="dict.label"
-            />
-          </el-radio-group>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button type="primary" @click="submitFloorForm">确 定</el-button>
-          <el-button @click="cancelFloor">取 消</el-button>
-        </div>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
 <script setup name="Room">
-import { listRoom, getRoom, delRoom, addRoom, updateRoom, listFloor, listFloorOptions, getFloor, addFloor, updateFloor, delFloor } from "@/api/serve/room"
+import { listRoom, getRoom, delRoom, addRoom, updateRoom } from "@/api/serve/room"
+import { listFloorOptions } from "@/api/serve/floor"
 
 const { proxy } = getCurrentInstance()
 
@@ -193,11 +137,6 @@ const loading = ref(true)
 const showSearch = ref(false)
 const total = ref(0)
 const title = ref("")
-const floorManageOpen = ref(false)
-const floorLoading = ref(false)
-const floorList = ref([])
-const floorOpen = ref(false)
-const floorTitle = ref("")
 const { room_status, room_type } = proxy.useDict("room_status", "room_type")
 
 const data = reactive({
@@ -215,16 +154,9 @@ const data = reactive({
     roomImage: [{ required: true, message: "请上传房间图片", trigger: "blur" }],
     status: [{ required: true, message: "请选择状态", trigger: "change" }]
   },
-  floorForm: {},
-  floorRules: {
-    floorNo: [{ required: true, message: "请输入楼层编号", trigger: "blur" }],
-    floorName: [{ required: true, message: "请输入楼层名称", trigger: "blur" }],
-    sortNo: [{ required: true, message: "请输入排序号", trigger: "blur" }],
-    status: [{ required: true, message: "请选择状态", trigger: "change" }]
-  }
 })
 
-const { queryParams, form, rules, floorForm, floorRules } = toRefs(data)
+const { queryParams, form, rules } = toRefs(data)
 
 function getStatusLabel(status) {
   const dict = room_status.value.find(item => Number(item.value) === Number(status))
@@ -274,21 +206,10 @@ function reset() {
   proxy.resetForm("roomRef")
 }
 
-function resetFloor() {
-  floorForm.value = {
-    id: null,
-    floorNo: null,
-    floorName: null,
-    sortNo: 1,
-    status: 1
-  }
-  proxy.resetForm("floorRef")
-}
-
 function handleAdd() {
   reset()
   if (floorOptions.value.length === 0) {
-    proxy.$modal.msgWarning("请先在楼层管理中新增楼层")
+    proxy.$modal.msgWarning("请先在「楼层管理」菜单中维护楼层数据")
     return
   }
   open.value = true
@@ -347,79 +268,6 @@ function handleDelete(row) {
     return delRoom(row.id)
   }).then(() => {
     proxy.$modal.msgSuccess("删除成功")
-    getList()
-  }).catch(() => {})
-}
-
-function getFloorList() {
-  floorLoading.value = true
-  listFloor({
-    pageNum: 1,
-    pageSize: 999
-  }).then(response => {
-    floorList.value = response.rows || []
-  }).finally(() => {
-    floorLoading.value = false
-  })
-}
-
-function openFloorManage() {
-  floorManageOpen.value = true
-  getFloorList()
-}
-
-function handleFloorAdd() {
-  resetFloor()
-  floorOpen.value = true
-  floorTitle.value = "新增楼层"
-}
-
-function handleFloorUpdate(row) {
-  resetFloor()
-  getFloor(row.id).then(response => {
-    floorForm.value = response.data || {}
-    floorForm.value.floorNo = floorForm.value.floorNo != null ? Number(floorForm.value.floorNo) : null
-    floorForm.value.sortNo = floorForm.value.sortNo != null ? Number(floorForm.value.sortNo) : 1
-    floorForm.value.status = floorForm.value.status != null ? Number(floorForm.value.status) : 1
-    floorOpen.value = true
-    floorTitle.value = "修改楼层"
-  })
-}
-
-function submitFloorForm() {
-  proxy.$refs["floorRef"].validate(valid => {
-    if (!valid) {
-      return
-    }
-    const payload = {
-      ...floorForm.value,
-      floorNo: floorForm.value.floorNo != null ? Number(floorForm.value.floorNo) : null,
-      sortNo: floorForm.value.sortNo != null ? Number(floorForm.value.sortNo) : 1,
-      status: floorForm.value.status != null ? Number(floorForm.value.status) : 1
-    }
-    const request = floorForm.value.id != null ? updateFloor(payload) : addFloor(payload)
-    request.then(() => {
-      proxy.$modal.msgSuccess(floorForm.value.id != null ? "楼层修改成功" : "楼层新增成功")
-      floorOpen.value = false
-      getFloorList()
-      getFloorOptions()
-      getList()
-    })
-  })
-}
-
-function cancelFloor() {
-  floorOpen.value = false
-  resetFloor()
-}
-
-function handleFloorDelete(row) {
-  proxy.$modal.confirm(`是否确认删除楼层“${row.floorName || row.floorNo + "楼"}”？`).then(() => {
-    return delFloor(row.id)
-  }).then(() => {
-    proxy.$modal.msgSuccess("删除成功")
-    getFloorList()
-    getFloorOptions()
     getList()
   }).catch(() => {})
 }

@@ -27,34 +27,57 @@ const _sfc_main = {
       });
     });
     const decryptPhoneNumber = (e) => {
+      const detail = e && e.detail ? e.detail : {};
+      const phoneCode = detail.code;
+      const errMsg = detail.errMsg || "";
+      if (errMsg.indexOf("ok") === -1) {
+        if (errMsg.indexOf("deny") !== -1 || errMsg.indexOf("cancel") !== -1) {
+          common_vendor.index.showToast({ title: "需要同意授权手机号", icon: "none" });
+        } else {
+          common_vendor.index.showToast({ title: "手机号授权失败，请重试", icon: "none" });
+        }
+        return;
+      }
+      if (!phoneCode) {
+        common_vendor.index.showToast({ title: "未获取到手机号凭证，请在真机重试", icon: "none" });
+        return;
+      }
       common_vendor.wx$1.login({
         success(res) {
-          if (e.detail.errMsg === "getPhoneNumber:ok" && e.target.errMsg === "getPhoneNumber:ok") {
-            common_vendor.index.getUserInfo({
-              success(val) {
-                pages_api_login.login({
-                  code: res.code,
-                  phoneCode: e.detail.code,
-                  nickName: val.userInfo.nickName
-                }).then((res2) => {
-                  if (res2.code === 200) {
-                    common_vendor.index.setStorageSync("token", res2.data.token);
-                    common_vendor.index.setStorageSync("nickName", res2.data.nickName);
-                    common_vendor.index.showToast({
-                      title: "登录成功",
-                      duration: 1e3,
-                      icon: "none"
-                    });
-                    if (router.value) {
-                      common_vendor.index.redirectTo({
-                        url: `/${router.value}`
-                      });
-                    }
-                  }
+          if (!res || !res.code) {
+            common_vendor.index.showToast({ title: "微信登录失败", icon: "none" });
+            return;
+          }
+          pages_api_login.login({
+            code: res.code,
+            phoneCode,
+            nickName: ""
+          }).then((res2) => {
+            if (res2 && res2.code === 200 && res2.data && res2.data.token) {
+              common_vendor.index.setStorageSync("token", res2.data.token);
+              common_vendor.index.setStorageSync("nickName", res2.data.nickName || "");
+              common_vendor.index.showToast({
+                title: "登录成功",
+                duration: 1e3,
+                icon: "none"
+              });
+              if (router.value) {
+                common_vendor.index.redirectTo({
+                  url: `/${router.value}`
                 });
               }
-            });
-          }
+            } else {
+              common_vendor.index.showToast({
+                title: (res2 && res2.msg) || "登录失败",
+                icon: "none"
+              });
+            }
+          }).catch(() => {
+            common_vendor.index.showToast({ title: "网络异常，请重试", icon: "none" });
+          });
+        },
+        fail() {
+          common_vendor.index.showToast({ title: "微信登录失败", icon: "none" });
         }
       });
     };

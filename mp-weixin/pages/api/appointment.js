@@ -1,7 +1,7 @@
 "use strict";
 const utils_request = require("../../utils/request.js");
 const addReservation = (params) => utils_request.request({
-  url: `/reservation`,
+  url: "/member/reservation",
   method: "post",
   params
 });
@@ -11,16 +11,16 @@ const getAllList = (params) => utils_request.request({
   params
 });
 const getList = (params) => utils_request.request({
-  url: "/reservation/page",
+  url: "/member/reservation/page",
   method: "get",
   params
 });
 const cancelReservation = (id) => utils_request.request({
-  url: `/reservation/${id}/cancel`,
+  url: `/member/reservation/${id}/cancel`,
   method: "put"
 });
 const cancelCount = () => utils_request.request({
-  url: `/reservation/cancelled-count`,
+  url: "/member/reservation/cancelled-count",
   method: "get"
 });
 exports.addReservation = addReservation;

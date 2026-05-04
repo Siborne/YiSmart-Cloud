@@ -35,15 +35,22 @@ const _sfc_main = {
       });
     });
     const getHotList = async () => {
-      await pages_api_index.getHotHoust({
-        status: 1
-      }).then((res) => {
+      try {
+        const res = await pages_api_index.getHotHoust({
+          status: 1
+        });
         if (res.code === 200) {
           baseData.value = res.data;
           triggered.value = false;
           enabled.value = false;
         }
-      });
+      } catch (err) {
+        const msg = err && err.data && err.data.msg ? err.data.msg : "请求超时，请检查网络";
+        common_vendor.index.showToast({
+          title: msg,
+          icon: "none"
+        });
+      }
     };
     common_vendor.onPullDownRefresh(() => {
       setTimeout(() => {

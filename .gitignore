@@ -227,6 +227,8 @@ unpackage/
 # *.custom-extension
 # custom-folder/
 毕业设计致谢.md
+# 毕业设计说明书初稿等个人稿件（不入版本库）
+docs/graduation/
 
 # ==================== #
 #  Sensitive Config    #

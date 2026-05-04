@@ -1,43 +1,47 @@
-# YiSmartCloud ¡ª Agent / Ğ­×÷ÕßËµÃ÷
+# YiSmartCloud â€” Agent / åä½œè€…è¯´æ˜
 
-±¾ÎÄ¼ş¹© AI Agent Óë¿ª·¢Õß¿ìËÙ¶ÔÆë²Ö¿â½á¹¹Óë¹¤×÷·½Ê½¡£ÏêÏ¸±àÂëÔ¼¶¨¼û²Ö¿â [`.cursor/rules/`](.cursor/rules/)£¨º¬ `project-modules-and-stack.mdc` µÈ£©¡£
+æœ¬æ–‡ä»¶ä¾› AI Agent ä¸å¼€å‘è€…å¿«é€Ÿå¯¹é½ä»“åº“ç»“æ„ä¸å·¥ä½œæ–¹å¼ã€‚è¯¦ç»†ç¼–ç çº¦å®šè§ä»“åº“ [`.cursor/rules/`](.cursor/rules/)ï¼ˆå« `project-modules-and-stack.mdc` ç­‰ï¼‰ã€‚
 
-## ÃüÃûËµÃ÷
+## å‘½åè¯´æ˜
 
-±¾²Ö¿âÊ¹ÓÃ¸ùÄ¿Â¼ **`Agents.md`**¡£²¿·Ö¹¤¾ß»òÎÄµµÏ°¹ß **`AGENTS.md`**£¨È«´óĞ´£©£»ÈôÄãµÄ»·¾³Ö»ÈÏÆäÖĞÒ»ÖÖÎÄ¼şÃû£¬¿É½«±¾ÎÄ¼şÊÓÎªµÈ¼ÛÈë¿Ú»ò×ÔĞĞÔö¼Ó·ûºÅÁ´½Ó/¸±±¾¡£
+æœ¬ä»“åº“ä½¿ç”¨æ ¹ç›®å½• **`Agents.md`**ã€‚éƒ¨åˆ†å·¥å…·æˆ–æ–‡æ¡£ä¹ æƒ¯ **`AGENTS.md`**ï¼ˆå…¨å¤§å†™ï¼‰ï¼›è‹¥ä½ çš„ç¯å¢ƒåªè®¤å…¶ä¸­ä¸€ç§æ–‡ä»¶åï¼Œå¯å°†æœ¬æ–‡ä»¶è§†ä¸ºç­‰ä»·å…¥å£æˆ–è‡ªè¡Œå¢åŠ ç¬¦å·é“¾æ¥/å‰¯æœ¬ã€‚
 
-## ÏîÄ¿ÊÇÊ²Ã´
+## é¡¹ç›®æ˜¯ä»€ä¹ˆ
 
-»ùÓÚ **ÈôÒÀ RuoYi-Vue 3.8.9** µÄ¡¸ÒÃÖÇÔÆ¡¹È«Õ»£ºSpring Boot ¶àÄ£¿éºó¶Ë + Vue 3£¨Vite£©¹ÜÀí¶Ë¡£ÒµÎñÆ·ÅÆÓë°üÃûÎª **`org.FlyingSparrow.YiSmartCloud`**¡£
+åŸºäº **è‹¥ä¾ RuoYi-Vue 3.8.9** çš„ã€Œé¢æ™ºäº‘ã€å…¨æ ˆï¼šSpring Boot å¤šæ¨¡å—åç«¯ + Vue 3ï¼ˆViteï¼‰ç®¡ç†ç«¯ã€‚ä¸šåŠ¡å“ç‰Œä¸åŒ…åä¸º **`org.FlyingSparrow.YiSmartCloud`**ã€‚
 
-## Ä¿Â¼½á¹¹£¨¸ßÆµ£©
+## ç›®å½•ç»“æ„ï¼ˆé«˜é¢‘ï¼‰
 
-| Â·¾¶ | ËµÃ÷ |
+| è·¯å¾„ | è¯´æ˜ |
 |------|------|
-| `YiSmartCloud-background/` | ºó¶Ë Maven ¸¸¹¤³ÌÓë×ÓÄ£¿é |
-| `YiSmartCloud-background/YiSmartCloud-admin/` | **Æô¶¯Ä£¿é**£¨Spring Boot Èë¿Ú£© |
-| `YiSmartCloud-background/YiSmartCloud-nursing-platform/` | **»¤Àí/ÒÃÑøÒµÎñÄ¬ÈÏÂäµã**£¨`serve` °ü¡¢MyBatis XML£© |
-| `YiSmartCloud-front/` | Ç°¶Ë£¨`npm run dev`£¬Vite£© |
+| `YiSmartCloud-background/` | åç«¯ Maven çˆ¶å·¥ç¨‹ä¸å­æ¨¡å— |
+| `YiSmartCloud-background/YiSmartCloud-admin/` | **å¯åŠ¨æ¨¡å—**ï¼ˆSpring Boot å…¥å£ï¼‰ |
+| `YiSmartCloud-background/YiSmartCloud-nursing-platform/` | **æŠ¤ç†/é¢å…»ä¸šåŠ¡é»˜è®¤è½ç‚¹**ï¼ˆ`serve` åŒ…ã€MyBatis XMLï¼‰ |
+| `YiSmartCloud-front/` | å‰ç«¯ï¼ˆ`npm run dev`ï¼ŒViteï¼‰ |
+| `YiSmartCloud-member-uniapp/` | å®¶å±ç«¯ UniApp æºç ï¼ˆVue3 + Viteï¼›`npm run build:mp-weixin` â†’ `dist/build/mp-weixin`ï¼‰ |
+| `mp-weixin/` | å†å²å¾®ä¿¡å°ç¨‹åºç¼–è¯‘äº§ç‰©ï¼ˆå¯¹ç…§ç”¨ï¼›æ—¥å¸¸æ”¹ `YiSmartCloud-member-uniapp`ï¼‰ |
 
-## ¼¼ÊõÕ»ÕªÒª
+## æŠ€æœ¯æ ˆæ‘˜è¦
 
-- ºó¶Ë£ºJava **11**£¬Spring Boot **2.5.x**£¬MyBatis-Plus£¬PageHelper£¬Spring Security£»½Ó¿ÚÎÄµµ **Knife4j + Swagger 2**£¨`io.swagger.annotations`£©¡£
-- Ç°¶Ë£ºVue **3**¡¢`script setup`¡¢Element Plus¡¢Pinia¡¢Axios£»¿ª·¢´úÀí **`/dev-api`** ¡ú ºó¶Ë£¨¼û `YiSmartCloud-front/vite.config.js` ÖĞ `baseUrl`£¬Ä¬ÈÏ `http://localhost:8080`£©¡£
+- åç«¯ï¼šJava **11**ï¼ŒSpring Boot **2.5.x**ï¼ŒMyBatis-Plusï¼ŒPageHelperï¼ŒSpring Securityï¼›æ¥å£æ–‡æ¡£ **Knife4j + Swagger 2**ï¼ˆ`io.swagger.annotations`ï¼‰ã€‚
+- ç®¡ç†ç«¯ï¼šVue **3**ã€`script setup`ã€Element Plusã€Piniaã€Axiosï¼›å¼€å‘ä»£ç† **`/dev-api`** â†’ åç«¯ï¼ˆè§ `YiSmartCloud-front/vite.config.js` ä¸­ `baseUrl`ï¼Œé»˜è®¤ `http://localhost:8080`ï¼‰ã€‚
+- å®¶å±ç«¯å°ç¨‹åºï¼š`YiSmartCloud-member-uniapp`ï¼Œç›´è¿åç«¯æ ¹åœ°å€ï¼ˆ`VITE_API_BASE`ï¼‰ï¼Œé‰´æƒå¤´ä¸º **`Authorization`** æºå¸¦ **Bearer** JWTã€‚
 
-## ±¾µØ¿ª·¢£¨Òªµã£©
+## æœ¬åœ°å¼€å‘ï¼ˆè¦ç‚¹ï¼‰
 
-1. ÅäÖÃÊı¾İÔ´Óë Redis£ºÊ¹ÓÃ `YiSmartCloud-admin` ÏÂ profile£¨²Î¿¼ `application-druid-example.yml` µÈÊ¾Àı£©£¬**Îğ½«º¬ÕæÊµÃÜÂëµÄÅäÖÃÌá½»Èë¿â**¡£
-2. Æô¶¯ºó¶Ë£ºÔÚ `YiSmartCloud-background/YiSmartCloud-admin` ÔËĞĞ Spring Boot Ö÷Àà£¨Ä¬ÈÏ¶Ë¿Ú³£ÓëÇ°¶Ë´úÀíÒ»ÖÂ£¬Èç **8080**£©¡£
-3. Æô¶¯Ç°¶Ë£ºÔÚ `YiSmartCloud-front` Ö´ĞĞ `npm install`£¨Ê×´Î£©¡¢`npm run dev`£»Ò³ÃæÇëÇóÒÔ `/dev-api` ÎªÇ°×º¡£
+1. é…ç½®æ•°æ®æºä¸ Redisï¼šä½¿ç”¨ `YiSmartCloud-admin` ä¸‹ profileï¼ˆå‚è€ƒ `application-druid-example.yml` ç­‰ç¤ºä¾‹ï¼‰ï¼Œ**å‹¿å°†å«çœŸå®å¯†ç çš„é…ç½®æäº¤å…¥åº“**ã€‚
+2. å¯åŠ¨åç«¯ï¼šåœ¨ `YiSmartCloud-background/YiSmartCloud-admin` è¿è¡Œ Spring Boot ä¸»ç±»ï¼ˆé»˜è®¤ç«¯å£å¸¸ä¸å‰ç«¯ä»£ç†ä¸€è‡´ï¼Œå¦‚ **8080**ï¼‰ã€‚
+3. å¯åŠ¨å‰ç«¯ï¼šåœ¨ `YiSmartCloud-front` æ‰§è¡Œ `npm install`ï¼ˆé¦–æ¬¡ï¼‰ã€`npm run dev`ï¼›é¡µé¢è¯·æ±‚ä»¥ `/dev-api` ä¸ºå‰ç¼€ã€‚
+4. å®¶å±ç«¯å°ç¨‹åºï¼šåœ¨ `YiSmartCloud-member-uniapp` æ‰§è¡Œ `npm install`ã€`npm run dev:mp-weixin` æˆ– `npm run build:mp-weixin`ï¼Œç”¨å¾®ä¿¡å¼€å‘è€…å·¥å…·æ‰“å¼€ç¼–è¯‘ç›®å½•ï¼ˆè§è¯¥ç›®å½• `README.md`ï¼‰ã€‚
 
-## ÒµÎñ API ÓëÇ°¶ËÔ¼¶¨
+## ä¸šåŠ¡ API ä¸å‰ç«¯çº¦å®š
 
-- »¤ÀíÄ£¿é HTTP Ç°×º¶àÎª **`/serve/...`**£»Ç°¶Ë½Ó¿Ú·â×°ÔÚ **`YiSmartCloud-front/src/api/serve/`**£¬Ò³ÃæÔÚ **`src/views/serve/`** µÈÄ¿Â¼¡£
-- ²Ëµ¥ÓëÂ·ÓÉÖ÷ÒªÓÉ**ºó¶Ë²Ëµ¥**¶¯Ì¬ÏÂ·¢£»ĞÂÔöÒ³ÃæÍ¨³£ĞèÅäÖÃ²Ëµ¥Óë°´Å¥È¨ÏŞ£¬²¢Óë `@PreAuthorize` / `v-hasPermi` ±êÊ¶Ò»ÖÂ¡£
+- æŠ¤ç†æ¨¡å— HTTP å‰ç¼€å¤šä¸º **`/serve/...`**ï¼›å‰ç«¯æ¥å£å°è£…åœ¨ **`YiSmartCloud-front/src/api/serve/`**ï¼Œé¡µé¢åœ¨ **`src/views/serve/`** ç­‰ç›®å½•ã€‚
+- èœå•ä¸è·¯ç”±ä¸»è¦ç”±**åç«¯èœå•**åŠ¨æ€ä¸‹å‘ï¼›æ–°å¢é¡µé¢é€šå¸¸éœ€é…ç½®èœå•ä¸æŒ‰é’®æƒé™ï¼Œå¹¶ä¸ `@PreAuthorize` / `v-hasPermi` æ ‡è¯†ä¸€è‡´ã€‚
 
-## Agent ¹¤×÷Ô¼¶¨
+## Agent å·¥ä½œçº¦å®š
 
-- ×ñÊØ **`.cursor/rules/`** ÏÂ¸÷ `*.mdc`£¨·Ö²ã¡¢È¨ÏŞ¡¢Mapper¡¢Vue¡¢UTF-8 µÈ£©¡£
-- ËùÓĞÎÄ±¾/Ô´ÂëÎÄ¼şÊ¹ÓÃ **UTF-8**¡£
-- ¶Ô²Ö¿â×ö**ÊµÖÊĞÔ´úÂë»ò¹æÔò±ä¸ü**ºó£¬ÔÚ **`docs/code_review/`** ĞÂÔöÒ»Ìõµ±ÈÕ¼ÇÂ¼£¨¼û `code-change-review-log` ¹æÔò£©¡£
-- **ÎğÌá½»**£º`**/target/**`¡¢±¾µØ IDE Ë½»õ£¨ÈçÎ´ºöÂÔµÄ `.idea/workspace.xml`£©¡¢º¬ÃÜÔ¿µÄ `application-*.yml`¡£
+- éµå®ˆ **`.cursor/rules/`** ä¸‹å„ `*.mdc`ï¼ˆåˆ†å±‚ã€æƒé™ã€Mapperã€Vueã€UTF-8 ç­‰ï¼‰ã€‚
+- æ‰€æœ‰æ–‡æœ¬/æºç æ–‡ä»¶ä½¿ç”¨ **UTF-8**ã€‚
+- å¯¹ä»“åº“åš**å®è´¨æ€§ä»£ç æˆ–è§„åˆ™å˜æ›´**åï¼Œåœ¨ **`docs/code_review/`** æ–°å¢ä¸€æ¡å½“æ—¥è®°å½•ï¼ˆè§ `code-change-review-log` è§„åˆ™ï¼‰ã€‚
+- **å‹¿æäº¤**ï¼š`**/target/**`ã€æœ¬åœ° IDE ç§è´§ï¼ˆå¦‚æœªå¿½ç•¥çš„ `.idea/workspace.xml`ï¼‰ã€å«å¯†é’¥çš„ `application-*.yml`ã€‚

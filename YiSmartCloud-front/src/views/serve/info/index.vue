@@ -1,5 +1,13 @@
 <template>
   <div class="app-container">
+    <el-alert
+      type="info"
+      :closable="false"
+      show-icon
+      style="margin-bottom: 16px"
+      title="模块说明"
+      description="本页维护在院老人主数据（身份、联系方式、在院状态等），与「入住办理」联动：新入住通常由申请流程写入档案。护工 / 责任护理员的排班与派工将在此基础上扩展，并与护理等级、护理计划等模块衔接。"
+    />
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="老人姓名" prop="name">
         <el-input
@@ -115,7 +123,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改老人档案对话框 -->
+    <!-- 添加或修改在院老人信息对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="infoRef" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="老人姓名" prop="name">
@@ -193,7 +201,7 @@ const data = reactive({
 
 const { queryParams, form, rules } = toRefs(data)
 
-/** 查询老人档案列表 */
+/** 查询在院老人信息列表 */
 function getList() {
   loading.value = true
   listInfo(queryParams.value).then(response => {
@@ -250,7 +258,7 @@ function handleSelectionChange(selection) {
 function handleAdd() {
   reset()
   open.value = true
-  title.value = "添加老人档案"
+  title.value = "添加在院老人信息"
 }
 
 /** 修改按钮操作 */
@@ -260,7 +268,7 @@ function handleUpdate(row) {
   getInfo(_id).then(response => {
     form.value = response.data
     open.value = true
-    title.value = "修改老人档案"
+    title.value = "修改在院老人信息"
   })
 }
 
@@ -288,7 +296,7 @@ function submitForm() {
 /** 删除按钮操作 */
 function handleDelete(row) {
   const _ids = row.id || ids.value
-  proxy.$modal.confirm('是否确认删除老人档案编号为"' + _ids + '"的数据项？').then(function() {
+  proxy.$modal.confirm('是否确认删除在院老人信息编号为"' + _ids + '"的数据项？').then(function() {
     return delInfo(_ids)
   }).then(() => {
     getList()

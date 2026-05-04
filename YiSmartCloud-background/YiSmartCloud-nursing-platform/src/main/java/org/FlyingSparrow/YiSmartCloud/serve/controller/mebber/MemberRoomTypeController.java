@@ -8,7 +8,6 @@ import org.FlyingSparrow.YiSmartCloud.common.core.controller.BaseController;
 import org.FlyingSparrow.YiSmartCloud.common.core.domain.AjaxResult;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.Room;
 import org.FlyingSparrow.YiSmartCloud.serve.service.IRoomService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +23,7 @@ public class MemberRoomTypeController extends BaseController {
 
     private final IRoomService roomService;
 
-    @PreAuthorize("@ss.hasPermi('serve:room:list')")
+    /** C 端家属 JWT 无若依菜单权限，不在此接口使用方法级权限注解；GET 匿名策略见 SecurityConfig。 */
     @GetMapping
     @ApiOperation("根据状态查询房型")
     public AjaxResult findRoomTypeListByStatus(

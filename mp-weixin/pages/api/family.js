@@ -1,7 +1,7 @@
 "use strict";
 const utils_request = require("../../utils/request.js");
 const getElderList = (params) => utils_request.request({
-  url: "/user/list-by-page",
+  url: "/member/user/list-by-page",
   method: "get",
   params
 });
@@ -16,11 +16,11 @@ const elderBinging = (params) => utils_request.request({
   params
 });
 const deviceDetail = (iotId) => utils_request.request({
-  url: `/user/queryServiceProperties/` + iotId,
+  url: "/member/user/queryServiceProperties/" + iotId,
   method: "get"
 });
 const elderdeleteById = (id) => utils_request.request({
-  url: `/user/deleteById?id=` + id,
+  url: "/member/user/deleteById?id=" + id,
   method: "delete"
 });
 const elderBloodPresh = (params) => utils_request.request({
@@ -29,7 +29,7 @@ const elderBloodPresh = (params) => utils_request.request({
   params
 });
 const elderBloodPreshPing = (params) => utils_request.request({
-  url: `/user/queryDeviceDataListByWeek`,
+  url: "/member/user/queryDeviceDataListByWeek",
   method: "get",
   params
 });

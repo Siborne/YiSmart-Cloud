@@ -33,7 +33,7 @@ function request({
       fail: (err) => {
         const error = {
           data: {
-            msg: err.data
+            msg: err && (err.errMsg || err.data) || "network error"
           }
         };
         reject(error);

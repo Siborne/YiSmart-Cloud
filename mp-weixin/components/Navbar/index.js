@@ -68,7 +68,13 @@ const _sfc_main = {
       if (props.handleToLink) {
         props.handleToLink();
       } else {
-        common_vendor.index.navigateBack();
+        common_vendor.index.navigateBack({
+          fail: () => {
+            common_vendor.index.switchTab({
+              url: "/pages/index/index"
+            });
+          }
+        });
       }
     };
     return (_ctx, _cache) => {
