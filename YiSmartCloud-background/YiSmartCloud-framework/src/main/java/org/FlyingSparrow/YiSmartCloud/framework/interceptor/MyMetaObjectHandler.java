@@ -17,13 +17,19 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         this.strictInsertFill(metaObject, "createTime", Date.class, new Date());
-        this.strictInsertFill(metaObject, "createBy", String.class, loadUserId() + "");
+        Long userId = loadUserId();
+        if (userId != null) {
+            this.strictInsertFill(metaObject, "createBy", String.class, userId + "");
+        }
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         this.strictUpdateFill(metaObject, "updateTime", Date.class, new Date());
-        this.strictUpdateFill(metaObject, "updateBy", String.class, loadUserId() + "");
+        Long userId = loadUserId();
+        if (userId != null) {
+            this.strictUpdateFill(metaObject, "updateBy", String.class, userId + "");
+        }
     }
 
     /**
@@ -38,10 +44,10 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
             if (ObjectUtils.isNotEmpty(loginUser)) {
                 return loginUser.getUserId();
             }
-            return 1L;
+            return null;
         } catch (Exception e) {
             log.error("获取当前登录人的ID异常！,异常信息：{}", e);
-            return 1L;
+            return null;
         }
     }
 }

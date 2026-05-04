@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 预约业务实现
+ * 预约服务实现类 - 处理参观和探视预约业务
  *
  * @author agent
  */
@@ -67,18 +67,18 @@ public class ReservationServiceImpl extends ServiceImpl<ReservationMapper, Reser
     public void create(ReservationCreateDto dto) {
         if (dto.getType() == null
                 || (dto.getType() != ReservationConstants.TYPE_VISIT && dto.getType() != ReservationConstants.TYPE_VISITATION)) {
-            throw new ServiceException("预约类型不合法");
+            throw new ServiceException("预约类型不正确");
         }
         if (countCancelledToday() > ReservationConstants.MAX_DAILY_CANCEL) {
-            throw new ServiceException("当日取消预约次数已达上限，暂时无法预约");
+            throw new ServiceException("今日取消次数过多，请稍后再试");
         }
 
         LocalDateTime slot = dto.getTime().withNano(0);
         validateSlot(slot);
-
-        int occupied = reservationMapper.countActiveAtSlot(slot);
-        if (occupied >= ReservationConstants.SLOT_CAPACITY) {
-            throw new ServiceException("该时间段已约满");
+        String lockKey = "reservation_slot_" + slot.format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+        Integer lock = reservationMapper.acquireSlotLock(lockKey, 3);
+        if (!Integer.valueOf(1).equals(lock)) {
+            throw new ServiceException("系统繁忙，请稍后重试");
         }
 
         Reservation entity = new Reservation();
@@ -91,17 +91,25 @@ public class ReservationServiceImpl extends ServiceImpl<ReservationMapper, Reser
         entity.setRemark(dto.getRemark());
 
         try {
-            reservationMapper.insert(entity);
-        } catch (DuplicateKeyException e) {
-            log.warn("预约唯一约束冲突: mobile={}, time={}", dto.getMobile(), slot, e);
-            throw new ServiceException("该手机号在此时间段已有预约");
-        } catch (DataIntegrityViolationException e) {
-            if (e.getCause() instanceof java.sql.SQLIntegrityConstraintViolationException
-                    || (e.getMessage() != null && e.getMessage().contains("Duplicate"))) {
-                log.warn("预约唯一约束冲突: mobile={}, time={}", dto.getMobile(), slot, e);
-                throw new ServiceException("该手机号在此时间段已有预约");
+            int occupied = reservationMapper.countActiveAtSlot(slot);
+            if (occupied >= ReservationConstants.SLOT_CAPACITY) {
+                throw new ServiceException("该时段已满");
             }
-            throw e;
+            try {
+                reservationMapper.insert(entity);
+            } catch (DuplicateKeyException e) {
+                log.warn("预约重复提交: mobile={}, time={}", dto.getMobile(), slot, e);
+                throw new ServiceException("请勿重复提交预约");
+            } catch (DataIntegrityViolationException e) {
+                if (e.getCause() instanceof java.sql.SQLIntegrityConstraintViolationException
+                        || (e.getMessage() != null && e.getMessage().contains("Duplicate"))) {
+                    log.warn("预约数据冲突: mobile={}, time={}", dto.getMobile(), slot, e);
+                    throw new ServiceException("请勿重复提交预约");
+                }
+                throw e;
+            }
+        } finally {
+            reservationMapper.releaseSlotLock(lockKey);
         }
     }
 
@@ -118,7 +126,7 @@ public class ReservationServiceImpl extends ServiceImpl<ReservationMapper, Reser
     @Transactional(rollbackFor = Exception.class)
     public void cancel(Long id) {
         if (id == null) {
-            throw new ServiceException("预约主键不能为空");
+            throw new ServiceException("预约ID不能为空");
         }
         Reservation row = reservationMapper.selectById(id);
         if (row == null) {
@@ -126,10 +134,10 @@ public class ReservationServiceImpl extends ServiceImpl<ReservationMapper, Reser
         }
         Long memberId = SecurityUtils.getUserId();
         if (!String.valueOf(memberId).equals(row.getCreateBy())) {
-            throw new ServiceException("无权操作该预约");
+            throw new ServiceException("无权操作此预约");
         }
         if (!Integer.valueOf(ReservationConstants.STATUS_PENDING).equals(row.getStatus())) {
-            throw new ServiceException("当前状态不可取消");
+            throw new ServiceException("只能取消待确认的预约");
         }
         row.setStatus(ReservationConstants.STATUS_CANCELLED);
         reservationMapper.updateById(row);
@@ -140,13 +148,13 @@ public class ReservationServiceImpl extends ServiceImpl<ReservationMapper, Reser
     public int expirePending() {
         int n = reservationMapper.expirePending(LocalDateTime.now());
         if (n > 0) {
-            log.info("[Reservation] 自动过期待报道预约 {} 条", n);
+            log.info("[Reservation] 过期 {} 条待确认预约记录", n);
         }
         return n;
     }
 
     /**
-     * 校验预约时间落在可选档内，且未早于当前时刻（当日）
+     * 验证预约时间段是否合法（日期、时间格式、是否已过等）
      */
     private void validateSlot(LocalDateTime slot) {
         LocalDate date = slot.toLocalDate();
@@ -161,7 +169,7 @@ public class ReservationServiceImpl extends ServiceImpl<ReservationMapper, Reser
         }
         LocalDateTime now = LocalDateTime.now();
         if (!date.isAfter(today) && !slot.isAfter(now)) {
-            throw new ServiceException("预约时间必须晚于当前时间");
+            throw new ServiceException("不能预约已经过去的时间");
         }
     }
 

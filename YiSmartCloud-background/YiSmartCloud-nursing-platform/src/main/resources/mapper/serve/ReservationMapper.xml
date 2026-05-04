@@ -31,7 +31,7 @@
         SELECT COUNT(*)
         FROM reservation
         WHERE `status` = 2
-          AND `create_by` = #{memberId}
+          AND `create_by` = CAST(#{memberId} AS CHAR)
           AND DATE(`update_time`) = #{date}
     </select>
 
@@ -42,11 +42,19 @@
           AND `status` IN (0, 1)
     </select>
 
+    <select id="acquireSlotLock" resultType="int">
+        SELECT GET_LOCK(#{lockKey}, #{timeoutSeconds})
+    </select>
+
+    <select id="releaseSlotLock" resultType="int">
+        SELECT RELEASE_LOCK(#{lockKey})
+    </select>
+
     <select id="selectMemberReservationList" resultMap="ReservationResult">
         SELECT id, name, mobile, `time`, visitor, type, status, create_by, create_time, update_by, update_time, remark
         FROM reservation
         <where>
-            `create_by` = #{memberId}
+            `create_by` = CAST(#{memberId} AS CHAR)
             <if test="query.type != null">
                 AND type = #{query.type}
             </if>

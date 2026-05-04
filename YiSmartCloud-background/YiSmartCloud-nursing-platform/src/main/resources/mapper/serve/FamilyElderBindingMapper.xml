@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.FlyingSparrow.YiSmartCloud.serve.mapper.FamilyElderBindingMapper">
+
+    <resultMap id="FamilyElderBindingResult" type="org.FlyingSparrow.YiSmartCloud.serve.domain.FamilyElderBinding">
+        <id property="id" column="id"/>
+        <result property="familyMemberId" column="family_member_id"/>
+        <result property="elderId" column="elder_id"/>
+        <result property="relation" column="relation"/>
+        <result property="status" column="status"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <select id="selectElderByNameAndPhone" resultType="org.FlyingSparrow.YiSmartCloud.serve.domain.ElderInfo">
+        SELECT id, name, contact_phone
+        FROM elder_info
+        WHERE (is_deleted IS NULL OR is_deleted = 0)
+          AND status = 1
+          AND name = #{elderName}
+          AND contact_phone = #{phone}
+        LIMIT 1
+    </select>
+
+    <select id="countActiveBinding" resultType="int">
+        SELECT COUNT(*)
+        FROM family_elder_binding
+        WHERE family_member_id = #{familyMemberId}
+          AND elder_id = #{elderId}
+          AND status = 1
+          AND (is_deleted IS NULL OR is_deleted = 0)
+    </select>
+
+    <select id="selectBoundElders" resultType="org.FlyingSparrow.YiSmartCloud.serve.domain.ElderInfo">
+        SELECT ei.id,
+               ei.name,
+               ei.contact_phone AS contactPhone,
+               ei.age,
+               ei.gender,
+               ei.health_status AS healthStatus,
+               ei.status
+        FROM family_elder_binding feb
+                 INNER JOIN elder_info ei ON ei.id = feb.elder_id
+        WHERE feb.family_member_id = #{familyMemberId}
+          AND feb.status = 1
+          AND (feb.is_deleted IS NULL OR feb.is_deleted = 0)
+          AND (ei.is_deleted IS NULL OR ei.is_deleted = 0)
+        <if test="name != null and name != ''">
+            AND ei.name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        ORDER BY feb.create_time DESC
+    </select>
+
+    <update id="softDeleteBinding">
+        UPDATE family_elder_binding
+        SET status = 0,
+            is_deleted = 1,
+            update_time = NOW()
+        WHERE family_member_id = #{familyMemberId}
+          AND elder_id = #{elderId}
+          AND status = 1
+          AND (is_deleted IS NULL OR is_deleted = 0)
+    </update>
+
+    <select id="selectAnyBoundElderId" resultType="long">
+        SELECT elder_id
+        FROM family_elder_binding
+        WHERE family_member_id = #{familyMemberId}
+          AND status = 1
+          AND (is_deleted IS NULL OR is_deleted = 0)
+        ORDER BY create_time DESC
+        LIMIT 1
+    </select>
+</mapper>

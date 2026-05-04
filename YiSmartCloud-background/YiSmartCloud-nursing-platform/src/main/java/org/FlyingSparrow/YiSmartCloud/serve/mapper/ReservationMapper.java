@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Ô¤Ô¼ÐÅÏ¢ Mapper
+ * Ô¤Ô¼ï¿½ï¿½Ï¢ Mapper
  *
  * @author agent
  */
@@ -19,29 +19,39 @@ import java.util.List;
 public interface ReservationMapper extends BaseMapper<Reservation> {
 
     /**
-     * Í³¼ÆÄ³ÈÕ¸÷Ê±¼ä¶ÎÒÑÕ¼ÓÃÊýÁ¿£¨´ý±¨µÀ¡¢ÒÑÍê³É£©
+     * Í³ï¿½ï¿½Ä³ï¿½Õ¸ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É£ï¿½
      */
     List<ReservationSlotOccupancyRow> selectOccupiedCountsByDate(@Param("date") LocalDate date);
 
     /**
-     * µ±Ç°¼ÒÊôµ±ÈÕÈ¡ÏûÔ¤Ô¼´ÎÊý£¨°´ update_time ¹éÊô×ÔÈ»ÈÕ£©
+     * ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½Ô¤Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ update_time ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È»ï¿½Õ£ï¿½
      */
     int countCancelledTodayByMember(@Param("memberId") Long memberId, @Param("date") LocalDate date);
 
     /**
-     * Ä³Ê±¼ä¶ÎÄÚ´ý±¨µÀ/ÒÑÍê³ÉÔ¤Ô¼ÊýÁ¿
+     * Ä³Ê±ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½Ô¤Ô¼ï¿½ï¿½ï¿½ï¿½
      */
     int countActiveAtSlot(@Param("slot") LocalDateTime slot);
 
     /**
-     * ¼ÒÊô·ÖÒ³ÁÐ±í£¨½ö±¾ÈË´´½¨£©
+     * ï¿½ï¿½È¡Ä³ï¿½ï¿½Ô¤Ô¼Ê±ï¿½Îµï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     */
+    Integer acquireSlotLock(@Param("lockKey") String lockKey, @Param("timeoutSeconds") Integer timeoutSeconds);
+
+    /**
+     * ï¿½Í·ï¿½Ô¤Ô¼Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     */
+    Integer releaseSlotLock(@Param("lockKey") String lockKey);
+
+    /**
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë´ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     List<Reservation> selectMemberReservationList(@Param("memberId") Long memberId, @Param("query") Reservation query);
 
     /**
-     * ½«ÒÑ¹ýÆÚÎ´µ½³¡µÄ´ý±¨µÀÔ¤Ô¼ÖÃÎª¹ýÆÚ
+     * ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½Ô¤Ô¼ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
      *
-     * @return Ó°ÏìÐÐÊý
+     * @return Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     int expirePending(@Param("now") LocalDateTime now);
 }

@@ -31,8 +31,11 @@ export function request({ url = '', params = {}, method = 'GET' }) {
               uni.navigateTo({ url: '/pages/login/index' })
             }, 500)
           }
+          reject(data)
+          return
         }
-        resolve(data)
+        uni.showToast({ title: data.msg || '请求失败', icon: 'none' })
+        reject(data)
       },
       fail: (err) => reject({ data: { msg: (err && err.errMsg) || 'network error' } })
     })

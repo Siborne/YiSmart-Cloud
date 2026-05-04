@@ -16,13 +16,16 @@ import java.time.LocalDateTime;
 @ApiModel("Member create order request")
 public class MemberOrderCreateDto {
 
-    @NotNull(message = "服务项目ID不能为空")
-    @ApiModelProperty(value = "服务项目ID", required = true)
+    @NotNull(message = "鏈嶅姟椤圭洰ID涓嶈兘涓虹┖")
+    @ApiModelProperty(value = "鏈嶅姟椤圭洰ID", required = true)
     private Long projectId;
 
-    @NotNull(message = "服务家人不能为空")
-    @ApiModelProperty(value = "服务家人ID", required = true)
+    @NotNull(message = "服务对象ID不能为空")
+    @ApiModelProperty(value = "兼容字段：服务对象ID（历史字段名）", required = true)
     private Long familyMemberId;
+
+    @ApiModelProperty("老人ID（新字段，优先使用）")
+    private Long elderId;
 
     @Min(value = 1, message = "数量至少为1")
     @ApiModelProperty(value = "数量", required = true)

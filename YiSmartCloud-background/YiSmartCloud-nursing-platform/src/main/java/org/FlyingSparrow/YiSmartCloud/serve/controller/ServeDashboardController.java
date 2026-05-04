@@ -1,5 +1,8 @@
 package org.FlyingSparrow.YiSmartCloud.serve.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.FlyingSparrow.YiSmartCloud.common.core.controller.BaseController;
 import org.FlyingSparrow.YiSmartCloud.common.core.domain.AjaxResult;
 import org.FlyingSparrow.YiSmartCloud.serve.service.IServeDashboardService;
@@ -7,26 +10,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
-
 /**
- * ¹ÜÀí¶ËÊ×Ò³ÒÇ±íÅÌ
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½Ç±ï¿½ï¿½ï¿½
  */
 @RestController
 @RequestMapping("/serve/dashboard")
-@Api(tags = "Ê×Ò³ÒÇ±íÅÌ")
+@Api(tags = "ï¿½ï¿½Ò³ï¿½Ç±ï¿½ï¿½ï¿½")
 @RequiredArgsConstructor
 public class ServeDashboardController extends BaseController {
 
     private final IServeDashboardService serveDashboardService;
 
     /**
-     * Ê×Ò³»ã×Ü£¨¸ÅÀÀ±ýÍ¼¡¢Ç÷ÊÆ¡¢À´·ÃÈÕÀúµÈÕæÊµÊý¾Ý£©
+     * ï¿½ï¿½Ò³ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½Ý£ï¿½
      */
     @GetMapping("/summary")
-    @ApiOperation("Ê×Ò³»ã×ÜÊý¾Ý")
+    @ApiOperation("ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
     public AjaxResult summary() {
         return success(serveDashboardService.loadSummary());
     }

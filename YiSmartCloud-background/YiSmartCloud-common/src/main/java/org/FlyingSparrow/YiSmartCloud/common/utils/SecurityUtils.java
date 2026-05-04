@@ -28,10 +28,22 @@ public class SecurityUtils
     {
         try
         {
-            return getLoginUser().getUserId();
+            LoginUser loginUser = getLoginUser();
+            if (loginUser != null) {
+                return loginUser.getUserId();
+            }
+            Long memberId = UserThreadLocal.getUserId();
+            if (memberId != null) {
+                return memberId;
+            }
+            throw new ServiceException("获取用户ID异常", HttpStatus.UNAUTHORIZED);
         }
         catch (Exception e)
         {
+            Long memberId = UserThreadLocal.getUserId();
+            if (memberId != null) {
+                return memberId;
+            }
             throw new ServiceException("获取用户ID异常", HttpStatus.UNAUTHORIZED);
         }
     }

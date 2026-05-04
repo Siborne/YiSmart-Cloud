@@ -1,10 +1,12 @@
 <template>
-  <view class="main-page">
+  <view class="main-page ys-page-tint cancel-page">
     <nav-bar title="取消订单" :is-show-back="true" />
-    <view class="section">
-      <view>订单ID：{{ orderId }}</view>
-      <textarea v-model="reason" class="input" placeholder="请输入取消原因" />
-      <button class="btn" :loading="loading" @tap="submit">确认取消</button>
+    <view class="section cancel-card">
+      <view class="group-title">订单编号</view>
+      <view class="readonly-strip">{{ orderId || '—' }}</view>
+      <view class="group-title field-spaced">取消原因</view>
+      <textarea v-model="reason" class="ys-field-area" placeholder="请说明取消原因，便于我们改进服务" />
+      <button class="ys-btn-primary submit" :loading="loading" @tap="submit">确认取消</button>
     </view>
   </view>
 </template>
@@ -43,6 +45,32 @@ async function submit() {
 </script>
 
 <style scoped>
-.input { min-height: 120rpx; margin-top: 20rpx; border: 1px solid #eee; border-radius: 10rpx; padding: 20rpx; }
-.btn { margin-top: 20rpx; background: var(--ys-primary); color: #fff; }
+.cancel-page {
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
+}
+.cancel-card {
+  margin-top: 8rpx;
+}
+.group-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--ys-text-secondary);
+  margin-bottom: 12rpx;
+}
+.field-spaced {
+  margin-top: 28rpx;
+}
+.readonly-strip {
+  padding: 22rpx 24rpx;
+  background: var(--ys-bg);
+  border-radius: var(--ys-radius);
+  border: 2rpx solid var(--ys-border);
+  font-size: 28rpx;
+  color: var(--ys-text);
+  word-break: break-all;
+}
+.submit {
+  width: 100%;
+  margin-top: 32rpx;
+}
 </style>

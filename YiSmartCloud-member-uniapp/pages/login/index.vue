@@ -1,13 +1,20 @@
 <template>
-  <view class="main-page login-page">
+  <view class="main-page ys-page-tint login-page">
     <nav-bar title="登录" :is-show-back="true" :handle-to-link="handleBack" />
     <view class="section login-card">
       <image class="logo" src="/static/logo.png" mode="widthFix" />
-      <view class="tips">最基础模式：手机号登录 / 注册</view>
-      <input v-model="phone" class="phone-input" type="number" maxlength="11" placeholder="请输入手机号" />
-      <input v-model="nickName" class="phone-input" maxlength="20" placeholder="请输入昵称（注册可填）" />
-      <button class="btn" :loading="loginLoading" @tap="handleBasicLogin">登录</button>
-      <button class="register-btn" :loading="registerLoading" @tap="handleRegister">注册并登录</button>
+      <view class="brand-title">颐智云</view>
+      <view class="tips">使用手机号快速登录；新用户可一键注册</view>
+      <view class="field-block">
+        <text class="label">手机号</text>
+        <input v-model="phone" class="ys-field" type="number" maxlength="11" placeholder="请输入11位手机号" />
+      </view>
+      <view class="field-block">
+        <text class="label">昵称（选填）</text>
+        <input v-model="nickName" class="ys-field" maxlength="20" placeholder="注册时可填写，方便称呼" />
+      </view>
+      <button class="ys-btn-primary btn-block" :loading="loginLoading" @tap="handleBasicLogin">登录</button>
+      <button class="ys-btn-outline btn-block outline" :loading="registerLoading" @tap="handleRegister">注册并登录</button>
     </view>
   </view>
 </template>
@@ -105,28 +112,47 @@ async function handleRegister() {
 </script>
 
 <style scoped>
-.login-card { margin-top: 120rpx; text-align: center; }
-.logo { width: 180rpx; margin: 40rpx auto; display: block; }
-.tips { margin-top: 24rpx; color: #8d8d8d; font-size: 24rpx; }
-.phone-input {
-  margin-top: 16rpx;
-  background: #fff;
-  border: 1px solid #ececec;
-  border-radius: 10rpx;
-  height: 78rpx;
-  line-height: 78rpx;
+.login-page {
+  padding-bottom: calc(48rpx + env(safe-area-inset-bottom));
+}
+.login-card {
+  margin-top: 24rpx;
+  text-align: center;
+}
+.logo {
+  width: 160rpx;
+  margin: 16rpx auto 8rpx;
+  display: block;
+}
+.brand-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--ys-text);
+  letter-spacing: 2rpx;
+}
+.tips {
+  margin: 16rpx 8rpx 8rpx;
+  color: var(--ys-text-muted);
+  font-size: 24rpx;
+  line-height: 1.45;
+  text-align: center;
+}
+.field-block {
+  margin-top: 28rpx;
   text-align: left;
-  padding: 0 20rpx;
 }
-.btn {
-  margin-top: 14rpx;
-  background: var(--ys-primary);
-  color: #fff;
+.label {
+  display: block;
+  font-size: 26rpx;
+  color: var(--ys-text-secondary);
+  margin-bottom: 12rpx;
+  font-weight: 500;
 }
-.register-btn {
-  margin-top: 14rpx;
-  background: #fff;
-  color: var(--ys-primary);
-  border: 1px solid var(--ys-primary);
+.btn-block {
+  width: 100%;
+  margin-top: 32rpx;
+}
+.outline {
+  margin-top: 20rpx;
 }
 </style>
