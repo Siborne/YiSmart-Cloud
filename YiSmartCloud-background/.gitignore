@@ -45,3 +45,4 @@ nbdist/
 !*/build/*.java
 !*/build/*.html
 !*/build/*.xml
+/YiSmartCloud-admin/src/main/resources/application-druid.yml
