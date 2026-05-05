@@ -241,3 +241,6 @@ docs/graduation/
 
 # 忽略reference文件里面的所有文件
 reference/
+
+# 忽略配置文件
+YiSmartCloud-admin/src/main/resources/application-druid.yml
