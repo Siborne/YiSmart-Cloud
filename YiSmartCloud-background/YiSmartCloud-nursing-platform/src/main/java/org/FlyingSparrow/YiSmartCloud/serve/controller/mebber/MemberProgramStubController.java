@@ -7,17 +7,14 @@ import lombok.RequiredArgsConstructor;
 import org.FlyingSparrow.YiSmartCloud.common.core.controller.BaseController;
 import org.FlyingSparrow.YiSmartCloud.common.core.domain.AjaxResult;
 import org.FlyingSparrow.YiSmartCloud.common.core.page.TableDataInfo;
-import org.FlyingSparrow.YiSmartCloud.common.exception.ServiceException;
 import org.FlyingSparrow.YiSmartCloud.common.utils.SecurityUtils;
 import org.FlyingSparrow.YiSmartCloud.common.utils.StringUtils;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.BillDetail;
 import org.FlyingSparrow.YiSmartCloud.serve.domain.MemberServiceOrder;
-import org.FlyingSparrow.YiSmartCloud.serve.domain.NursingProject;
 import org.FlyingSparrow.YiSmartCloud.serve.dto.FamilyElderBindRequestDto;
 import org.FlyingSparrow.YiSmartCloud.serve.dto.MemberOrderCreateDto;
 import org.FlyingSparrow.YiSmartCloud.serve.service.IFamilyElderBindingService;
 import org.FlyingSparrow.YiSmartCloud.serve.service.IMemberServiceOrderService;
-import org.FlyingSparrow.YiSmartCloud.serve.service.INursingProjectService;
 import org.FlyingSparrow.YiSmartCloud.serve.service.IReservationService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,7 +41,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MemberProgramStubController extends BaseController {
 
-    private final INursingProjectService nursingProjectService;
     private final IFamilyElderBindingService familyElderBindingService;
     private final IMemberServiceOrderService memberServiceOrderService;
     private final IReservationService reservationService;
@@ -188,25 +184,6 @@ public class MemberProgramStubController extends BaseController {
         return success();
     }
 
-    @GetMapping("/member/orders/project/page")
-    @ApiOperation("Paginated nursing project list")
-    @SuppressWarnings("rawtypes")
-    public TableDataInfo projectPage(@RequestParam(value = "name", required = false) String name) {
-        startPage();
-        NursingProject query = new NursingProject();
-        query.setStatus(1);
-        query.setName(StringUtils.trim(name));
-        List<NursingProject> list = nursingProjectService.selectNursingProjectList(query);
-        return getDataTable(list);
-    }
-
-    @GetMapping("/member/orders/project/{id}")
-    @ApiOperation("Nursing project details")
-    public AjaxResult projectDetail(@PathVariable("id") Long id) {
-        NursingProject project = validateProject(id);
-        return success(project);
-    }
-
     @GetMapping("/member/user/queryServiceProperties/{iotId}")
     @ApiOperation("IoT device properties (placeholder)")
     @SuppressWarnings("unused")
@@ -232,14 +209,4 @@ public class MemberProgramStubController extends BaseController {
         return success(Collections.emptyList());
     }
 
-    private NursingProject validateProject(Long projectId) {
-        if (projectId == null) {
-            throw new ServiceException("Nursing project ID cannot be empty");
-        }
-        NursingProject project = nursingProjectService.selectNursingProjectById(projectId);
-        if (project == null || project.getStatus() == null || project.getStatus() != 1) {
-            throw new ServiceException("Nursing project does not exist or is disabled");
-        }
-        return project;
-    }
 }
