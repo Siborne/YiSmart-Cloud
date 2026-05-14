@@ -63,9 +63,12 @@ const translations = {
         'footer.issues': '问题反馈',
         'footer.tech': '技术栈',
         'footer.license': 'MIT License',
-        'footer.owner': '项目所有者: Siborne'
+        'footer.owner': '项目所有者: Siborne',
+        'nav.switchTheme': '切换主题'
     },
     en: {
+        'nav.switchTheme': 'Switch Theme',
+
         'nav.brand': 'YiSmartCloud',
         'nav.features': 'Features',
         'nav.tech': 'Tech Stack',
@@ -134,6 +137,7 @@ const translations = {
 };
 
 let currentLang = localStorage.getItem('lang') || 'zh';
+let currentTheme = localStorage.getItem('theme') || 'light';
 
 function setLanguage(lang) {
     currentLang = lang;
@@ -158,16 +162,48 @@ function setLanguage(lang) {
     });
 }
 
+function setTheme(theme) {
+    currentTheme = theme;
+    localStorage.setItem('theme', theme);
+    
+    if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+    
+    const sunIcon = document.getElementById('sunIcon');
+    const moonIcon = document.getElementById('moonIcon');
+    
+    if (sunIcon && moonIcon) {
+        if (theme === 'dark') {
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+        } else {
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+        }
+    }
+}
+
 function toggleLanguage() {
     const newLang = currentLang === 'zh' ? 'en' : 'zh';
     setLanguage(newLang);
 }
 
+function toggleTheme() {
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     setLanguage(currentLang);
+    setTheme(currentTheme);
     
     const langToggle = document.getElementById('langToggle');
     const langToggleMobile = document.getElementById('langToggleMobile');
+    const themeToggle = document.getElementById('themeToggle');
+    const themeToggleMobile = document.getElementById('themeToggleMobile');
     
     if (langToggle) {
         langToggle.addEventListener('click', toggleLanguage);
@@ -175,6 +211,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (langToggleMobile) {
         langToggleMobile.addEventListener('click', toggleLanguage);
+    }
+    
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
+    
+    if (themeToggleMobile) {
+        themeToggleMobile.addEventListener('click', toggleTheme);
     }
     
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
