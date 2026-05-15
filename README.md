@@ -5,6 +5,14 @@
 # 颐智云（YiSmartCloud）项目说明
 
 <p>
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-blue.svg" />
+  <img alt="Build Status" src="https://img.shields.io/badge/build-passing-brightgreen.svg" />
+  <a href="https://github.com/Siborne/YiSmart-Cloud/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/Siborne/YiSmart-Cloud.svg" /></a>
+  <a href="https://github.com/Siborne/YiSmart-Cloud/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/Siborne/YiSmart-Cloud.svg" /></a>
+  <a href="https://github.com/Siborne/YiSmart-Cloud/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/Siborne/YiSmart-Cloud.svg" /></a>
+</p>
+
+<p>
   <img alt="Java" src="https://img.shields.io/badge/Java-11-007396?logo=openjdk&logoColor=white" />
   <img alt="Spring Boot" src="https://img.shields.io/badge/Spring%20Boot-2.5.15-6DB33F?logo=springboot&logoColor=white" />
   <img alt="Vue" src="https://img.shields.io/badge/Vue-3.4.31-42b883?logo=vuedotjs&logoColor=white" />
@@ -12,13 +20,11 @@
   <img alt="Element Plus" src="https://img.shields.io/badge/Element%20Plus-2.7.6-409EFF?logo=element&logoColor=white" />
   <img alt="MySQL" src="https://img.shields.io/badge/MySQL-8.x-4479A1?logo=mysql&logoColor=white" />
   <img alt="Redis" src="https://img.shields.io/badge/Redis-6%2F7-DC382D?logo=redis&logoColor=white" />
-  <img alt="License" src="https://img.shields.io/badge/License-MIT-blue.svg" />
 </p>
 
 <p>
   <img alt="Status" src="https://img.shields.io/badge/状态-开发中-orange" />
   <img alt="Start Date" src="https://img.shields.io/badge/项目开始-2026--02--27-blue" />
-  <img alt="First Commit" src="https://img.shields.io/badge/首次提交-Initial%20commit-8A2BE2" />
 </p>
 
 `YiSmartCloud`（颐智云）是一套面向养老机构的**智慧养老管理系统**，前后端分离，以「老人全生命周期服务管理」为主线；其中**老人侧运营**优先围绕**入住办理、床位与护理等级配置、在院主数据**，并预留**护工 / 照护员派工与排班**与护理计划、员工主数据的衔接。同时覆盖房间床位、合同与费用、健康记录等场景。项目在 **RuoYi-Vue 3.8.9** 之上做业务化扩展：不是简单套模板，而是贴近机构真实运营流程的一体化平台；后端与前端 `package.json` 版本与若依基线对齐，便于对照官方升级说明。
