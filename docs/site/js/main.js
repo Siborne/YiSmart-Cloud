@@ -238,13 +238,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const featureCards = document.querySelectorAll('.feature-card');
     const techCards = document.querySelectorAll('.tech-card');
+    const stackingSections = document.querySelectorAll('.stacking-section');
     
     const cardObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
+        entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, index * 100);
+                entry.target.classList.add('visible');
                 cardObserver.unobserve(entry.target);
             }
         });
@@ -255,6 +254,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
     featureCards.forEach(card => cardObserver.observe(card));
     techCards.forEach(card => cardObserver.observe(card));
+    
+    const stackObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+            }
+        });
+    }, {
+        threshold: 0.3,
+        rootMargin: '0px 0px -10% 0px'
+    });
+    
+    stackingSections.forEach(section => stackObserver.observe(section));
     
     const navbar = document.getElementById('navbar');
     
