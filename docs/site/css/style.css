@@ -160,32 +160,20 @@ body {
     transform: translateY(0);
 }
 
-.stacking-section {
+.hero-scroll-container {
+    position: relative;
+}
+
+.hero-sticky {
     position: sticky;
     top: 0;
-    min-height: 100vh;
-    border-radius: 24px 24px 0 0;
-    overflow: hidden;
-    will-change: transform;
+    height: 100vh;
+    z-index: 1;
 }
 
-.stacking-section[data-stack="1"] { z-index: 1; }
-.stacking-section[data-stack="2"] { z-index: 2; }
-.stacking-section[data-stack="3"] { z-index: 3; }
-.stacking-section[data-stack="4"] { z-index: 4; }
-.stacking-section[data-stack="5"] { z-index: 5; }
-.stacking-section[data-stack="6"] { z-index: 6; }
-.stacking-section[data-stack="7"] { z-index: 7; }
-
-.stacking-section .stack-inner {
-    opacity: 0;
-    transform: translateY(60px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.stacking-section.in-view .stack-inner {
-    opacity: 1;
-    transform: translateY(0);
+.hero-overlap {
+    position: relative;
+    z-index: 2;
 }
 
 .particle {
