@@ -251,6 +251,165 @@ body {
     }
 }
 
+/* Card Stacking Animation */
+.stack-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 400px;
+    margin: 0 auto;
+    perspective: 1000px;
+}
+
+.stack-card {
+    position: absolute;
+    width: 280px;
+    height: 320px;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform-origin: center center;
+}
+
+/* Initial scattered positions */
+.stack-card[data-index="0"] {
+    left: 0;
+    top: 0;
+    transform: rotate(-15deg) translateX(-50px) translateY(-30px) scale(0.9);
+    z-index: 1;
+}
+
+.stack-card[data-index="1"] {
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%) rotate(10deg) translateX(50px) translateY(-20px) scale(0.9);
+    z-index: 2;
+}
+
+.stack-card[data-index="2"] {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) rotate(-8deg) translateX(-40px) translateY(30px) scale(0.9);
+    z-index: 3;
+}
+
+.stack-card[data-index="3"] {
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%) rotate(12deg) translateX(60px) translateY(40px) scale(0.9);
+    z-index: 4;
+}
+
+/* Stacked state */
+.stack-container.stacked .stack-card {
+    left: 50%;
+    top: 50%;
+}
+
+.stack-container.stacked .stack-card[data-index="0"] {
+    transform: translateX(-50%) translateY(-50%) rotate(-8deg) translateZ(0px) scale(0.85);
+    z-index: 1;
+}
+
+.stack-container.stacked .stack-card[data-index="1"] {
+    transform: translateX(-50%) translateY(-50%) rotate(5deg) translateZ(20px) translateY(-8px) scale(0.88);
+    z-index: 2;
+}
+
+.stack-container.stacked .stack-card[data-index="2"] {
+    transform: translateX(-50%) translateY(-50%) rotate(-3deg) translateZ(40px) translateY(-16px) scale(0.91);
+    z-index: 3;
+}
+
+.stack-container.stacked .stack-card[data-index="3"] {
+    transform: translateX(-50%) translateY(-50%) rotate(2deg) translateZ(60px) translateY(-24px) scale(0.94);
+    z-index: 4;
+}
+
+/* Hover effect on stacked cards */
+.stack-container.stacked .stack-card:hover {
+    transform: translateX(-50%) translateY(-50%) rotate(0deg) translateZ(80px) translateY(-40px) scale(1) !important;
+    z-index: 10;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+}
+
+/* Scroll indicator for stack section */
+.stack-scroll-hint {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.7;
+    animation: bounce 2s infinite;
+}
+
+.stack-scroll-hint svg {
+    width: 24px;
+    height: 24px;
+    color: #6b7280;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-5px);
+    }
+}
+
+/* Feature section layout for stacking */
+.features-stack-section {
+    position: relative;
+    min-height: 150vh;
+}
+
+.features-stack-section .stack-container {
+    position: sticky;
+    top: 20vh;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .stack-container {
+        height: 300px;
+    }
+    
+    .stack-card {
+        width: 200px;
+        height: 240px;
+    }
+    
+    .stack-card[data-index="0"] {
+        left: 0;
+        top: 0;
+        transform: rotate(-12deg) translateX(-30px) translateY(-20px) scale(0.85);
+    }
+    
+    .stack-card[data-index="1"] {
+        left: 45%;
+        top: 0;
+        transform: translateX(-50%) rotate(8deg) translateX(30px) translateY(-15px) scale(0.85);
+    }
+    
+    .stack-card[data-index="2"] {
+        left: 0;
+        top: 45%;
+        transform: translateY(-50%) rotate(-6deg) translateX(-25px) translateY(20px) scale(0.85);
+    }
+    
+    .stack-card[data-index="3"] {
+        left: 45%;
+        top: 45%;
+        transform: translateX(-50%) translateY(-50%) rotate(10deg) translateX(35px) translateY(25px) scale(0.85);
+    }
+}
+
 .hover\:-translate-y-2:hover {
     transform: translateY(-8px);
 }
