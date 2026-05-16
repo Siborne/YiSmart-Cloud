@@ -301,22 +301,4 @@ document.addEventListener('DOMContentLoaded', () => {
             ctaSection.style.backgroundPosition = `${x}% ${y}%`;
         });
     }
-
-    const stackContainer = document.getElementById('featureStack');
-    if (stackContainer) {
-        const stackObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-                    stackContainer.classList.add('stacked');
-                } else if (!entry.isIntersecting) {
-                    stackContainer.classList.remove('stacked');
-                }
-            });
-        }, {
-            threshold: [0, 0.3, 0.5, 0.7, 1],
-            rootMargin: '-10% 0px -10% 0px'
-        });
-
-        stackObserver.observe(stackContainer);
-    }
 });
